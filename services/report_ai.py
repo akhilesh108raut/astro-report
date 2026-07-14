@@ -405,6 +405,10 @@ def _write_from_blueprint(blueprint: dict, client, model: str, language: str = "
     _defaults = {"remedies": [], "important_ages": [], "summary_card": {}}
     for key in SECTIONS:
         data.setdefault(key, _defaults.get(key, ""))
+    # Pass the blueprint's structured identity (archetype + evidence_weights +
+    # confidence) through untouched — the writer only rewrites prose fields;
+    # this one feeds the "Why This Is Your Archetype" evidence flowchart.
+    data["identity"] = blueprint.get("identity") or {}
     return data
 
 
@@ -714,6 +718,31 @@ def _engine_fallback(chart: dict) -> dict:
         "insight_sentence": dna.get("one_liner") or f"Your {lagna.get('lord', '?')}-ruled chart rewards patience over haste.",
     }
 
+    # Deterministic evidence weights for the archetype flowchart — no LLM,
+    # so weights are simple fixed shares by factor order rather than a true
+    # confidence calculation. Only the factors that actually exist are used.
+    ll = lagna.get("lord", "?")
+    factors = [f"{ll} rules your lagna ({lagna.get('sign', '?')} rising)"]
+    if yoga_lines:
+        factors.append(yoga_lines[0].split(" — ")[0])
+    factors.append(f"{maha} Mahadasha is currently active")
+    if strong:
+        factors.append(f"{strong[0]} is in dignity")
+    shares = [40, 25, 20, 15][:len(factors)]
+    total = sum(shares)
+    identity = {
+        "archetype": dna.get("archetype_name", ""),
+        "one_liner": dna.get("one_liner", ""),
+        "core_theme": dna.get("core_mechanism", ""),
+        "evidence": " + ".join(factors),
+        "confidence": "moderate",
+        "evidence_weights": [
+            {"factor": f, "weight_pct": round(s * 100 / total)}
+            for f, s in zip(factors, shares)
+        ],
+        "natal_vs_transit": "mixed" if yoga_lines else "natal",
+    }
+
     return {
         "_source": "engine-fallback",
         "executive_summary": summary,
@@ -729,4 +758,5 @@ def _engine_fallback(chart: dict) -> dict:
         "remedies": remedies,
         "important_ages": ages,
         "summary_card": summary_card,
+        "identity": identity,
     }

@@ -101,6 +101,53 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 </section>
 {% endif %}
 
+<!-- ══════════════════ HALL 2.5 — WHY THIS IS YOUR ARCHETYPE ══════════════════ -->
+{% set idn = ai.identity or {} %}
+{% if idn.evidence_weights %}
+<section id="hall-evidence" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:640px">
+    <div class="hall-eyebrow">Why This Is Your Archetype</div>
+    <div class="hall-title" style="font-size:clamp(24px,4vw,32px);margin-bottom:8px">Generated From Your Chart — Not Assumed</div>
+    {% if idn.natal_vs_transit %}
+    <p style="color:var(--ink-dim);font-size:13.5px;margin-bottom:34px">
+      {% if idn.natal_vs_transit == 'natal' %}This is a stable pattern rooted in your birth chart, not a passing phase.
+      {% elif idn.natal_vs_transit == 'transit' %}This reading leans on your current dasha/transit period — expect it to shift as that period changes.
+      {% else %}This blends stable birth-chart traits with your current dasha period.{% endif %}
+    </p>
+    {% endif %}
+
+    <div class="evidence-flow">
+      {% for f in idn.evidence_weights %}
+      <details class="evidence-step">
+        <summary>
+          <span class="evidence-step-factor">{{ f.factor }}</span>
+          <span class="evidence-step-weight">{{ f.weight_pct }}%</span>
+        </summary>
+        <div class="evidence-weight-bar"><div class="evidence-weight-fill" style="width:{{ f.weight_pct }}%"></div></div>
+        <p class="evidence-step-detail">This factor contributes roughly {{ f.weight_pct }}% of the reasoning behind your archetype.</p>
+      </details>
+      {% if not loop.last %}<div class="evidence-arrow">↓</div>{% endif %}
+      {% endfor %}
+      <div class="evidence-arrow">↓</div>
+      <div class="evidence-result">
+        <div class="evidence-result-label">Archetype</div>
+        <div class="evidence-result-name">{{ idn.archetype or dna.archetype_name }}</div>
+        {% if idn.confidence %}
+        <div class="evidence-confidence conf-{{ idn.confidence }}">
+          {{ idn.confidence|capitalize }} Confidence
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if idn.evidence %}
+    <button class="adv-toggle" style="margin-top:26px" onclick="this.nextElementSibling.classList.toggle('show');this.style.display='none'">See Full Reasoning Chain</button>
+    <div class="evidence-full-chain"><p>{{ idn.evidence }}</p></div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
 <!-- ══════════════════ HALL 3 — EXECUTIVE SUMMARY ══════════════════ -->
 <section id="hall-summary" class="hall compact">
   <div class="hall-inner reveal">

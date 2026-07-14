@@ -284,6 +284,58 @@ html { scroll-behavior: smooth; }
 .letter-line:last-child { color: var(--ink-dim); font-style: italic; margin-bottom: 0; }
 @media (max-width: 600px) { .letter { padding: 34px 26px; } }
 
+/* ── EVIDENCE FLOWCHART (Why This Is Your Archetype) ─────────────────── */
+.evidence-flow { display: flex; flex-direction: column; align-items: stretch; }
+.evidence-arrow {
+  text-align: center; color: var(--gold); opacity: .55; font-size: 18px; margin: 4px 0;
+}
+.evidence-step {
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 14px;
+  padding: 16px 20px; cursor: pointer;
+}
+.evidence-step summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  list-style: none; cursor: pointer;
+}
+.evidence-step summary::-webkit-details-marker { display: none; }
+.evidence-step-factor { font-size: 14.5px; color: var(--ink); }
+.evidence-step-weight {
+  font-family: var(--font-body); font-variant-numeric: tabular-nums; font-weight: 600;
+  color: var(--gold-bright); font-size: 15px; flex-shrink: 0;
+}
+.evidence-weight-bar {
+  height: 5px; border-radius: 3px; background: rgba(255,255,255,.08); margin-top: 12px; overflow: hidden;
+}
+.evidence-weight-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+}
+.evidence-step-detail { font-size: 13px; color: var(--ink-dim); margin-top: 10px; margin-bottom: 0; }
+.evidence-result {
+  text-align: center; padding: 22px; border-radius: 14px; margin-top: 4px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(217,178,91,.16), transparent 70%);
+  border: 1px solid var(--glass-brd);
+}
+.evidence-result-label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim); }
+.evidence-result-name {
+  font-family: var(--font-head); font-size: clamp(24px, 4vw, 32px); margin: 6px 0 10px;
+  background: linear-gradient(120deg, #f7e6b0, var(--gold-bright) 45%, #b8860b);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.evidence-confidence {
+  display: inline-block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px; font-weight: 600;
+}
+.evidence-confidence.conf-high { background: rgba(74,222,128,.14); color: var(--green); }
+.evidence-confidence.conf-moderate { background: rgba(217,178,91,.16); color: var(--gold); }
+.evidence-confidence.conf-low { background: rgba(248,113,113,.14); color: var(--red); }
+.evidence-full-chain { display: none; margin-top: 14px; }
+.evidence-full-chain.show { display: block; }
+.evidence-full-chain p {
+  font-size: 13.5px; color: var(--ink-dim); line-height: 1.7;
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 12px; padding: 16px 18px;
+}
+
 /* ── REFLECTION PAUSE ───────────────────────────────────────────────── */
 .reflection {
   min-height: 60vh; display: flex; align-items: center; justify-content: center;
@@ -330,7 +382,8 @@ html { scroll-behavior: smooth; }
   .arrival-hook, .archetype-hook, .hall-eyebrow, .eyebrow { color: #6b5d3f; }
 
   .archetype-card, .council-card, .quote-card, .remedy-card, .karma-card,
-  .reveal-card, .summary-card, .yoga-card, .chapter-node, .letter, .badge {
+  .reveal-card, .summary-card, .yoga-card, .chapter-node, .letter, .badge,
+  .evidence-step, .evidence-result {
     background: #fbf6ea !important;
     border: 1px solid #d9b25b !important;
     box-shadow: none !important;
@@ -340,4 +393,8 @@ html { scroll-behavior: smooth; }
     background: #f3ead2 !important;
     border-color: #d9b25b !important;
   }
+  .evidence-result-name { background: none !important; -webkit-text-fill-color: #8a6d1f !important; color: #8a6d1f !important; }
+  .evidence-step-detail, .evidence-full-chain p { color: #4a4030 !important; }
+  .evidence-full-chain { display: block !important; }
+  .evidence-step[open] summary, .evidence-step summary { color: #2a2416; }
 }
