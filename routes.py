@@ -12,7 +12,7 @@ import re
 from datetime import datetime, timedelta
 
 from flask import (Blueprint, render_template, request, jsonify, session,
-                   current_app, abort, url_for)
+                   current_app, abort)
 
 from database import db
 from models import Purchase, Report, PaymentEvent, PricingHistory
@@ -646,25 +646,7 @@ def _mark_paid_and_generate(purchase: Purchase, event: str, detail: str) -> str:
     report = purchase.report
     _grant_ownership(report.uuid)
     _ensure_ai(report)          # generate once, cache forever
-    relative_url = f"/store/report-v2/{report.uuid}"
-    _deliver_report_email(purchase, report)
-    return relative_url
-
-
-def _deliver_report_email(purchase: Purchase, report: Report) -> None:
-    """Send one delivery email after a verified payment; retries are webhook-safe."""
-    already_sent = PaymentEvent.query.filter_by(
-        purchase_id=purchase.id, event="report_email_sent"
-    ).first()
-    if already_sent or not purchase.email:
-        return
-    from services.mailer import send_report_link
-    report_url = url_for("report_store.view_report_v2", report_uuid=report.uuid,
-                         _external=True)
-    if send_report_link(purchase.email, purchase.name, report_url):
-        db.session.add(PaymentEvent(purchase_id=purchase.id,
-                                    event="report_email_sent", detail=report_url))
-        db.session.commit()
+    return f"/store/report-v2/{report.uuid}"
 
 
 @store_bp.route("/api/verify", methods=["POST"])
@@ -713,7 +695,6 @@ def razorpay_webhook():
         log.warning("Razorpay webhook for unknown order %s", order_id)
         return jsonify(status="unknown_order"), 200
     if purchase.status == "paid":
-        _deliver_report_email(purchase, purchase.report)
         return jsonify(status="already_processed"), 200
     purchase.razorpay_payment_id = payment.get("id") or purchase.razorpay_payment_id
     _mark_paid_and_generate(purchase, "webhook_payment_captured",
