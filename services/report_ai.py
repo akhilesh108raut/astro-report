@@ -268,8 +268,12 @@ def generate_report_ai(chart: dict) -> dict:
             import anthropic
             client = anthropic.Anthropic(
                 api_key=api_key,
-                timeout=25.0,       # bounded so 2 sequential calls can't exceed the gunicorn worker timeout
-                max_retries=2,
+                # Sonnet's adaptive thinking + an 8000-token structured response
+                # can legitimately take close to a minute — this must be a
+                # single generous attempt, not several short ones, since
+                # retrying a call that's merely slow just repeats the wait.
+                timeout=60.0,
+                max_retries=1,
             )
             blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
             data = _write_from_blueprint(blueprint, client, WRITER_MODEL)
