@@ -69,8 +69,8 @@ def verify_signature(order_id: str, payment_id: str, signature: str) -> bool:
 
 def verify_webhook_signature(body: bytes, signature: str) -> bool:
     """Verify Razorpay's webhook HMAC before accepting a payment event."""
-    _, key_secret = get_keys()
-    if not key_secret:
+    webhook_secret = os.getenv("RAZORPAY_WEBHOOK_SECRET")
+    if not webhook_secret:
         return False
-    expected = hmac.new(key_secret.encode(), body, hashlib.sha256).hexdigest()
+    expected = hmac.new(webhook_secret.encode(), body, hashlib.sha256).hexdigest()
     return hmac.compare_digest(expected, signature or "")

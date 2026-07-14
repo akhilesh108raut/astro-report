@@ -12,7 +12,7 @@ import re
 from datetime import datetime, timedelta
 
 from flask import (Blueprint, render_template, request, jsonify, session,
-                   current_app, abort)
+                   current_app, abort, url_for)
 
 from database import db
 from models import Purchase, Report, PaymentEvent, PricingHistory
@@ -138,12 +138,7 @@ def checkout(purchase_uuid):
         price=info,
         dev_mode=_dev_mode(),
         razorpay_key_id=(payments.get_keys()[0] or ""),
-        # Environment configuration can replace this link without a code change.
-        # The fallback keeps the public guest checkout working on first deploy.
-        payment_link_url=os.getenv(
-            "RAZORPAY_PAYMENT_LINK_URL",
-            "https://razorpay.com/payment-link/plink_TDL5jbUHF7SoX7",
-        ).strip(),
+        payment_link_url=os.getenv("RAZORPAY_PAYMENT_LINK_URL", "").strip(),
     )
 
 
@@ -651,7 +646,25 @@ def _mark_paid_and_generate(purchase: Purchase, event: str, detail: str) -> str:
     report = purchase.report
     _grant_ownership(report.uuid)
     _ensure_ai(report)          # generate once, cache forever
-    return f"/store/report-v2/{report.uuid}"
+    relative_url = f"/store/report-v2/{report.uuid}"
+    _deliver_report_email(purchase, report)
+    return relative_url
+
+
+def _deliver_report_email(purchase: Purchase, report: Report) -> None:
+    """Send one delivery email after a verified payment; retries are webhook-safe."""
+    already_sent = PaymentEvent.query.filter_by(
+        purchase_id=purchase.id, event="report_email_sent"
+    ).first()
+    if already_sent or not purchase.email:
+        return
+    from services.mailer import send_report_link
+    report_url = url_for("report_store.view_report_v2", report_uuid=report.uuid,
+                         _external=True)
+    if send_report_link(purchase.email, purchase.name, report_url):
+        db.session.add(PaymentEvent(purchase_id=purchase.id,
+                                    event="report_email_sent", detail=report_url))
+        db.session.commit()
 
 
 @store_bp.route("/api/verify", methods=["POST"])
@@ -680,6 +693,32 @@ def api_verify():
     purchase.razorpay_signature = signature
     url = _mark_paid_and_generate(purchase, "payment_verified", payment_id)
     return jsonify(success=True, report_url=url)
+
+
+@store_bp.route("/api/razorpay/webhook", methods=["POST"])
+def razorpay_webhook():
+    """Razorpay server-to-server payment confirmation and email delivery."""
+    raw_body = request.get_data(cache=True)
+    signature = request.headers.get("X-Razorpay-Signature", "")
+    if not payments.verify_webhook_signature(raw_body, signature):
+        log.warning("Rejected Razorpay webhook with invalid signature")
+        return jsonify(error="Invalid webhook signature"), 400
+    payload = request.get_json(silent=True) or {}
+    if payload.get("event") not in {"payment.captured", "order.paid"}:
+        return jsonify(status="ignored"), 200
+    payment = ((payload.get("payload") or {}).get("payment") or {}).get("entity") or {}
+    order_id = payment.get("order_id", "")
+    purchase = Purchase.query.filter_by(razorpay_order_id=order_id).first()
+    if not purchase:
+        log.warning("Razorpay webhook for unknown order %s", order_id)
+        return jsonify(status="unknown_order"), 200
+    if purchase.status == "paid":
+        _deliver_report_email(purchase, purchase.report)
+        return jsonify(status="already_processed"), 200
+    purchase.razorpay_payment_id = payment.get("id") or purchase.razorpay_payment_id
+    _mark_paid_and_generate(purchase, "webhook_payment_captured",
+                            payment.get("id", ""))
+    return jsonify(status="processed"), 200
 
 
 @store_bp.route("/api/dev-pay", methods=["POST"])
