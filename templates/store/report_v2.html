@@ -361,16 +361,45 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
   <div class="hall-inner reveal" style="max-width:720px">
     <div class="hall-eyebrow">What Makes You Rare</div>
     <div class="hall-title">The Patterns Few People Carry</div>
-    {% for y in yogas_v2 %}
-    <div class="yoga-card">
-      <div class="yoga-title">{{ y.name }}</div>
-      <div class="yoga-rarity">{{ y.rarity }}</div>
-      <div class="yoga-stars">{{ "★★★★★" if y.rarity == "Very Rare" else "★★★★☆" if y.rarity == "Rare" else "★★★☆☆" }}</div>
-      <div class="yoga-effect">{{ y.effect or y.description or "" }}</div>
-      {% if y.planets %}
-      <div style="margin-top:10px">{% for pl in y.planets %}<span class="chip">{{ pl }}</span>{% endfor %}</div>
+
+    {% if yoga_discovery %}
+    <div class="yoga-discovery">
+      <div class="yoga-discovery-step"><b>{{ yoga_discovery.checked }}</b> yoga types checked</div>
+      <div class="yoga-discovery-arrow">→</div>
+      <div class="yoga-discovery-step"><b>{{ yoga_discovery.detected }}</b> detected in your chart</div>
+      {% if yoga_discovery.rare %}
+      <div class="yoga-discovery-arrow">→</div>
+      <div class="yoga-discovery-step gold"><b>{{ yoga_discovery.rare }}</b> rare or above</div>
+      {% endif %}
+      {% if yoga_discovery.exceptional %}
+      <div class="yoga-discovery-arrow">→</div>
+      <div class="yoga-discovery-step gold"><b>{{ yoga_discovery.exceptional }}</b> exceptional</div>
       {% endif %}
     </div>
+    {% endif %}
+
+    {% for y in yogas_v2 %}
+    <details class="yoga-card">
+      <summary>
+        <div class="yoga-title">✦ {{ y.name }}</div>
+        <div class="yoga-stars">{{ "★★★★★" if y.rarity == "Very Rare" else "★★★★☆" if y.rarity == "Rare" else "★★★☆☆" }}</div>
+        <div class="yoga-rarity">{{ y.rarity }}</div>
+        {% if y.planets %}
+        <div class="yoga-chips">{% for pl in y.planets %}<span class="chip">{{ pl }}</span>{% endfor %}</div>
+        {% endif %}
+        <div class="yoga-effect">{{ y.effect or y.description or "" }}</div>
+        <div class="yoga-expand-hint">Explore ↓</div>
+      </summary>
+      <div class="yoga-rarity-meter">
+        <div class="yoga-rarity-fill" style="width:{{ y.rarity_pct }}%"></div>
+      </div>
+      {% if y.rule %}
+      <div class="yoga-detail-label">Why you have it</div>
+      <p class="yoga-detail-text">{{ y.rule }}</p>
+      {% endif %}
+      <div class="yoga-detail-label">Meaning</div>
+      <p class="yoga-detail-text">{{ y.effect or y.description or "" }}</p>
+    </details>
     {% endfor %}
   </div>
 </section>

@@ -391,13 +391,28 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
             "stars": _PLANET_STARS.get(pdata.get("dignity"), 3),
         }
 
-    # Yoga rarity
+    # Yoga rarity — check "Viparita" first: "Viparita Raja Yoga" also contains
+    # "Raja" as a substring, so checking that condition first (as this used
+    # to) always misclassified it as the more common "Raja Yoga" tier.
+    _RARITY_PCT = {"Very Rare": 95, "Rare": 70, "Notable": 40}
     yogas = []
     for y in (chart.get("yogas") or []):
         if isinstance(y, dict):
             yname = y.get("name", "Yoga")
-            rare = "Very Rare" if "Raja" in yname else "Rare" if "Viparita" in yname else "Notable"
-            yogas.append({**y, "rarity": rare})
+            rare = "Very Rare" if "Viparita" in yname else "Rare" if "Raja" in yname else "Notable"
+            yogas.append({**y, "rarity": rare, "rarity_pct": _RARITY_PCT[rare]})
+
+    # Discovery stats — "checked" is the real count of distinct yoga TYPES
+    # the engine screens for (see engine/yogas.py: Gajakesari, Budha-Aditya,
+    # Chandra-Mangal, Raja Yoga, Dhana Yoga, Viparita Raja Yoga, and the 5
+    # Pancha Mahapurusha yogas). Never a fabricated "N combinations checked".
+    YOGA_TYPES_CHECKED = 11
+    yoga_discovery = {
+        "checked": YOGA_TYPES_CHECKED,
+        "detected": len(yogas),
+        "rare": sum(1 for y in yogas if y["rarity"] in ("Very Rare", "Rare")),
+        "exceptional": sum(1 for y in yogas if y["rarity"] == "Very Rare"),
+    }
 
     # Top 6 classical rules by strongest effect
     rules = chart.get("classical_rules") or []
@@ -550,7 +565,7 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
 
     return {
         "age": age, "chapters": chapters, "planets_v2": planets,
-        "yogas_v2": yogas, "top_rules": top_rules,
+        "yogas_v2": yogas, "top_rules": top_rules, "yoga_discovery": yoga_discovery,
         "hidden_gift": hidden_gift, "superpower": superpower, "blind_spot": blind_spot,
         "badges": badges, "onepage": onepage, "planet_symbol": _PLANET_SYMBOL,
         "council": council, "closing_letter": closing_letter,

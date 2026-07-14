@@ -218,18 +218,55 @@ html { scroll-behavior: smooth; }
 }
 .planet-card.expanded .pdetail { display: block; }
 
-/* ── HALL 8 — YOGA GALLERY ─────────────────────────────────────────── */
+/* ── HALL 8 — YOGA GALLERY (collectible cards) ────────────────────── */
+.yoga-discovery {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 10px; margin-bottom: 28px; font-size: 12.5px; color: var(--ink-dim);
+}
+.yoga-discovery-step b { color: var(--ink); font-family: var(--font-body); }
+.yoga-discovery-step.gold b { color: var(--gold-bright); }
+.yoga-discovery-arrow { color: var(--gold); opacity: .5; font-size: 13px; }
+
 .yoga-card {
   border-radius: 18px; padding: 24px; margin-bottom: 14px;
   border: 1px solid rgba(217,178,91,.25); position: relative; overflow: hidden;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
 }
 .yoga-card:nth-child(3n+1) { background: linear-gradient(135deg, rgba(217,178,91,.08), rgba(20,16,42,.5)); }
 .yoga-card:nth-child(3n+2) { background: linear-gradient(135deg, rgba(155,92,255,.08), rgba(20,16,42,.5)); }
 .yoga-card:nth-child(3n+3) { background: linear-gradient(135deg, rgba(74,222,128,.06), rgba(20,16,42,.5)); }
+.yoga-card:hover, .yoga-card[open] {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.4);
+  border-color: var(--gold-bright);
+}
+.yoga-card summary { cursor: pointer; list-style: none; }
+.yoga-card summary::-webkit-details-marker { display: none; }
 .yoga-title { font-family: var(--font-head); font-size: 22px; color: var(--gold-bright); }
 .yoga-rarity { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--purple); margin: 4px 0 10px; }
-.yoga-stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; margin-bottom: 8px; }
+.yoga-stars {
+  color: var(--gold); letter-spacing: 2px; font-size: 13px; margin-bottom: 8px;
+  transition: text-shadow .3s;
+}
+.yoga-card:hover .yoga-stars { text-shadow: 0 0 12px rgba(217,178,91,.8); }
 .yoga-effect { font-size: 14px; color: var(--ink); }
+.yoga-chips { margin: 10px 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.yoga-chips .chip { transition: transform .3s; }
+.yoga-card:hover .yoga-chips .chip { transform: translateY(-2px); }
+.yoga-expand-hint {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim);
+  margin-top: 12px;
+}
+.yoga-rarity-meter {
+  height: 6px; border-radius: 3px; background: rgba(255,255,255,.08);
+  margin: 16px 0 14px; overflow: hidden;
+}
+.yoga-rarity-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--purple), var(--gold-bright)); }
+.yoga-detail-label {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
+  margin: 14px 0 4px;
+}
+.yoga-detail-text { font-size: 13.5px; color: var(--ink-dim); line-height: 1.7; margin: 0; }
 
 /* ── HALL 9 — SCRIPTURE QUOTES ─────────────────────────────────────── */
 .quote-card {
@@ -442,9 +479,18 @@ html { scroll-behavior: smooth; }
   .evidence-step-detail, .evidence-full-chain p { color: #4a4030 !important; }
   .evidence-full-chain { display: block !important; }
   .evidence-step[open] summary, .evidence-step summary { color: #2a2416; }
+  .evidence-step:not([open]) > *:not(summary) { display: block !important; }
   .compass-detail { display: block !important; }
   .compass-axis-ring, .compass-axis-line { stroke: rgba(0,0,0,.12) !important; }
   .compass-polygon { fill: rgba(217,178,91,.3) !important; stroke: #8a6d1f !important; }
   .compass-center-score, .compass-node-score, .compass-meaning { color: #2a2416 !important; }
   .compass-center-label, .compass-center-theme, .compass-node-name { color: #6b5d3f !important; }
+
+  .yoga-card { transform: none !important; box-shadow: none !important; }
+  .yoga-card:not([open]) > *:not(summary) { display: block !important; }
+  .yoga-title { -webkit-text-fill-color: #8a6d1f !important; color: #8a6d1f !important; }
+  .yoga-effect, .yoga-detail-text { color: #3a3225 !important; }
+  .yoga-detail-label, .yoga-expand-hint { color: #6b5d3f !important; }
+  .yoga-rarity-fill { background: #b8860b !important; }
+  .yoga-discovery-step b { color: #2a2416 !important; }
 }
