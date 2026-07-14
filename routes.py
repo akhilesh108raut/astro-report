@@ -630,6 +630,17 @@ def api_create_order():
         return jsonify(dev_mode=True, amount=price * 100,
                        order_id=purchase.razorpay_order_id)
 
+    if price <= 0:
+        # Razorpay rejects ₹0 orders outright — skip the gateway entirely
+        # and mark the purchase paid directly. TEMPORARY: only reachable
+        # while PRICE_TIERS is set to 0 for testing; revert before real launch.
+        purchase.razorpay_order_id = f"free_order_{purchase.uuid[:12]}"
+        db.session.add(PaymentEvent(purchase_id=purchase.id, event="order_created",
+                                    detail="free — zero-price testing window"))
+        db.session.commit()
+        url = _mark_paid_and_generate(purchase, "free_zero_price", "no payment required")
+        return jsonify(free=True, amount=0, report_url=url)
+
     try:
         order = payments.create_order(price, receipt=purchase.uuid)
     except RuntimeError as e:

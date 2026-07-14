@@ -188,6 +188,13 @@ async function startPayment() {
     return;
   }
 
+  if (order.free) {
+    // Zero-price testing window — server already marked this paid, no gateway to open
+    const done = showGenerating();
+    done(); window.location.href = order.report_url;
+    return;
+  }
+
   const rzp = new Razorpay({
     key: order.key_id,
     amount: order.amount,
