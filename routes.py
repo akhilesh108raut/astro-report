@@ -8,6 +8,7 @@ import json
 import time
 import logging
 import os
+import re
 from datetime import datetime, timedelta
 
 from flask import (Blueprint, render_template, request, jsonify, session,
@@ -546,6 +547,12 @@ def api_preview():
         return jsonify(error="Too many requests — please wait a minute."), 429
 
     data = request.get_json(silent=True) or {}
+    email = str(data.get("email", "")).strip().lower()
+    mobile = re.sub(r"[\s()\-]", "", str(data.get("mobile", "")))
+    if not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", email):
+        return jsonify(error="Enter a valid email address."), 400
+    if mobile and not re.fullmatch(r"\+?[0-9]{8,15}", mobile):
+        return jsonify(error="Enter a valid mobile number or leave it blank."), 400
     try:
         year, month, day = int(data["year"]), int(data["month"]), int(data["day"])
         hour, minute = int(data["hour"]), int(data["minute"])
@@ -569,6 +576,8 @@ def api_preview():
 
     purchase = Purchase(
         name=str(data.get("name", ""))[:100],
+        email=email[:255],
+        mobile=mobile[:20] or None,
         birth_place=str(data.get("birth_place", ""))[:180],
         year=year, month=month, day=day, hour=hour, minute=minute,
         lat=lat, lon=lon, timezone=tz,

@@ -58,6 +58,18 @@
       <input id="f-name" type="text" placeholder="Your name" maxlength="100">
     </div>
 
+    <div class="field" style="margin-bottom:18px">
+      <label>Email address *</label>
+      <input id="f-email" type="email" placeholder="you@example.com" maxlength="255" required>
+      <small style="color:var(--ink-dim)">We use this to send your receipt and secure report link.</small>
+    </div>
+
+    <div class="field" style="margin-bottom:18px">
+      <label>Mobile number (optional)</label>
+      <input id="f-mobile" type="tel" placeholder="+91 98765 43210" maxlength="20">
+      <small style="color:var(--ink-dim)">Only for report support or WhatsApp delivery if you opt in later.</small>
+    </div>
+
     <div class="grid-2" style="margin-bottom:18px">
       <div class="field"><label>Date of Birth *</label><input id="f-date" type="date" required></div>
       <div class="field"><label>Time of Birth *</label><input id="f-time" type="time" required></div>
@@ -133,7 +145,9 @@ async function submitBirth() {
 
   const d = document.getElementById('f-date').value;
   const t = document.getElementById('f-time').value;
+  const email = document.getElementById('f-email').value.trim();
   if (!d || !t) { err.textContent = 'Date and time of birth are required.'; err.style.display = 'block'; return; }
+  if (!email) { err.textContent = 'Your email address is required to deliver the report.'; err.style.display = 'block'; return; }
 
   let lat, lon, tz = 5.5, place;
   const citySel = document.getElementById('f-city');
@@ -158,6 +172,8 @@ async function submitBirth() {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: document.getElementById('f-name').value,
+        email,
+        mobile: document.getElementById('f-mobile').value,
         year, month, day, hour, minute, lat, lon, timezone: tz, birth_place: place
       })
     });

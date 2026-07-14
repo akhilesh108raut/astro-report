@@ -28,6 +28,8 @@ class Purchase(db.Model):
 
     # Birth details (what the chart was built from)
     name        = db.Column(db.String(120), default='')
+    email       = db.Column(db.String(255), nullable=True, index=True)
+    mobile      = db.Column(db.String(20), nullable=True)
     birth_place = db.Column(db.String(200), default='')
     year        = db.Column(db.Integer, nullable=False)
     month       = db.Column(db.Integer, nullable=False)
