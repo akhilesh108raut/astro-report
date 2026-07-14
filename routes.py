@@ -138,7 +138,12 @@ def checkout(purchase_uuid):
         price=info,
         dev_mode=_dev_mode(),
         razorpay_key_id=(payments.get_keys()[0] or ""),
-        payment_link_url=os.getenv("RAZORPAY_PAYMENT_LINK_URL", "").strip(),
+        # Environment configuration can replace this link without a code change.
+        # The fallback keeps the public guest checkout working on first deploy.
+        payment_link_url=os.getenv(
+            "RAZORPAY_PAYMENT_LINK_URL",
+            "https://razorpay.com/payment-link/plink_TDL5jbUHF7SoX7",
+        ).strip(),
     )
 
 
