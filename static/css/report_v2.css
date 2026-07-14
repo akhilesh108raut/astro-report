@@ -302,6 +302,29 @@ html { scroll-behavior: smooth; }
 }
 .yoga-detail-text { font-size: 13.5px; color: var(--ink-dim); line-height: 1.7; margin: 0; }
 
+/* ── HALL 8.7 — ECHOES FROM YOUR ANCESTORS ────────────────────────── */
+.ancestor-disclaimer { font-size: 12px; color: var(--ink-dim); text-align: center; font-style: italic; margin: -8px 0 26px; }
+.ancestor-card {
+  border-radius: 16px; padding: 22px 24px; margin-bottom: 14px;
+  background: linear-gradient(135deg, rgba(217,178,91,.06), rgba(20,16,42,.5));
+  border: 1px solid var(--glass-brd); transition: transform .25s, border-color .25s;
+}
+.ancestor-card:hover, .ancestor-card[open] { transform: translateY(-4px); border-color: var(--gold-bright); }
+.ancestor-card summary { cursor: pointer; list-style: none; }
+.ancestor-card summary::-webkit-details-marker { display: none; }
+.ancestor-line { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.ancestor-quote { font-family: var(--font-head); font-style: italic; font-size: 16.5px; color: var(--ink); line-height: 1.6; margin: 0; }
+.ancestor-connection {
+  font-size: 13.5px; color: var(--ink-dim); line-height: 1.7; margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--glass-brd);
+}
+.ancestor-panel {
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 14px;
+  padding: 20px 22px; margin-bottom: 14px;
+}
+.ancestor-strength-row { font-size: 13.5px; color: var(--ink); margin-bottom: 8px; }
+.ancestor-caveat { font-size: 11.5px; color: var(--ink-dim); font-style: italic; margin: 12px 0 0; }
+
 /* ── HALL 9 — SCRIPTURE QUOTES ─────────────────────────────────────── */
 .quote-card {
   text-align: center; padding: 30px 26px; border-radius: 18px; margin-bottom: 16px;
@@ -499,7 +522,7 @@ html { scroll-behavior: smooth; }
 
   .archetype-card, .council-card, .quote-card, .remedy-card, .karma-card,
   .reveal-card, .summary-card, .yoga-card, .chapter-node, .letter, .badge,
-  .evidence-step, .evidence-result, .snapshot-card {
+  .evidence-step, .evidence-result, .snapshot-card, .ancestor-card, .ancestor-panel {
     background: #fbf6ea !important;
     border: 1px solid #d9b25b !important;
     box-shadow: none !important;
@@ -509,6 +532,10 @@ html { scroll-behavior: smooth; }
   .snapshot-stat-val, .snapshot-card-headline { color: #2a2416 !important; }
   .snapshot-card-detail, .snapshot-why-text, .snapshot-weather-label { color: #4a4030 !important; }
   .snapshot-weather-fill { background: #b8860b !important; }
+  .ancestor-card:not([open]) > *:not(summary) { display: block !important; }
+  .ancestor-quote { color: #2a2416 !important; }
+  .ancestor-connection, .ancestor-strength-row, .ancestor-caveat, .ancestor-disclaimer { color: #4a4030 !important; }
+  .ancestor-line { color: #8a6d1f !important; }
   .snapshot-title { color: #6b5d3f !important; }
   .archetype-tile, .council-character, .compass-detail {
     background: #f3ead2 !important;

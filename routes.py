@@ -307,6 +307,38 @@ _BLINDSPOT = {
     "Ketu":    ("Pulling away too soon", "You detach when things get close or uncertain. Some things are worth staying for, even when part of you wants to disappear."),
 }
 
+# ── Echoes From Your Ancestors — symbolic, chart-derived, always hedged ──
+# Planet in dignity → an inherited-strength label + the real reason it appears.
+_ANCESTOR_STRENGTH = {
+    "Sun":     ("Faith during uncertainty", "your Sun holds its dignity in your chart"),
+    "Moon":    ("Emotional resilience", "your Moon holds its dignity in your chart"),
+    "Mars":    ("Courage under pressure", "your Mars holds its dignity in your chart"),
+    "Mercury": ("Resourcefulness", "your Mercury holds its dignity in your chart"),
+    "Jupiter": ("Wisdom passed through patience", "your Jupiter holds its dignity in your chart"),
+    "Venus":   ("Grace in hardship", "your Venus holds its dignity in your chart"),
+    "Saturn":  ("Discipline and endurance", "your Saturn holds its dignity in your chart"),
+    "Rahu":    ("Willingness to break new ground", "your Rahu is well-placed in your chart"),
+    "Ketu":    ("Quiet inner detachment", "your Ketu is well-placed in your chart"),
+}
+# Planet debilitated → a "lesson still being learned" (framed as multi-generational, not personal failure).
+_ANCESTOR_LESSON = {
+    "Sun":     "Trusting your own authority instead of seeking outside approval",
+    "Moon":    "Speaking emotions openly instead of carrying them silently",
+    "Mars":    "Acting on your own timing instead of waiting for permission",
+    "Mercury": "Trusting your first instinct instead of overanalyzing",
+    "Jupiter": "Receiving help instead of insisting on doing it alone",
+    "Venus":   "Balancing duty and rest",
+    "Saturn":  "Resting without guilt",
+    "Rahu":    "Staying present instead of always reaching for what's next",
+    "Ketu":    "Staying instead of withdrawing when things get close",
+}
+# Archetype name (substring match) → a symbolic ancestral "voice" framing.
+_ANCESTOR_VOICE = [
+    ("Sovereign", ("👑", "the Line of Builders")), ("Hermit", ("🏺", "Sages and Teachers")),
+    ("Warrior", ("⚔️", "Those Who Endured Hardship")), ("Caregiver", ("🌙", "the Line of Caretakers")),
+    ("Messenger", ("📜", "Scholars and Storytellers")), ("Visionary", ("🔥", "Inventors and Explorers")),
+]
+
 
 # Closing-letter "lesson" keyed to the life-chapter (Mahadasha) being lived now.
 _LETTER_LESSON = {
@@ -478,6 +510,53 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
         "why": (f"A tender spot: your {weak_planet} sits in a difficult sign." if weak_planet else ""),
     }
 
+    # ── Echoes From Your Ancestors — symbolic reflection, always hedged ──
+    strong = [p for p, d in planets_raw.items() if d.get("dignity") in ("exalted", "own")]
+    weak = [p for p, d in planets_raw.items() if d.get("dignity") == "debilitated"]
+    saturn = planets_raw.get("Saturn", {})
+    moon = planets_raw.get("Moon", {})
+    mercury = planets_raw.get("Mercury", {})
+    jupiter = planets_raw.get("Jupiter", {})
+    mahadasha = (chart.get("dasha") or {}).get("mahadasha", "")
+
+    ancestor_cards = [{
+        "icon": "👤", "line": "From the Line of Builders",
+        "quote": "Do not confuse silence with weakness. The strongest tree grows quietly before it gives shade.",
+        "connection": f"Your chart suggests Saturn ({saturn.get('sign', '?')}, house {saturn.get('house', '?')}) "
+                      f"carries real weight — discipline often appears as an inherited lesson rather than a personal choice.",
+    }, {
+        "icon": "🌙", "line": "From the Line of Caretakers",
+        "quote": "Protect your peace before protecting your reputation. A restless home creates a restless mind.",
+        "connection": f"This theme often points toward your Moon ({moon.get('sign', '?')}, house {moon.get('house', '?')})"
+                      + (f" combined with your current {mahadasha} Mahadasha." if mahadasha else "."),
+    }, {
+        "icon": "📜", "line": "Wisdom Passed Through Generations",
+        "quote": "Knowledge kept only for yourself becomes a burden. Knowledge shared becomes your legacy.",
+        "connection": f"A recurring theme may trace to Mercury (house {mercury.get('house', '?')}) "
+                      f"and Jupiter (house {jupiter.get('house', '?')}) both shaping how you learn and teach.",
+    }]
+    if has_viparita or has_raja:
+        ancestor_cards.insert(1, {
+            "icon": "⚔️", "line": "From Those Who Endured Hardship",
+            "quote": "Your greatest victories will arrive after the battles others believed had already defeated you.",
+            "connection": ("Viparita Raja Yoga" if has_viparita else "Raja Yoga")
+                          + f" combined with Saturn's influence suggests resilience built through, not despite, difficulty.",
+        })
+
+    ancestor_strengths = [
+        {"label": _ANCESTOR_STRENGTH[p][0], "why": f"Because {_ANCESTOR_STRENGTH[p][1]}."}
+        for p in strong if p in _ANCESTOR_STRENGTH
+    ]
+    ancestor_lessons = [_ANCESTOR_LESSON[p] for p in weak if p in _ANCESTOR_LESSON]
+    if not ancestor_lessons:
+        ancestor_lessons = ["Balancing duty and rest", "Receiving help without guilt"]
+
+    ancestor_voice = next((v for key, v in _ANCESTOR_VOICE if key in dna.get("archetype_name", "")), ("🏺", "Those Who Came Before"))
+    ancestors = {
+        "cards": ancestor_cards, "strengths": ancestor_strengths, "lessons": ancestor_lessons,
+        "voice_icon": ancestor_voice[0], "voice_label": ancestor_voice[1],
+    }
+
     # ── Achievement badges (only from real, verifiable placements) ───
     badges, _seen_labels = [], set()
 
@@ -575,6 +654,7 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
     return {
         "age": age, "chapters": chapters, "planets_v2": planets,
         "yogas_v2": yogas, "top_rules": top_rules, "yoga_discovery": yoga_discovery,
+        "ancestors": ancestors,
         "hidden_gift": hidden_gift, "superpower": superpower, "blind_spot": blind_spot,
         "badges": badges, "onepage": onepage, "planet_symbol": _PLANET_SYMBOL,
         "council": council, "closing_letter": closing_letter,

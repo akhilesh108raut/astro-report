@@ -449,6 +449,54 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 </section>
 {% endif %}
 
+<!-- ══════════════════ HALL 8.7 — ECHOES FROM YOUR ANCESTORS ══════════════════ -->
+{% if ancestors and ancestors.cards %}
+<section id="hall-ancestors" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:720px">
+    <div class="hall-eyebrow">{{ ancestors.voice_icon }} Echoes From Your Ancestors</div>
+    <p class="ancestor-disclaimer">
+      The wisdom below is a symbolic reflection generated from the patterns in your birth
+      chart — not a literal message from specific ancestors.
+    </p>
+
+    {% for c in ancestors.cards %}
+    <details class="ancestor-card">
+      <summary>
+        <div class="ancestor-line">{{ c.icon }} {{ c.line }}</div>
+        <p class="ancestor-quote">“{{ c.quote }}”</p>
+        <div class="yoga-expand-hint">Why this appears ↓</div>
+      </summary>
+      <p class="ancestor-connection">{{ c.connection }}</p>
+    </details>
+    {% endfor %}
+
+    {% if ancestors.strengths %}
+    <div class="ancestor-panel">
+      <div class="summary-label" style="color:var(--green);margin-bottom:10px">Inherited Strengths</div>
+      {% for s in ancestors.strengths %}
+      <div class="ancestor-strength-row">✓ <b>{{ s.label }}</b> — {{ s.why }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if ancestors.lessons %}
+    <div class="ancestor-panel">
+      <div class="summary-label" style="color:var(--gold);margin-bottom:10px">Lessons Still Being Learned</div>
+      {% for l in ancestors.lessons %}
+      <div class="ancestor-strength-row">• {{ l }}</div>
+      {% endfor %}
+      <p class="ancestor-caveat">This symbolism often points toward a recurring theme in your chart —
+        not a documented family history.</p>
+    </div>
+    {% endif %}
+
+    <p class="reflection-q" style="font-size:19px;text-align:center;margin-top:30px">
+      “You are not asked to repeat their stories.<br>You are asked to complete what they could not.”
+    </p>
+  </div>
+</section>
+{% endif %}
+
 <!-- ══════════════════ HALL 8.5 — ACHIEVEMENT BADGES ══════════════════ -->
 {% if badges %}
 <section id="hall-badges" class="hall compact">
