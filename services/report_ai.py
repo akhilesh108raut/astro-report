@@ -287,10 +287,11 @@ def generate_report_ai(chart: dict, language: str = "en") -> dict:
             client = anthropic.Anthropic(
                 api_key=api_key,
                 # An 8000-token structured response can legitimately take a
-                # while — this must be a single generous attempt, not several
-                # short ones, since retrying a call that's merely slow just
-                # repeats the wait.
-                timeout=60.0,
+                # while — more so for non-English output, which needs more
+                # tokens for the same content. This must be a single generous
+                # attempt, not several short ones, since retrying a call
+                # that's merely slow just repeats the wait.
+                timeout=100.0,
                 max_retries=1,
             )
             blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
