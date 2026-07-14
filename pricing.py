@@ -7,8 +7,7 @@ Never trust a price sent by the frontend.
 
 # (min_reports_inclusive, max_reports_inclusive, price_inr)
 PRICE_TIERS = [
-    (0,         11,        5),
-    (12,     9_999,     10),
+    (0,      9_999,     10),
     (10_000,    99_999,    20),
     (100_000,   999_999,   30),
     (1_000_000, None,      49),   # hard ceiling — never exceed ₹49
