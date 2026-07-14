@@ -327,6 +327,7 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
         <div class="council-detail">In your chart, this voice speaks from {{ c.sign }}
           (house {{ c.house }}){% if c.dignity and c.dignity != 'neutral' %} — and here it is
           especially {{ c.dignity }}, meaning it plays an outsized role in who you are{% endif %}.</div>
+        {% if c.house_voice %}<p class="council-voice" style="font-size:14px;margin-top:12px">“{{ c.house_voice }}”</p>{% endif %}
       </div>
     </div>
     {% endfor %}

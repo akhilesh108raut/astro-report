@@ -213,6 +213,25 @@ _SUPERPOWER = {
     "Ketu":    ("Effortless detachment", "You can release what others cling to. That freedom lets you move on cleanly while others stay stuck."),
 }
 
+# Which house a planet sits in → what that voice is actually focused on right
+# now, in the same first-person "council" style. Combined with _COUNCIL's
+# per-planet character so the card reflects the specific placement, not just
+# a generic planet archetype.
+_HOUSE_VOICE = {
+    1:  "how you see yourself and show up in the world",
+    2:  "what you value, and what makes you feel secure",
+    3:  "your courage, your voice, and the risks you're willing to take",
+    4:  "home, roots, and your inner sense of safety",
+    5:  "creativity, romance, and what genuinely delights you",
+    6:  "the daily discipline of work, health, and problem-solving",
+    7:  "partnership — who you commit to, and how you meet others halfway",
+    8:  "transformation — what you're willing to release and rebuild",
+    9:  "belief, meaning, and the bigger picture you're reaching for",
+    10: "your public role — the mark you're making that others can see",
+    11: "community, ambition, and the gains that come through others",
+    12: "rest, release, and what happens when no one's watching",
+}
+
 # Debilitated / difficult planet → a compassionate "blind spot" (headline, sentence)
 _BLINDSPOT = {
     "Sun":     ("Waiting for permission", "You may have spent years feeling behind, or quietly waiting to be chosen. You were never behind — you were being prepared."),
@@ -428,10 +447,17 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
     for pname, pdata in planets_raw.items():
         c = _COUNCIL.get(pname)
         if c:
+            house = pdata.get("house")
+            try:
+                house_focus = _HOUSE_VOICE.get(int(house))
+            except (TypeError, ValueError):
+                house_focus = None
             council.append({
                 "planet": pname, "symbol": _PLANET_SYMBOL.get(pname, "✦"),
                 "character": c[0], "voice": c[1],
-                "sign": pdata.get("sign", ""), "house": pdata.get("house", ""),
+                "sign": pdata.get("sign", ""), "house": house,
+                "house_voice": (f"Right now, I'm mostly focused on {house_focus}."
+                                if house_focus else ""),
                 "dignity": pdata.get("dignity", "neutral"),
             })
 
