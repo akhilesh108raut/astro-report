@@ -268,8 +268,8 @@ def generate_report_ai(chart: dict) -> dict:
             import anthropic
             client = anthropic.Anthropic(
                 api_key=api_key,
-                timeout=60.0,       # cold-start containers can be slow to open a connection
-                max_retries=4,
+                timeout=25.0,       # bounded so 2 sequential calls can't exceed the gunicorn worker timeout
+                max_retries=2,
             )
             blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
             data = _write_from_blueprint(blueprint, client, WRITER_MODEL)
