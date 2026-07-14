@@ -4,6 +4,7 @@ from datetime import timedelta
 
 from flask import Flask, redirect
 from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from database import db
 from routes import store_bp
@@ -11,6 +12,9 @@ from routes import store_bp
 
 def create_app():
     app = Flask(__name__)
+    # Render terminates HTTPS before forwarding the request to Gunicorn.
+    # Trust its forwarded scheme/host when generating report links in emails.
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
     production = os.getenv("FLASK_ENV", "development").lower() == "production"
     secret = os.getenv("SECRET_KEY")
     if production and not secret:
