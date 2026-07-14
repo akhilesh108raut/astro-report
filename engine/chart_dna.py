@@ -88,27 +88,49 @@ def _determine_archetype(dominant_planet: str, mechanisms: list, contradictions:
 
 
 def _generate_one_liner(archetype: str, axis: str, shadow: str, dasha: dict) -> str:
-    """Generate one-sentence description of the chart."""
-    current_md = dasha.get("mahadasha", "Unknown")
+    """Generate the arrival-page hook — a destiny statement, not a personality
+    label. Every version below is built only from real chart_dna inputs
+    (archetype, axis, shadow theme, current dasha) but framed to promise
+    what the report reveals, not just describe a trait."""
+    left, right = (axis.split('↔') + [axis])[:2]
+    current_md = dasha.get("mahadasha", "")
+    now = f" Right now, your {current_md} Mahadasha is where that gift is being tested." if current_md else ""
 
     templates = {
-        "The Sovereign": f"A natural leader navigating {axis.split('↔')[0]} through authority and vision.",
-        "The Sage": f"A seeker of wisdom pursuing {axis.split('↔')[0]} with philosophical depth.",
-        "The Benefactor": f"A generous soul spreading abundance while exploring {axis}.",
-        "The Builder": f"A disciplined architect constructing {axis.split('↔')[0]} through sustained effort.",
-        "The Hermit": f"An introspective sage building wisdom through solitude and {axis.split('↔')[1]}.",
-        "The Lover": f"A relational being seeking harmony in {axis.split('↔')[0]} and human connection.",
-        "The Artist": f"A creative soul expressing {axis.split('↔')[0]} through artistic vision.",
-        "The Warrior": f"A courageous fighter conquering {axis.split('↔')[0]} through bold action.",
-        "The Scholar": f"An intellectual explorer mastering {axis.split('↔')[0]} through learning.",
-        "The Nurturer": f"A compassionate caregiver manifesting {axis.split('↔')[0]} through connection.",
-        "The Leader": f"A luminous presence shining in {axis.split('↔')[0]} through authentic power.",
-        "The Transformer": f"An evolutionary spirit embracing {shadow} to reach {axis.split('↔')[1]}.",
-        "The Mystic": f"A transcendent being discovering ultimate truth beyond {axis}.",
-        "The Seeker": f"An earnest explorer navigating {axis} with growth-oriented intention.",
+        "The Sovereign": f"You weren't born to simply succeed — your chart points toward earning authority "
+                         f"through {left.strip().lower()}, not demanding it.{now}",
+        "The Sage": f"Every choice you've made has quietly circled back to one question: what is actually true. "
+                    f"Your chart explains why {left.strip().lower()} keeps pulling at you, and what it's preparing you to understand.",
+        "The Benefactor": f"Your chart suggests a life measured less by what you keep and more by what you make "
+                           f"possible for others — built around {left.strip().lower()}.{now}",
+        "The Builder": f"Some lives chase quick wins. Yours is built for what lasts — {left.strip().lower()}, "
+                       f"assembled slowly enough to actually hold weight.{now}",
+        "The Hermit": f"You've likely spent more of your life in solitude than most — not from avoidance, "
+                      f"but because {right.strip().lower()} only reveals itself in quiet.",
+        "The Lover": f"Your chart suggests connection isn't a side quest for you — {left.strip().lower()} "
+                     f"is close to the center of what your life is actually about.",
+        "The Artist": f"You don't just experience {left.strip().lower()} — your chart suggests you're built to "
+                      f"turn it into something others can feel too.",
+        "The Warrior": f"Your chart suggests a life shaped by confrontation, not avoidance of it — "
+                       f"{left.strip().lower()} won through bold, direct action.{now}",
+        "The Scholar": f"Understanding isn't optional for you — your chart suggests {left.strip().lower()} "
+                       f"only becomes real once you've mastered it from the inside.",
+        "The Nurturer": f"Your chart suggests your impact shows up less in what you achieve and more in who "
+                        f"you help become steady — centered on {left.strip().lower()}.",
+        "The Leader": f"People notice you before you try to be noticed. Your chart points toward "
+                      f"{left.strip().lower()}, carried through presence rather than performance.{now}",
+        "The Transformer": f"Your chart suggests your hardest chapters were never punishment — they were the "
+                           f"path through {shadow.lower()} toward {right.strip().lower()}.",
+        "The Mystic": f"Your chart suggests the ordinary explanation has never quite satisfied you — "
+                      f"something in you has always been reaching past {axis.lower()}.",
+        "The Seeker": f"Your chart suggests you're not lost — you're paced by growth itself, moving through "
+                      f"{axis.lower()} on a timeline only your chart can explain.",
     }
 
-    return templates.get(archetype, f"A complex being navigating {axis}.")
+    return templates.get(
+        archetype,
+        f"Your chart reveals a specific pattern behind {axis.lower()} — one this report explains in full."
+    )
 
 
 def _identify_challenge(contradictions: dict) -> str:

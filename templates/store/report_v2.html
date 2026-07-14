@@ -29,6 +29,20 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
       {% if age %}&nbsp;·&nbsp; Age <b>{{ age }}</b>{% endif %}
     </div>
     <p class="arrival-hook">“{{ dna.one_liner or (sc.insight_sentence) or "Your chart holds a story only the stars could write." }}”</p>
+
+    <div class="arrival-promise">
+      <div class="arrival-promise-label">What You'll Discover</div>
+      <div class="arrival-promise-grid">
+        <div>✦ Why certain patterns keep repeating in your life</div>
+        <div>✦ Your true strengths and hidden challenges</div>
+        <div>✦ Where you're built to naturally excel</div>
+        <div>✦ Your relationship and family dynamics</div>
+        <div>✦ Your wealth-building potential</div>
+        <div>✦ The karmic lessons this life is asking you to master</div>
+        <div>✦ The most important opportunities in your next chapter</div>
+      </div>
+    </div>
+
     <button class="scroll-cue" onclick="document.getElementById('hall-onepage').scrollIntoView({behavior:'smooth'})">
       <span>Begin Your Journey</span><span class="arrow">↓</span>
     </button>

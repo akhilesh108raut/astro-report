@@ -47,6 +47,19 @@ html { scroll-behavior: smooth; }
   font-family: var(--font-head); font-style: italic; font-size: clamp(19px, 3vw, 26px);
   color: var(--ink); max-width: 560px; margin: 0 auto 46px; line-height: 1.5;
 }
+.arrival-promise {
+  max-width: 620px; margin: 0 auto 46px; padding: 24px 28px; border-radius: 16px;
+  background: var(--glass); border: 1px solid var(--glass-brd); text-align: left;
+}
+.arrival-promise-label {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+  text-align: center; margin-bottom: 14px;
+}
+.arrival-promise-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px;
+  font-size: 13.5px; color: var(--ink-dim); line-height: 1.5;
+}
+@media (max-width: 620px) { .arrival-promise-grid { grid-template-columns: 1fr; } }
 .scroll-cue {
   display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
   color: var(--gold); font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
@@ -513,7 +526,7 @@ html { scroll-behavior: smooth; }
 @media print {
   .hall { min-height: auto; padding: 26px 0; page-break-inside: avoid; }
   .hall-inner { max-width: 100%; }
-  .scroll-cue, .adv-toggle, .final-actions, .hall-divider, .chapter-connector { display: none !important; }
+  .scroll-cue, .adv-toggle, .final-actions, .hall-divider, .chapter-connector, .arrival-promise { display: none !important; }
 
   .arrival-name, .archetype-name {
     background: none; -webkit-text-fill-color: #8a6d1f; color: #8a6d1f;
