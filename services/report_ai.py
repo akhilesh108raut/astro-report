@@ -93,14 +93,32 @@ Return exactly this JSON shape:
     ... 4-6 items
   ],
   "important_ages": [ {"age": str, "insight": str}, ... 4-8 items ],
-  "closing_letter_seed": {"core_lesson": str, "life_chapter": str}
-}"""
+  "closing_letter_seed": {"core_lesson": str, "life_chapter": str, "age": int}
+}
+
+For closing_letter_seed.age: copy the "current_age" value given to you verbatim —
+never calculate it yourself from birth_date."""
+
+
+def _current_age(meta: dict) -> int | None:
+    """Compute age from birth_date deterministically — never let the LLM do date math."""
+    birth_date = (meta or {}).get("birth_date")
+    if not birth_date:
+        return None
+    try:
+        from datetime import date
+        y, m, d = (int(p) for p in birth_date.split("-"))
+        today = date.today()
+        return today.year - y - ((today.month, today.day) < (m, d))
+    except (ValueError, TypeError):
+        return None
 
 
 def _compact_chart(chart: dict) -> dict:
     """Trim the engine output to the interpretive essentials (token control)."""
     return {
         "meta": chart.get("meta"),
+        "current_age": _current_age(chart.get("meta")),
         "lagna": chart.get("lagna"),
         "moon": chart.get("moon"),
         "sun_sign": chart.get("sun_sign"),
@@ -202,6 +220,18 @@ closing_letter: written AS the reader's own future self, speaking to them.
 No astrology terms. No predictions. No clichés. Should feel handwritten and
 make someone emotional. Open with "Dear friend," (the app substitutes the
 real name) and close with a short signature line. 5-8 short paragraphs.
+
+Calibrate every reference to life stage using closing_letter_seed.age — do not
+write generic "the years ahead" prose that could apply to any adult. Someone
+in their late teens/early 20s is at the start of building an identity and
+independence; write about first steps, not decades of accumulated experience.
+Someone in their 30s-40s is likely mid-career, possibly raising a family or
+deep in established responsibilities; write about sustaining and deepening,
+not starting out. Someone in their 50s+ has decades of lived experience behind
+them; write about legacy, what they've already built, and what's still ahead —
+never talk down to them as if they're just beginning. Never state the number
+itself in the letter — the calibration should be felt in the framing, not
+announced.
 
 summary_card: an ultra-condensed distillation, 120 words MAXIMUM combined —
 compress to the single sharpest phrase per field, don't just copy sentences
