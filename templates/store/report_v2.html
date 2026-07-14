@@ -9,7 +9,6 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 {% block content %}
 {% set sc = ai.summary_card or {} %}
 {% set dna = chart.chart_dna or {} %}
-{% set cs = chart.confidence_scores or {} %}
 {% set adv = chart.advanced_predictions or {} %}
 {% set past = adv.past_lives or {} %}
 {% set karma = adv.karma_debts or {} %}
@@ -275,32 +274,53 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 </section>
 
 <!-- ══════════════════ HALL 6 — DESTINY COMPASS ══════════════════ -->
-{% if cs %}
+{% if compass and compass.nodes %}
 <section id="hall-compass" class="hall compact">
   <div class="hall-inner reveal">
     <div class="hall-eyebrow">Where Your Energy Flows</div>
-    <div class="hall-title">Your Four Directions</div>
-    <div class="compass-wrap">
-      <div class="compass-ring"></div>
-      {% set points = [
-          ("top",    "Career",       cs.get("Career & Authority", {})),
-          ("right",  "Love",         cs.get("Marriage & Partnerships", {})),
-          ("bottom", "Spirituality", cs.get("Spirituality & Growth", {})),
-          ("left",   "Money",        cs.get("Wealth & Finances", {})),
-      ] %}
-      {% for pos, label, data in points %}
-      {% set score = data.score if data is mapping else data %}
-      <div class="compass-point {{ pos }}" onclick="toggleCompass('{{ pos }}')">
-        <div class="compass-dot"></div>
-        <div class="compass-label">{{ label }}</div>
-        <div class="compass-score">{{ score or "—" }}</div>
+    <div class="hall-title">Your Energy Compass</div>
+    <div class="compass-svg-wrap">
+      <svg viewBox="0 0 300 300" class="compass-svg">
+        <circle cx="150" cy="150" r="110" class="compass-axis-ring" />
+        <circle cx="150" cy="150" r="70" class="compass-axis-ring" />
+        <circle cx="150" cy="150" r="30" class="compass-axis-ring" />
+        <line x1="40" y1="150" x2="260" y2="150" class="compass-axis-line" />
+        <line x1="150" y1="40" x2="150" y2="260" class="compass-axis-line" />
+        <polygon points="{{ compass.polygon_points }}" class="compass-polygon" />
+        {% for n in compass.nodes %}
+        <circle cx="{{ n.x }}" cy="{{ n.y }}" r="9" class="compass-node zone-{{ n.zone }}"
+                data-pos="{{ n.pos }}" onclick="toggleCompassNode('{{ n.pos }}')" />
+        {% endfor %}
+        <foreignObject x="95" y="115" width="110" height="70">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="compass-center">
+            <div class="compass-center-label">Life Balance</div>
+            <div class="compass-center-score">{{ compass.balance }}%</div>
+            <div class="compass-center-theme">{{ compass.balance_label }}</div>
+          </div>
+        </foreignObject>
+      </svg>
+      {% for n in compass.nodes %}
+      <div class="compass-node-label pos-{{ n.pos }}" data-pos="{{ n.pos }}" onclick="toggleCompassNode('{{ n.pos }}')">
+        <div class="compass-node-name">{{ n.label }}</div>
+        <div class="compass-node-score zone-text-{{ n.zone }}">{{ n.score }}</div>
       </div>
       {% endfor %}
     </div>
-    {% for pos, label, data in points %}
-    <div class="compass-detail" id="compass-{{ pos }}">
-      <strong style="color:var(--gold-bright)">{{ label }}</strong> — confidence {{ (data.confidence if data is mapping else "") or "Moderate" }}<br>
-      {{ (data.reasoning if data is mapping else [])|join(" · ") }}
+
+    {% for n in compass.nodes %}
+    <div class="compass-detail" id="compass-{{ n.pos }}">
+      <div class="compass-detail-head">
+        <div class="compass-detail-title">{{ n.label }}</div>
+        <div class="compass-detail-score zone-text-{{ n.zone }}">{{ n.score }} / 100</div>
+      </div>
+      <div class="compass-weight-bar"><div class="compass-weight-fill zone-{{ n.zone }}" style="width:{{ n.score }}%"></div></div>
+      <div class="compass-detail-badge zone-text-{{ n.zone }}">{{ n.confidence }} Confidence — {{ n.confidence_pct }}%</div>
+      {% if n.reasoning %}
+      <div class="compass-evidence">
+        {% for r in n.reasoning %}<span class="compass-evidence-chip">✓ {{ r }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      <p class="compass-meaning">{{ n.meaning }}</p>
     </div>
     {% endfor %}
   </div>
@@ -529,11 +549,14 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: .15 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-function toggleCompass(pos) {
-  document.querySelectorAll('.compass-detail').forEach(el => {
-    if (el.id === 'compass-' + pos) el.classList.toggle('show');
-    else el.classList.remove('show');
-  });
+function toggleCompassNode(pos) {
+  const wasOpen = document.getElementById('compass-' + pos)?.classList.contains('show');
+  document.querySelectorAll('.compass-detail').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.compass-node, .compass-node-label').forEach(el => el.classList.remove('active'));
+  if (!wasOpen) {
+    document.getElementById('compass-' + pos)?.classList.add('show');
+    document.querySelectorAll(`[data-pos="${pos}"]`).forEach(el => el.classList.add('active'));
+  }
 }
 </script>
 {% endblock %}

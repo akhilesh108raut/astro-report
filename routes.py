@@ -73,6 +73,68 @@ def _overall_score(chart: dict) -> int:
     return round(sum(vals) / len(vals)) if vals else 62
 
 
+_COMPASS_AXES = [
+    ("top",    "Career",       "Career & Authority"),
+    ("right",  "Love",         "Marriage & Partnerships"),
+    ("bottom", "Spirituality", "Spirituality & Growth"),
+    ("left",   "Money",        "Wealth & Finances"),
+]
+_CONFIDENCE_PCT = {"High": 92, "Medium": 65, "Low": 38}
+_BALANCE_LABELS = [
+    (85, "Flourishing"), (70, "Harmony"), (55, "Steady Ground"), (0, "Building Foundations"),
+]
+
+
+def _color_zone(score: int) -> str:
+    if score >= 90: return "emerald"
+    if score >= 70: return "gold"
+    if score >= 40: return "amber"
+    return "red"
+
+
+def _build_compass(cs: dict) -> dict:
+    """Radar-polygon data for the Energy Compass — node placement computed
+    here (polar coordinates), not in the template, since Jinja has no trig."""
+    import math
+
+    cx, cy, min_r, max_r = 150, 150, 30, 110
+    angles = {"top": -90, "right": 0, "bottom": 90, "left": 180}
+    nodes = []
+    scores = []
+    for pos, label, cs_key in _COMPASS_AXES:
+        data = cs.get(cs_key) or {}
+        score = data.get("score") if isinstance(data, dict) else data
+        score = int(score) if isinstance(score, (int, float)) else 50
+        confidence = data.get("confidence", "Medium") if isinstance(data, dict) else "Medium"
+        reasoning = data.get("reasoning") or [] if isinstance(data, dict) else []
+        scores.append(score)
+
+        r = min_r + (score / 100) * (max_r - min_r)
+        rad = math.radians(angles[pos])
+        x = round(cx + r * math.cos(rad), 1)
+        y = round(cy + r * math.sin(rad), 1)
+
+        meaning = (
+            f"Because {', '.join(reasoning[:3])}, this area currently shows "
+            f"{confidence.lower()} confidence in your chart."
+            if reasoning else
+            f"This area currently shows {confidence.lower()} confidence in your chart."
+        )
+        nodes.append({
+            "pos": pos, "label": label, "score": score, "confidence": confidence,
+            "confidence_pct": _CONFIDENCE_PCT.get(confidence, 50),
+            "zone": _color_zone(score), "x": x, "y": y, "reasoning": reasoning,
+            "meaning": meaning,
+        })
+
+    polygon_points = " ".join(f"{n['x']},{n['y']}" for n in nodes)
+    balance = round(sum(scores) / len(scores)) if scores else 50
+    balance_label = next(label for threshold, label in _BALANCE_LABELS if balance >= threshold)
+
+    return {"nodes": nodes, "polygon_points": polygon_points,
+            "balance": balance, "balance_label": balance_label, "cx": cx, "cy": cy}
+
+
 def _preview_payload(chart: dict) -> dict:
     yogas = []
     for y in (chart.get("yogas") or [])[:2]:
@@ -442,6 +504,9 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
         "north_star": dna.get("one_liner") or sc.get("insight_sentence", ""),
     }
 
+    # ── Energy Compass — radar polygon with score-driven node placement ──
+    compass = _build_compass(chart.get("confidence_scores") or {})
+
     # ── Inner Council — planets as characters who speak to you ──────────
     council = []
     for pname, pdata in planets_raw.items():
@@ -489,6 +554,7 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
         "hidden_gift": hidden_gift, "superpower": superpower, "blind_spot": blind_spot,
         "badges": badges, "onepage": onepage, "planet_symbol": _PLANET_SYMBOL,
         "council": council, "closing_letter": closing_letter,
+        "compass": compass,
     }
 
 

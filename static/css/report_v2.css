@@ -128,30 +128,75 @@ html { scroll-behavior: smooth; }
 .karma-headline { font-family: var(--font-head); font-size: 20px; color: var(--ink); margin-bottom: 10px; }
 .karma-detail { font-size: 13px; color: var(--ink-dim); line-height: 1.6; }
 
-/* ── HALL 6 — DESTINY COMPASS ─────────────────────────────────────── */
-.compass-wrap { position: relative; width: min(340px, 80vw); height: min(340px, 80vw); margin: 0 auto; }
-.compass-ring {
-  position: absolute; inset: 0; border-radius: 50%;
-  border: 1px solid rgba(217,178,91,.2); background: radial-gradient(circle, rgba(155,92,255,.06), transparent 70%);
+/* ── HALL 6 — ENERGY COMPASS (SVG radar) ──────────────────────────── */
+.compass-svg-wrap { position: relative; width: min(340px, 80vw); height: min(340px, 80vw); margin: 0 auto; }
+.compass-svg { width: 100%; height: 100%; overflow: visible; }
+.compass-axis-ring { fill: none; stroke: rgba(255,255,255,.06); stroke-width: 1; }
+.compass-axis-line { stroke: rgba(255,255,255,.06); stroke-width: 1; }
+.compass-polygon {
+  fill: rgba(217,178,91,.22);
+  stroke: var(--gold-bright); stroke-width: 1.5;
+  transition: all .6s cubic-bezier(.2,.8,.2,1);
 }
-.compass-point {
-  position: absolute; width: 96px; text-align: center; cursor: pointer;
-  transition: transform .25s;
+.compass-node {
+  stroke: rgba(6,4,15,.8); stroke-width: 2; cursor: pointer;
+  transition: r .25s, filter .25s;
+  animation: compass-pulse 3s ease-in-out infinite;
 }
-.compass-point:hover { transform: scale(1.08); }
-.compass-point.top    { top: -8px; left: 50%; transform: translateX(-50%); }
-.compass-point.right  { right: -18px; top: 50%; transform: translateY(-50%); }
-.compass-point.bottom { bottom: -8px; left: 50%; transform: translateX(-50%); }
-.compass-point.left   { left: -18px; top: 50%; transform: translateY(-50%); }
-.compass-dot { width: 14px; height: 14px; border-radius: 50%; margin: 0 auto 8px;
-  background: var(--gold-bright); box-shadow: 0 0 16px rgba(217,178,91,.7); }
-.compass-label { font-size: 12px; color: var(--ink); font-weight: 600; }
-.compass-score { font-family: var(--font-head); font-size: 22px; color: var(--gold-bright); }
+.compass-node:hover, .compass-node.active { r: 12; }
+.compass-node.zone-emerald { fill: var(--green); filter: drop-shadow(0 0 6px rgba(74,222,128,.7)); }
+.compass-node.zone-gold    { fill: var(--gold-bright); filter: drop-shadow(0 0 6px rgba(255,215,0,.7)); }
+.compass-node.zone-amber   { fill: #f0a94e; filter: drop-shadow(0 0 6px rgba(240,169,78,.6)); }
+.compass-node.zone-red     { fill: var(--red); filter: drop-shadow(0 0 6px rgba(248,113,113,.6)); }
+@keyframes compass-pulse { 0%,100% { opacity: 1; } 50% { opacity: .72; } }
+
+.compass-center { text-align: center; font-family: var(--font-body); }
+.compass-center-label { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim); }
+.compass-center-score { font-family: var(--font-head); font-size: 26px; color: var(--gold-bright); line-height: 1.1; }
+.compass-center-theme { font-size: 10.5px; color: var(--ink-dim); margin-top: 2px; }
+
+.compass-node-label {
+  position: absolute; width: 92px; text-align: center; cursor: pointer;
+  transition: transform .25s; padding: 4px;
+}
+.compass-node-label:hover, .compass-node-label.active { transform: scale(1.08); }
+.compass-node-label.pos-top    { top: -14px; left: 50%; transform: translateX(-50%); }
+.compass-node-label.pos-right  { right: -30px; top: 50%; transform: translateY(-50%); }
+.compass-node-label.pos-bottom { bottom: -14px; left: 50%; transform: translateX(-50%); }
+.compass-node-label.pos-left   { left: -30px; top: 50%; transform: translateY(-50%); }
+.compass-node-label.pos-right:hover, .compass-node-label.pos-right.active,
+.compass-node-label.pos-left:hover, .compass-node-label.pos-left.active { transform: translateY(-50%) scale(1.08); }
+.compass-node-name { font-size: 12px; color: var(--ink); font-weight: 600; }
+.compass-node-score { font-family: var(--font-head); font-size: 22px; }
+.zone-text-emerald { color: var(--green); }
+.zone-text-gold    { color: var(--gold-bright); }
+.zone-text-amber   { color: #f0a94e; }
+.zone-text-red     { color: var(--red); }
+
 .compass-detail {
-  margin-top: 30px; padding: 18px 22px; border-radius: 14px; background: rgba(255,255,255,.03);
-  border: 1px solid rgba(217,178,91,.18); font-size: 13.5px; color: var(--ink-dim); display: none; text-align: left;
+  margin-top: 30px; padding: 20px 24px; border-radius: 14px; background: var(--glass);
+  border: 1px solid var(--glass-brd); display: none; text-align: left;
 }
 .compass-detail.show { display: block; }
+.compass-detail-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+.compass-detail-title { font-family: var(--font-head); font-size: 19px; color: var(--ink); }
+.compass-detail-score { font-family: var(--font-body); font-weight: 700; font-size: 16px; }
+.compass-weight-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); overflow: hidden; margin-bottom: 12px; }
+.compass-weight-fill { height: 100%; border-radius: 3px; }
+.compass-weight-fill.zone-emerald { background: var(--green); }
+.compass-weight-fill.zone-gold    { background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+.compass-weight-fill.zone-amber   { background: #f0a94e; }
+.compass-weight-fill.zone-red     { background: var(--red); }
+.compass-detail-badge {
+  display: inline-block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  font-weight: 600; margin-bottom: 12px;
+}
+.compass-evidence { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.compass-evidence-chip {
+  font-size: 12px; color: var(--ink-dim); background: rgba(255,255,255,.04);
+  border: 1px solid var(--glass-brd); border-radius: 999px; padding: 4px 12px;
+}
+.compass-meaning { font-size: 13.5px; color: var(--ink-dim); line-height: 1.7; margin: 0; }
 
 /* ── HALL 7 — PLANET GALLERY (carousel) ───────────────────────────── */
 .h-carousel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -389,7 +434,7 @@ html { scroll-behavior: smooth; }
     box-shadow: none !important;
     color: #2a2416 !important;
   }
-  .archetype-tile, .council-character, .compass-wrap {
+  .archetype-tile, .council-character, .compass-detail {
     background: #f3ead2 !important;
     border-color: #d9b25b !important;
   }
@@ -397,4 +442,9 @@ html { scroll-behavior: smooth; }
   .evidence-step-detail, .evidence-full-chain p { color: #4a4030 !important; }
   .evidence-full-chain { display: block !important; }
   .evidence-step[open] summary, .evidence-step summary { color: #2a2416; }
+  .compass-detail { display: block !important; }
+  .compass-axis-ring, .compass-axis-line { stroke: rgba(0,0,0,.12) !important; }
+  .compass-polygon { fill: rgba(217,178,91,.3) !important; stroke: #8a6d1f !important; }
+  .compass-center-score, .compass-node-score, .compass-meaning { color: #2a2416 !important; }
+  .compass-center-label, .compass-center-theme, .compass-node-name { color: #6b5d3f !important; }
 }
