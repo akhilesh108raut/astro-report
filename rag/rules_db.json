@@ -1,0 +1,3749 @@
+[
+  {
+    "rule_id": "BPHS_0001",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Sun",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "health": 0.6,
+      "leadership": 0.7,
+      "ego": 0.65
+    },
+    "interpretation": "Sun in lagna gives commanding presence, strong constitution, and pride. The native is ambitious but may suffer from ego conflicts.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0002",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 2
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "wealth": -0.3,
+      "speech": 0.4,
+      "family": -0.2
+    },
+    "interpretation": "Sun in 2nd afflicts family harmony and finances. Speech may be harsh. Father issues can affect early wealth. Eye problems possible.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "family"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0003",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 3
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "courage": 0.7,
+      "siblings": 0.5,
+      "communication": 0.6
+    },
+    "interpretation": "Sun in 3rd gives courage, initiative, and self-made success. Relations with siblings are complex. Writing or media aptitude.",
+    "weight": 1.0,
+    "tags": [
+      "communication",
+      "siblings"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0004",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 4
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "home": -0.3,
+      "mother": -0.2,
+      "property": 0.3
+    },
+    "interpretation": "Sun in 4th: government may seize property or the native shifts residence often. Conflict with mother. Possible vehicle and land acquisition.",
+    "weight": 1.0,
+    "tags": [
+      "home",
+      "property"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0005",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 5
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.7,
+      "children": -0.3,
+      "authority": 0.6
+    },
+    "interpretation": "Sun in 5th grants intelligence and royal favor. Few children or late children. Past-life merits bring government recognition.",
+    "weight": 1.0,
+    "tags": [
+      "children",
+      "intelligence"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0006",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 6
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Sun",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "enemies": -0.6,
+      "health": 0.4,
+      "service": 0.5
+    },
+    "interpretation": "Sun in 6th defeats enemies and rivals. Native excels in competitive fields. Health remains generally good. Service-oriented career.",
+    "weight": 1.0,
+    "tags": [
+      "enemies",
+      "service",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0007",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 7
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "marriage": -0.4,
+      "partnership": -0.3,
+      "spouse_health": -0.3
+    },
+    "interpretation": "Sun in 7th strains marriage. Spouse may be domineering or ill. Business partnerships face ego conflicts. Late or troubled marriage.",
+    "weight": 1.0,
+    "tags": [
+      "marriage",
+      "partnership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0008",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 8
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "longevity": -0.3,
+      "inheritance": 0.4,
+      "occult": 0.5
+    },
+    "interpretation": "Sun in 8th shortens father's life and can bring sudden transformations. Interest in occult. Inheritance possible. Eye or bone issues.",
+    "weight": 1.0,
+    "tags": [
+      "longevity",
+      "occult"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0009",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Sun",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "fortune": 0.7,
+      "father": 0.6,
+      "dharma": 0.8,
+      "spirituality": 0.6
+    },
+    "interpretation": "Sun in 9th is highly auspicious. Righteous, fortunate, fond of pilgrimages. Strong dharmic principles. Father is influential.",
+    "weight": 1.3,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0010",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Sun",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "career": 0.85,
+      "fame": 0.8,
+      "government": 0.75,
+      "leadership": 0.8
+    },
+    "interpretation": "Sun in 10th is the best placement for career and public life. Fame, authority, government favor. The native rises to prominence in their field.",
+    "weight": 1.5,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0011",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "gains": 0.7,
+      "income": 0.7,
+      "elder_siblings": 0.5
+    },
+    "interpretation": "Sun in 11th gives substantial income, gains from government or authority figures. Influential elder siblings. Ambitions are fulfilled.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0012",
+    "source": "BPHS 24",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "spirituality": 0.5,
+      "expenses": 0.6,
+      "foreign": 0.4,
+      "loss": -0.3
+    },
+    "interpretation": "Sun in 12th inclines toward spirituality and foreign lands. Expenses are high. Government or father-related losses. Hospital or isolated environments.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0013",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Moon",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "appearance": 0.7,
+      "emotions": 0.6,
+      "public": 0.65,
+      "mind": 0.6
+    },
+    "interpretation": "Moon in lagna gives attractive appearance, sensitive nature, and public popularity. The mind is impressionable. Emotional fluctuations are frequent.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "mind"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0014",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 2
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Moon",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "wealth": 0.6,
+      "speech": 0.6,
+      "food": 0.5,
+      "family": 0.6
+    },
+    "interpretation": "Moon in 2nd brings wealth through family lineage, pleasant speech, and fondness for good food. Family life is generally happy.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "family"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0015",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 3
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "courage": -0.2,
+      "siblings": 0.5,
+      "writing": 0.5,
+      "travel": 0.4
+    },
+    "interpretation": "Moon in 3rd gives many siblings, fondness for travel and writing. Courage fluctuates. Native is communicative but restless.",
+    "weight": 1.0,
+    "tags": [
+      "siblings",
+      "communication"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0016",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 4
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Moon",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "home": 0.8,
+      "mother": 0.8,
+      "property": 0.7,
+      "happiness": 0.7
+    },
+    "interpretation": "Moon in 4th is a very auspicious placement. Comfortable home, loving mother, landed property. Emotionally secure and well-liked.",
+    "weight": 1.3,
+    "tags": [
+      "home",
+      "mother",
+      "property"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0017",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 5
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.7,
+      "children": 0.6,
+      "creativity": 0.7
+    },
+    "interpretation": "Moon in 5th gives strong intuition, creativity, and good children. The mind is philosophical. Love of art, music, or literature.",
+    "weight": 1.0,
+    "tags": [
+      "children",
+      "intelligence",
+      "creativity"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0018",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 6
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "enemies": -0.3,
+      "health": -0.3,
+      "service": 0.4
+    },
+    "interpretation": "Moon in 6th brings health issues (especially digestive or lymphatic). Enemies cause mental distress. Service or healthcare professions suit.",
+    "weight": 1.0,
+    "tags": [
+      "health",
+      "enemies"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0019",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 7
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "marriage": 0.6,
+      "spouse": 0.65,
+      "partnership": 0.6
+    },
+    "interpretation": "Moon in 7th gives an attractive, caring spouse. Marriage brings happiness. Business partnerships flourish. Emotional fulfillment through relationships.",
+    "weight": 1.0,
+    "tags": [
+      "marriage",
+      "partnership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0020",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 8
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "longevity": -0.2,
+      "occult": 0.5,
+      "psychology": 0.5,
+      "inheritance": 0.4
+    },
+    "interpretation": "Moon in 8th brings emotional turbulence, possible loss of mother early, and interest in mysticism. Inheritance likely. Chronic health concerns.",
+    "weight": 1.0,
+    "tags": [
+      "longevity",
+      "occult"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0021",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "fortune": 0.7,
+      "spirituality": 0.7,
+      "mother": 0.6,
+      "dharma": 0.65
+    },
+    "interpretation": "Moon in 9th is very auspicious. Spiritual inclination, good fortune through mother. The native is pious and well-traveled.",
+    "weight": 1.2,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0022",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "career": 0.75,
+      "fame": 0.7,
+      "public": 0.8,
+      "mother": 0.5
+    },
+    "interpretation": "Moon in 10th gives a public-facing career. The native is famous, popular with masses, and emotionally tied to their profession. Strong mother's influence.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0023",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "gains": 0.8,
+      "income": 0.7,
+      "friends": 0.6,
+      "elder_siblings": 0.5
+    },
+    "interpretation": "Moon in 11th is excellent for gains and fulfillment of desires. Large social circle. Income flows from many sources. Elder siblings are helpful.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0024",
+    "source": "BPHS 25",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "spirituality": 0.6,
+      "sleep": 0.4,
+      "expenses": 0.5,
+      "foreign": 0.5
+    },
+    "interpretation": "Moon in 12th brings inclination toward spirituality, foreign residency, and seclusion. Sleep disturbances possible. Expenses are high.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0025",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mars",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      }
+    ],
+    "effects": {
+      "courage": 0.8,
+      "energy": 0.8,
+      "aggression": 0.65,
+      "accidents": 0.5
+    },
+    "interpretation": "Mars in lagna gives athletic build, courage, and leadership. Aggression and impulsiveness cause conflicts. Prone to accidents and fevers.",
+    "weight": 1.2,
+    "tags": [
+      "personality",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0026",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 2
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "speech": -0.4,
+      "wealth": -0.2,
+      "family": -0.3
+    },
+    "interpretation": "Mars in 2nd makes speech harsh and cutting. Family conflicts over finances. Spending is impulsive. Eye or dental issues possible.",
+    "weight": 1.0,
+    "tags": [
+      "speech",
+      "family",
+      "wealth"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0027",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 3
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      }
+    ],
+    "effects": {
+      "courage": 0.8,
+      "siblings": -0.3,
+      "writing": 0.5,
+      "initiative": 0.7
+    },
+    "interpretation": "Mars in 3rd gives exceptional courage and self-made success. Conflicts with siblings. Good for athletes, writers, and military personnel.",
+    "weight": 1.0,
+    "tags": [
+      "courage",
+      "siblings"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0028",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 4
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "home": -0.4,
+      "property": 0.4,
+      "vehicles": 0.5,
+      "mother": -0.3
+    },
+    "interpretation": "Mars in 4th (Manglik): home environment is conflict-prone. Property disputes are common. Possible separation from mother. Good for acquiring vehicles.",
+    "weight": 1.2,
+    "tags": [
+      "home",
+      "property",
+      "marriage"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0029",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 5
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "children": -0.3,
+      "speculation": 0.5,
+      "intelligence": 0.6
+    },
+    "interpretation": "Mars in 5th brings difficulties with children (delays or few). Sharp, analytical mind. Success in speculation, sports, or competitive academics.",
+    "weight": 1.0,
+    "tags": [
+      "children",
+      "intelligence"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0030",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 6
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mars",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      }
+    ],
+    "effects": {
+      "enemies": -0.7,
+      "health": 0.5,
+      "service": 0.6,
+      "litigation": 0.6
+    },
+    "interpretation": "Mars in 6th is a powerful placement for defeating enemies and competitors. Success in military, police, law, or medicine. Good physical endurance.",
+    "weight": 1.3,
+    "tags": [
+      "enemies",
+      "career",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0031",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 7
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "marriage": -0.5,
+      "partner": -0.4,
+      "passion": 0.6
+    },
+    "interpretation": "Mars in 7th (Manglik): marital discord, separation, or early widowhood risk. Spouse is energetic but argumentative. Passionate relationships.",
+    "weight": 1.3,
+    "tags": [
+      "marriage"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0032",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 8
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "longevity": -0.4,
+      "accidents": 0.6,
+      "surgery": 0.5,
+      "occult": 0.5
+    },
+    "interpretation": "Mars in 8th is a difficult placement. Accident-prone, surgical interventions likely, short temper. Interest in occult or forensics.",
+    "weight": 1.0,
+    "tags": [
+      "longevity",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0033",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 9
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "fortune": -0.2,
+      "dharma": -0.2,
+      "father": -0.2,
+      "aggression": 0.5
+    },
+    "interpretation": "Mars in 9th creates conflicts with father and gurus. Challenges conventional religious beliefs. Courage in pursuing one's own dharma path.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0034",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mars",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      }
+    ],
+    "effects": {
+      "career": 0.85,
+      "leadership": 0.8,
+      "fame": 0.6,
+      "ambition": 0.85
+    },
+    "interpretation": "Mars in 10th is the best career placement for Mars. Outstanding ambition, leadership, and executive ability. Success in technical, military, medical, or administrative fields.",
+    "weight": 1.5,
+    "tags": [
+      "career",
+      "leadership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0035",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      }
+    ],
+    "effects": {
+      "gains": 0.75,
+      "income": 0.7,
+      "elder_siblings": -0.2
+    },
+    "interpretation": "Mars in 11th gives substantial gains through courage and initiative. Income from technical or competitive fields. Elder sibling relations are competitive.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0036",
+    "source": "BPHS 26",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "expenses": 0.5,
+      "foreign": 0.4,
+      "spirituality": 0.3,
+      "imprisonment": 0.3
+    },
+    "interpretation": "Mars in 12th: high expenditure on enemies, litigation, and hospitalization. Foreign connection. Possible legal troubles. Secret enemies.",
+    "weight": 1.0,
+    "tags": [
+      "foreign",
+      "expenses"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0037",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mercury",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.8,
+      "communication": 0.75,
+      "business": 0.65,
+      "youthful": 0.6
+    },
+    "interpretation": "Mercury in lagna gives youthful appearance, sharp intellect, and excellent communication skills. Naturally analytical and business-minded.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "intelligence"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0038",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 2
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "wealth": 0.65,
+      "speech": 0.8,
+      "business": 0.7,
+      "education": 0.65
+    },
+    "interpretation": "Mercury in 2nd gives eloquence, wealth through trade and communication, and love of learning. The native is a skilled orator or writer.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "speech"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0039",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 3
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "writing": 0.8,
+      "communication": 0.8,
+      "siblings": 0.6,
+      "short_travel": 0.6
+    },
+    "interpretation": "Mercury in 3rd is excellent for writing, journalism, and communication. Intellectual siblings. Good at teaching and media.",
+    "weight": 1.0,
+    "tags": [
+      "communication",
+      "writing"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0040",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 4
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "education": 0.7,
+      "home": 0.6,
+      "vehicles": 0.5,
+      "property": 0.5
+    },
+    "interpretation": "Mercury in 4th: educated in prestigious institutions. Happy home with intellectual atmosphere. Good for real estate business.",
+    "weight": 1.0,
+    "tags": [
+      "education",
+      "home"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0041",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 5
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mercury",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.85,
+      "children": 0.6,
+      "speculation": 0.6,
+      "creativity": 0.7
+    },
+    "interpretation": "Mercury in 5th is outstanding for intellectual ability. Brilliant children. Success in academics, speculation, and creative writing.",
+    "weight": 1.2,
+    "tags": [
+      "intelligence",
+      "children"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0042",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 6
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "enemies": -0.5,
+      "health": 0.4,
+      "service": 0.5,
+      "analysis": 0.7
+    },
+    "interpretation": "Mercury in 6th defeats enemies through wit and strategy. Success in analytical, legal, or healthcare professions. Digestive issues possible.",
+    "weight": 1.0,
+    "tags": [
+      "enemies",
+      "service"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0043",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 7
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "marriage": 0.6,
+      "spouse": 0.65,
+      "business": 0.7,
+      "partnership": 0.7
+    },
+    "interpretation": "Mercury in 7th gives an intelligent, communicative spouse. Business partnerships are rewarding. Legal and trading careers flourish.",
+    "weight": 1.0,
+    "tags": [
+      "marriage",
+      "business"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0044",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 8
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "research": 0.6,
+      "longevity": 0.4,
+      "occult": 0.6,
+      "writing": 0.5
+    },
+    "interpretation": "Mercury in 8th gives interest in research, occult sciences, and hidden knowledge. Long life. Writing on esoteric topics.",
+    "weight": 1.0,
+    "tags": [
+      "research",
+      "occult"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0045",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "dharma": 0.7,
+      "education": 0.8,
+      "writing": 0.7,
+      "fortune": 0.6
+    },
+    "interpretation": "Mercury in 9th gives higher learning, religious scholarship, and publishing success. Good for philosophers and legal scholars.",
+    "weight": 1.0,
+    "tags": [
+      "education",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0046",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "career": 0.8,
+      "business": 0.75,
+      "communication": 0.8,
+      "fame": 0.6
+    },
+    "interpretation": "Mercury in 10th: highly successful in business, media, writing, finance, or IT. Intellectual approach to career. Fame through communication.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "business"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0047",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      }
+    ],
+    "effects": {
+      "gains": 0.75,
+      "friends": 0.7,
+      "income": 0.7
+    },
+    "interpretation": "Mercury in 11th brings gains through intelligence and networking. Large social circle of intellectuals. Income from writing, trading, or technology.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0048",
+    "source": "BPHS 27",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "spirituality": 0.5,
+      "foreign": 0.5,
+      "expenses": 0.4,
+      "research": 0.6
+    },
+    "interpretation": "Mercury in 12th: interest in foreign lands and meditation. Expenses on education. Research and investigative writing. Possible spiritual writing.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0049",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "wisdom": 0.8,
+      "health": 0.7,
+      "spirituality": 0.7,
+      "fortune": 0.7
+    },
+    "interpretation": "Jupiter in lagna gives wisdom, moral character, spiritual inclination, and a well-built body. The native is respected and generally fortunate.",
+    "weight": 1.2,
+    "tags": [
+      "personality",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0050",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 2
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "wealth": 0.8,
+      "speech": 0.7,
+      "family": 0.75,
+      "food": 0.6
+    },
+    "interpretation": "Jupiter in 2nd brings wealth, eloquence, and a large happy family. Financial security. The native has a commanding and pleasant voice.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "family"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0051",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 3
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "courage": 0.5,
+      "siblings": 0.5,
+      "writing": 0.6
+    },
+    "interpretation": "Jupiter in 3rd: courageous and learned younger siblings. Interest in religious writing. The native may travel for spiritual purposes.",
+    "weight": 1.0,
+    "tags": [
+      "siblings",
+      "communication"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0052",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 4
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "home": 0.8,
+      "mother": 0.7,
+      "property": 0.8,
+      "vehicles": 0.7,
+      "happiness": 0.8
+    },
+    "interpretation": "Jupiter in 4th is highly auspicious. Comfortable home, good mother, landed property, and vehicles. The native is content and prosperous.",
+    "weight": 1.4,
+    "tags": [
+      "home",
+      "property",
+      "happiness"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0053",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 5
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.85,
+      "children": 0.8,
+      "creativity": 0.7,
+      "spirituality": 0.7
+    },
+    "interpretation": "Jupiter in 5th is excellent. Brilliant intellect, well-educated children, and strong spiritual merit. Good for scholarship, counseling, and finance.",
+    "weight": 1.4,
+    "tags": [
+      "intelligence",
+      "children",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0054",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 6
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "enemies": -0.4,
+      "health": -0.2,
+      "service": 0.5
+    },
+    "interpretation": "Jupiter in 6th is a debilitating placement for Jupiter. Enemies may be powerful. Liver and digestive issues. Success through service professions.",
+    "weight": 1.0,
+    "tags": [
+      "enemies",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0055",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 7
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "marriage": 0.75,
+      "spouse": 0.8,
+      "partnership": 0.75
+    },
+    "interpretation": "Jupiter in 7th gives a wise, generous, and fortunate spouse. Marriage is generally happy. Business partnerships are blessed.",
+    "weight": 1.2,
+    "tags": [
+      "marriage",
+      "partnership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0056",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 8
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "longevity": 0.7,
+      "inheritance": 0.6,
+      "occult": 0.7,
+      "spirituality": 0.6
+    },
+    "interpretation": "Jupiter in 8th extends longevity and gives interest in occult and Vedic studies. Inheritance from in-laws. Hidden wealth.",
+    "weight": 1.0,
+    "tags": [
+      "longevity",
+      "occult"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0057",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "fortune": 0.9,
+      "spirituality": 0.9,
+      "dharma": 0.9,
+      "guru": 0.8,
+      "father": 0.75
+    },
+    "interpretation": "Jupiter in 9th is the most powerful placement for Jupiter (own sign trine). Exceptional fortune, guru blessings, spiritual wisdom, and noble father.",
+    "weight": 1.6,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0058",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "career": 0.85,
+      "fame": 0.8,
+      "authority": 0.8,
+      "dharma": 0.7
+    },
+    "interpretation": "Jupiter in 10th gives a prestigious, respected career. Success in law, education, finance, or administration. Fame and moral authority.",
+    "weight": 1.4,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0059",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "gains": 0.85,
+      "income": 0.8,
+      "friends": 0.8,
+      "elder_siblings": 0.7
+    },
+    "interpretation": "Jupiter in 11th is outstanding for gains. Large income, noble friends, helpful elder siblings. Desires are fulfilled easily.",
+    "weight": 1.3,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0060",
+    "source": "BPHS 28",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 12
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      }
+    ],
+    "effects": {
+      "spirituality": 0.7,
+      "foreign": 0.5,
+      "expenses": 0.5,
+      "moksha": 0.7
+    },
+    "interpretation": "Jupiter in 12th gives spiritual liberation-seeking. Foreign lands, ashrams, or educational institutions. Expenses are on dharmic causes.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0061",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Venus",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "beauty": 0.8,
+      "charm": 0.8,
+      "luxury": 0.7,
+      "relationships": 0.7
+    },
+    "interpretation": "Venus in lagna gives physical attractiveness, charming personality, and a love of luxury. The native is artistic and popular in society.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "relationships"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0062",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 2
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "wealth": 0.8,
+      "speech": 0.75,
+      "family": 0.7,
+      "luxury": 0.65
+    },
+    "interpretation": "Venus in 2nd brings wealth, sweet speech, beautiful family, and comfort. Strong accumulation of assets. Artistic or musical talents.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "family"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0063",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 3
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "art": 0.7,
+      "siblings": 0.6,
+      "communication": 0.65
+    },
+    "interpretation": "Venus in 3rd gives artistic communication skills. Good relations with siblings, especially sisters. Writing with aesthetic sensibility.",
+    "weight": 1.0,
+    "tags": [
+      "communication",
+      "art"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0064",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 4
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Venus",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "home": 0.8,
+      "property": 0.8,
+      "vehicles": 0.8,
+      "mother": 0.7,
+      "luxury": 0.75
+    },
+    "interpretation": "Venus in 4th is an excellent placement. Luxurious home, good vehicles, loving mother, and landed property. Domestic happiness is high.",
+    "weight": 1.3,
+    "tags": [
+      "home",
+      "property",
+      "luxury"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0065",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 5
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "romance": 0.8,
+      "children": 0.75,
+      "creativity": 0.8,
+      "speculation": 0.6
+    },
+    "interpretation": "Venus in 5th brings romantic happiness, artistic children, and creative talent. Good for entertainment, fashion, and performing arts.",
+    "weight": 1.0,
+    "tags": [
+      "romance",
+      "children",
+      "creativity"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0066",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 6
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "enemies": -0.3,
+      "health": -0.2,
+      "relationships": -0.3,
+      "service": 0.4
+    },
+    "interpretation": "Venus in 6th creates health issues (reproductive or kidney), and adversaries in relationships. Love affairs may cause problems. Medical field career possible.",
+    "weight": 1.0,
+    "tags": [
+      "health",
+      "relationships"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0067",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 7
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Venus",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "marriage": 0.85,
+      "spouse": 0.85,
+      "business": 0.7,
+      "beauty": 0.7
+    },
+    "interpretation": "Venus in 7th is the best placement for marriage. Beautiful, artistic, and loving spouse. Business partnerships are profitable. Very favorable for relationships.",
+    "weight": 1.5,
+    "tags": [
+      "marriage",
+      "partnership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0068",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 8
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "longevity": 0.6,
+      "inheritance": 0.7,
+      "occult": 0.5,
+      "sensuality": 0.6
+    },
+    "interpretation": "Venus in 8th gives inheritance, sensual indulgences, and interest in occult. Long life. Possible inheritance from spouse or in-laws.",
+    "weight": 1.0,
+    "tags": [
+      "longevity",
+      "wealth"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0069",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "fortune": 0.75,
+      "spirituality": 0.6,
+      "dharma": 0.6,
+      "luxury": 0.7
+    },
+    "interpretation": "Venus in 9th brings fortunate circumstances through righteous living and aesthetic sensibility. Father may be artistic or wealthy.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0070",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "career": 0.8,
+      "fame": 0.75,
+      "art": 0.85,
+      "luxury": 0.7
+    },
+    "interpretation": "Venus in 10th gives a career in arts, entertainment, fashion, finance, or hospitality. Fame through aesthetic pursuits. Respected in society.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "art",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0071",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      }
+    ],
+    "effects": {
+      "gains": 0.8,
+      "income": 0.75,
+      "social": 0.8,
+      "romance": 0.7
+    },
+    "interpretation": "Venus in 11th is very auspicious for income. Gains from artistic ventures. Vibrant social life. Romantic fulfillment through friends.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income",
+      "romance"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0072",
+    "source": "BPHS 29",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "spirituality": 0.5,
+      "foreign": 0.6,
+      "sensuality": 0.6,
+      "expenses": 0.5
+    },
+    "interpretation": "Venus in 12th inclines toward bed pleasures, foreign relationships, and spiritual liberation. Expenditure on luxuries and foreign travel.",
+    "weight": 1.0,
+    "tags": [
+      "foreign",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0073",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Saturn",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "discipline": 0.6,
+      "delays": 0.5,
+      "health": -0.3,
+      "longevity": 0.6
+    },
+    "interpretation": "Saturn in lagna gives a lean, disciplined, and reserved personality. Early hardships build resilience. Health struggles in youth. Long life.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "longevity"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0074",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 2
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "wealth": -0.3,
+      "speech": -0.2,
+      "family": -0.3,
+      "delays": 0.4
+    },
+    "interpretation": "Saturn in 2nd delays wealth accumulation and causes family separations. Speech is slow or harsh. Financial struggles in early life.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "family"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0075",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 3
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "perseverance": 0.7,
+      "siblings": -0.3,
+      "discipline": 0.65,
+      "media": 0.5
+    },
+    "interpretation": "Saturn in 3rd gives tremendous persistence and self-made achievements. Difficult relations with siblings. Success comes through sustained effort.",
+    "weight": 1.0,
+    "tags": [
+      "courage",
+      "siblings"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0076",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 4
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "home": -0.4,
+      "mother": -0.3,
+      "property": 0.4,
+      "isolation": 0.5
+    },
+    "interpretation": "Saturn in 4th brings unhappy domestic environment, cold relationship with mother, and possible loss of ancestral property. Late acquisition of real estate.",
+    "weight": 1.0,
+    "tags": [
+      "home",
+      "property"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0077",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 5
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "children": -0.4,
+      "intelligence": 0.5,
+      "delays": 0.5,
+      "speculation": -0.3
+    },
+    "interpretation": "Saturn in 5th delays children and brings sorrow through them. Serious, methodical mind. Avoid speculation. Scholarly, research-oriented.",
+    "weight": 1.0,
+    "tags": [
+      "children",
+      "intelligence"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0078",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 6
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Saturn",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "enemies": -0.8,
+      "health": 0.5,
+      "service": 0.7,
+      "endurance": 0.8
+    },
+    "interpretation": "Saturn in 6th completely destroys enemies through persistence. Exceptional endurance. Success in public service, legal, and medical fields. Viparita strength.",
+    "weight": 1.4,
+    "tags": [
+      "enemies",
+      "service",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0079",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 7
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "marriage": -0.4,
+      "delays": 0.5,
+      "partnership": -0.2,
+      "spouse": -0.3
+    },
+    "interpretation": "Saturn in 7th delays marriage. Spouse may be older or from a different background. Marriage has responsibilities and limitations. Partnerships require patience.",
+    "weight": 1.0,
+    "tags": [
+      "marriage"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0080",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 8
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "longevity": 0.8,
+      "occult": 0.6,
+      "chronic_illness": 0.5,
+      "inheritance": 0.5
+    },
+    "interpretation": "Saturn in 8th grants extraordinary longevity. Interest in occult and research. Chronic ailments are possible. Inheritance after delay.",
+    "weight": 1.2,
+    "tags": [
+      "longevity",
+      "occult"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0081",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 9
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "dharma": -0.2,
+      "fortune": -0.2,
+      "father": -0.3,
+      "delays": 0.4
+    },
+    "interpretation": "Saturn in 9th creates a skeptical or unorthodox relationship with religion. Father's health may be poor. Fortune comes after age 36.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0082",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Saturn",
+        "dignity": "exalted"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "career": 0.75,
+      "discipline": 0.8,
+      "authority": 0.7,
+      "politics": 0.65
+    },
+    "interpretation": "Saturn in 10th gives a structured, disciplined career with slow but steady rise. Excellence in politics, administration, law, or engineering. Late but sustained success.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "authority"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0083",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "gains": 0.75,
+      "income": 0.7,
+      "elder_siblings": -0.2,
+      "persistence": 0.8
+    },
+    "interpretation": "Saturn in 11th gives gains through consistent effort. Income from technical, construction, or service sectors. Elder sibling relationships are complicated.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0084",
+    "source": "BPHS 30",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 12
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      }
+    ],
+    "effects": {
+      "spirituality": 0.7,
+      "foreign": 0.5,
+      "expenses": 0.6,
+      "isolation": 0.7
+    },
+    "interpretation": "Saturn in 12th gives spiritual inclination, foreign settlement, and isolation. Monastic or contemplative tendencies. Expenses are on others' welfare.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0085",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      }
+    ],
+    "effects": {
+      "ambition": 0.7,
+      "foreign": 0.6,
+      "unconventional": 0.7,
+      "health": -0.2
+    },
+    "interpretation": "Rahu in lagna gives unusual appearance, intense ambition, and attraction to foreign or unconventional paths. Early life may be turbulent.",
+    "weight": 1.0,
+    "tags": [
+      "personality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0086",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 2
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "wealth": 0.5,
+      "speech": -0.3,
+      "family": -0.3
+    },
+    "interpretation": "Rahu in 2nd brings wealth through unorthodox means. Harsh or deceptive speech. Family life is complicated. Dietary habits may be unusual.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "family"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0087",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 3
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      }
+    ],
+    "effects": {
+      "courage": 0.6,
+      "media": 0.6,
+      "ambition": 0.65
+    },
+    "interpretation": "Rahu in 3rd gives boldness in communication and media. Unconventional interests. The native is daring and may work in technology or mass media.",
+    "weight": 1.0,
+    "tags": [
+      "communication",
+      "courage"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0088",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 4
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "home": -0.3,
+      "mother": -0.2,
+      "foreign": 0.5,
+      "property": 0.4
+    },
+    "interpretation": "Rahu in 4th disrupts home life and maternal relationships. Often indicates foreign residence. Property dealings may be complex.",
+    "weight": 1.0,
+    "tags": [
+      "home",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0089",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 5
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "children": -0.3,
+      "speculation": 0.6,
+      "intelligence": 0.65
+    },
+    "interpretation": "Rahu in 5th gives unconventional intelligence and interest in speculation, occult, or technology. Children may come through unusual circumstances.",
+    "weight": 1.0,
+    "tags": [
+      "children",
+      "speculation"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0090",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 6
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      }
+    ],
+    "effects": {
+      "enemies": -0.7,
+      "health": 0.4,
+      "service": 0.6
+    },
+    "interpretation": "Rahu in 6th powerfully defeats enemies. Success in competitive or unconventional service fields. Medical or technological career. Viparita strength.",
+    "weight": 1.3,
+    "tags": [
+      "enemies",
+      "service"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0091",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 7
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "marriage": -0.3,
+      "foreign": 0.6,
+      "partnership": 0.5
+    },
+    "interpretation": "Rahu in 7th attracts foreign or unconventional partners. Marriage may be cross-cultural. Business partnerships with foreigners can be profitable.",
+    "weight": 1.0,
+    "tags": [
+      "marriage",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0092",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 8
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      }
+    ],
+    "effects": {
+      "longevity": 0.4,
+      "occult": 0.8,
+      "research": 0.7,
+      "transformation": 0.7
+    },
+    "interpretation": "Rahu in 8th is deeply interested in occult, research, and hidden knowledge. Life involves sudden transformations. Interest in tantra or psychology.",
+    "weight": 1.0,
+    "tags": [
+      "occult",
+      "research"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0093",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 9
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "fortune": -0.2,
+      "dharma": -0.3,
+      "foreign": 0.6,
+      "unconventional": 0.6
+    },
+    "interpretation": "Rahu in 9th creates unorthodox religious views and benefits from foreign connections. Fortune comes through non-traditional paths.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0094",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      }
+    ],
+    "effects": {
+      "career": 0.8,
+      "fame": 0.7,
+      "foreign": 0.6,
+      "ambition": 0.8
+    },
+    "interpretation": "Rahu in 10th gives extraordinary ambition and unconventional career success. Fame through technology, media, or foreign connections. Rise to prominence.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0095",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 11
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      }
+    ],
+    "effects": {
+      "gains": 0.8,
+      "income": 0.75,
+      "technology": 0.7
+    },
+    "interpretation": "Rahu in 11th brings large financial gains through technology, foreign trade, or unconventional means. Expansive social network.",
+    "weight": 1.0,
+    "tags": [
+      "gains",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0096",
+    "source": "BPHS 31",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "spirituality": 0.6,
+      "foreign": 0.7,
+      "expenses": 0.5
+    },
+    "interpretation": "Rahu in 12th indicates foreign settlement, spiritual liberation-seeking, and expenditure on foreign connections. Strong past-life karmic patterns.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0097",
+    "source": "BPHS 32",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Ketu",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Ketu"
+      }
+    ],
+    "effects": {
+      "spirituality": 0.6,
+      "detachment": 0.7,
+      "health": -0.2,
+      "mystical": 0.7
+    },
+    "interpretation": "Ketu in lagna gives a mystical, detached personality. The native has past-life wisdom. Health may be unpredictable. Spiritual liberation is sought.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0098",
+    "source": "BPHS 32",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Ketu",
+        "house": 6
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Ketu"
+      }
+    ],
+    "effects": {
+      "enemies": -0.7,
+      "health": 0.5,
+      "spiritual_service": 0.7
+    },
+    "interpretation": "Ketu in 6th destroys enemies through karma. Excellent for healing professions. Viparita strength gives resilience through hardship.",
+    "weight": 1.2,
+    "tags": [
+      "enemies",
+      "service"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0099",
+    "source": "BPHS 32",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Ketu",
+        "house": 8
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Ketu"
+      }
+    ],
+    "effects": {
+      "longevity": 0.5,
+      "occult": 0.85,
+      "mysticism": 0.8,
+      "accidents": 0.4
+    },
+    "interpretation": "Ketu in 8th gives profound mystical abilities and interest in tantra, astrology, or psychology. Accident-prone. Spiritual transformation through loss.",
+    "weight": 1.0,
+    "tags": [
+      "occult",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0100",
+    "source": "BPHS 32",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Ketu",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Ketu"
+      }
+    ],
+    "effects": {
+      "spirituality": 0.8,
+      "dharma": 0.6,
+      "unconventional": 0.6
+    },
+    "interpretation": "Ketu in 9th gives deep spiritual wisdom through past-life merits. Unorthodox approach to dharma. May reject conventional religion.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "fortune"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0101",
+    "source": "BPHS 32",
+    "required": [
+      {
+        "type": "planet_in_house",
+        "planet": "Ketu",
+        "house": 12
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Ketu"
+      }
+    ],
+    "effects": {
+      "moksha": 0.85,
+      "spirituality": 0.8,
+      "foreign": 0.5
+    },
+    "interpretation": "Ketu in 12th is considered the best placement for Ketu \u2014 strongly favors spiritual liberation (moksha), renunciation, and meditation.",
+    "weight": 1.3,
+    "tags": [
+      "spirituality",
+      "moksha"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0102",
+    "source": "300_Combinations 20",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Gajakesari Yoga"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.8,
+      "fame": 0.75,
+      "prosperity": 0.7,
+      "wisdom": 0.8
+    },
+    "interpretation": "Gajakesari Yoga: Jupiter in kendra from Moon. The native is wise, famous, and prosperous. Like an elephant (gaja) overpowering opposition.",
+    "weight": 1.4,
+    "tags": [
+      "fame",
+      "intelligence"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0103",
+    "source": "300_Combinations 26",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Budha-Aditya Yoga"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.8,
+      "career": 0.7,
+      "administration": 0.75,
+      "speech": 0.7
+    },
+    "interpretation": "Budha-Aditya Yoga: Sun and Mercury together. Sharp intellect, administrative ability, and career success. The native earns recognition through communication.",
+    "weight": 1.0,
+    "tags": [
+      "intelligence",
+      "career"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0104",
+    "source": "300_Combinations 35",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Chandra-Mangal Yoga"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      },
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "wealth": 0.7,
+      "courage": 0.65,
+      "business": 0.6
+    },
+    "interpretation": "Chandra-Mangal Yoga: Moon and Mars together. Financial gains through bold action. The native is energetic, wealthy, and possibly in money-lending or commerce.",
+    "weight": 1.0,
+    "tags": [
+      "wealth",
+      "courage"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0105",
+    "source": "300_Combinations 1",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Raja Yoga"
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.85,
+      "authority": 0.8,
+      "fame": 0.75,
+      "leadership": 0.8
+    },
+    "interpretation": "Raja Yoga: Kendra and trikona lords combined. Royal favor, authority, and rise to leadership positions. One of the most important success yogas.",
+    "weight": 1.6,
+    "tags": [
+      "career",
+      "fame",
+      "leadership"
+    ]
+  },
+  {
+    "rule_id": "PHALADEEPIKA_0106",
+    "source": "Phaladeepika 6",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Viparita Raja Yoga"
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "resilience": 0.8,
+      "career": 0.6,
+      "success_after_difficulty": 0.75
+    },
+    "interpretation": "Viparita Raja Yoga: trik house lord placed in another trik house. The native succeeds through adversity and gains from others' losses.",
+    "weight": 1.2,
+    "tags": [
+      "career",
+      "resilience"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0107",
+    "source": "300_Combinations 45",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Dhana Yoga"
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "wealth": 0.8,
+      "income": 0.75,
+      "accumulation": 0.7
+    },
+    "interpretation": "Dhana Yoga: lords of 2nd and 11th combined. Significant wealth accumulation. Financial prosperity is a dominant life theme.",
+    "weight": 1.3,
+    "tags": [
+      "wealth",
+      "income"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0108",
+    "source": "300_Combinations 55",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Ruchaka Yoga (Pancha Mahapurusha)"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      },
+      {
+        "type": "planet_dignity",
+        "planet": "Mars",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "courage": 0.9,
+      "leadership": 0.85,
+      "military": 0.8,
+      "fame": 0.75
+    },
+    "interpretation": "Ruchaka Yoga: Mars in own/exalted sign in kendra. Exceptional courage, military or athletic prowess, and commanding leadership.",
+    "weight": 1.5,
+    "tags": [
+      "courage",
+      "leadership"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0109",
+    "source": "300_Combinations 56",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Bhadra Yoga (Pancha Mahapurusha)"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      },
+      {
+        "type": "planet_dignity",
+        "planet": "Mercury",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "intelligence": 0.9,
+      "business": 0.85,
+      "communication": 0.8
+    },
+    "interpretation": "Bhadra Yoga: Mercury in own/exalted sign in kendra. Extraordinary intellect, business acumen, and communication skills.",
+    "weight": 1.5,
+    "tags": [
+      "intelligence",
+      "business"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0110",
+    "source": "300_Combinations 57",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Hamsa Yoga (Pancha Mahapurusha)"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      },
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "wisdom": 0.9,
+      "spirituality": 0.85,
+      "fortune": 0.8,
+      "teaching": 0.85
+    },
+    "interpretation": "Hamsa Yoga: Jupiter in own/exalted sign in kendra. Exceptional wisdom, spiritual attainment, and teaching ability. Blessed life.",
+    "weight": 1.5,
+    "tags": [
+      "wisdom",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0111",
+    "source": "300_Combinations 58",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Malavya Yoga (Pancha Mahapurusha)"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      },
+      {
+        "type": "planet_dignity",
+        "planet": "Venus",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "beauty": 0.9,
+      "luxury": 0.85,
+      "art": 0.8,
+      "relationships": 0.8
+    },
+    "interpretation": "Malavya Yoga: Venus in own/exalted sign in kendra. Extraordinary beauty, luxury, artistic talent, and relationship happiness.",
+    "weight": 1.5,
+    "tags": [
+      "beauty",
+      "art",
+      "relationships"
+    ]
+  },
+  {
+    "rule_id": "300_COMBINATIONS_0112",
+    "source": "300_Combinations 59",
+    "required": [
+      {
+        "type": "yoga_present",
+        "name": "Sasa Yoga (Pancha Mahapurusha)"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      },
+      {
+        "type": "planet_dignity",
+        "planet": "Saturn",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "authority": 0.85,
+      "discipline": 0.9,
+      "career": 0.8,
+      "longevity": 0.7
+    },
+    "interpretation": "Sasa Yoga: Saturn in own/exalted sign in kendra. Exceptional authority, disciplined power, and long-lasting achievements.",
+    "weight": 1.5,
+    "tags": [
+      "authority",
+      "career"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0113",
+    "source": "BPHS 40",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 1,
+        "to_house": 1
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "health": 0.7,
+      "self": 0.8,
+      "identity": 0.75
+    },
+    "interpretation": "Lagna lord in lagna: native is self-reliant, strong, and healthy. Focused on personal identity and self-expression.",
+    "weight": 1.0,
+    "tags": [
+      "personality",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0114",
+    "source": "BPHS 40",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 1,
+        "to_house": 10
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.8,
+      "ambition": 0.75,
+      "identity": 0.65
+    },
+    "interpretation": "Lagna lord in 10th: the self is expressed through career. Highly ambitious, public-facing, and career-driven. Success in chosen profession.",
+    "weight": 1.0,
+    "tags": [
+      "career"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0115",
+    "source": "BPHS 40",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 1,
+        "to_house": 9
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "fortune": 0.75,
+      "spirituality": 0.65,
+      "travel": 0.6
+    },
+    "interpretation": "Lagna lord in 9th: the self finds purpose through dharma and higher learning. Fortunate native, philosophical and religious-minded.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0116",
+    "source": "BPHS 42",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 5,
+        "to_house": 1
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "intelligence": 0.75,
+      "children": 0.65,
+      "creativity": 0.7
+    },
+    "interpretation": "5th lord in lagna: Intelligence and creative ability are core to the personality. Children bring personal identity. Artistic or academic orientation.",
+    "weight": 1.0,
+    "tags": [
+      "intelligence",
+      "children"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0117",
+    "source": "BPHS 42",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 5,
+        "to_house": 9
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "intelligence": 0.8,
+      "dharma": 0.75,
+      "fortune": 0.7
+    },
+    "interpretation": "5th lord in 9th: Exceptional intelligence directed toward dharma and higher knowledge. Philosophical and fortunate native. Blessed children.",
+    "weight": 1.0,
+    "tags": [
+      "intelligence",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0118",
+    "source": "BPHS 44",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 7,
+        "to_house": 7
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "marriage": 0.75,
+      "partnership": 0.7,
+      "business": 0.65
+    },
+    "interpretation": "7th lord in 7th: Strong focus on partnerships. Marriage is central to life. Successful business partnerships. Well-matched spouse.",
+    "weight": 1.0,
+    "tags": [
+      "marriage",
+      "partnership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0119",
+    "source": "BPHS 44",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 7,
+        "to_house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "marriage": -0.3,
+      "foreign": 0.5,
+      "spirituality": 0.4
+    },
+    "interpretation": "7th lord in 12th: Marriage partner from foreign land or spiritual background. Possible separation or loss in marriage. Bed pleasures emphasized.",
+    "weight": 1.0,
+    "tags": [
+      "marriage",
+      "foreign"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0120",
+    "source": "BPHS 46",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 9,
+        "to_house": 1
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "fortune": 0.8,
+      "spirituality": 0.7,
+      "health": 0.6
+    },
+    "interpretation": "9th lord in lagna: Fortune and dharma expressed through the personality itself. The native is naturally blessed and their presence brings good fortune.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0121",
+    "source": "BPHS 46",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 9,
+        "to_house": 10
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.8,
+      "fortune": 0.75,
+      "dharma": 0.7
+    },
+    "interpretation": "9th lord in 10th: Dharmakarmadhipati combination \u2014 fortune through righteous career. The native rises professionally through ethical conduct.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "fortune"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0122",
+    "source": "BPHS 47",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 10,
+        "to_house": 10
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.85,
+      "authority": 0.75,
+      "fame": 0.7
+    },
+    "interpretation": "10th lord in 10th: extremely powerful career house \u2014 the native is highly successful, authoritative, and respected in their profession.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0123",
+    "source": "BPHS 47",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 10,
+        "to_house": 1
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.75,
+      "identity": 0.7,
+      "fame": 0.65
+    },
+    "interpretation": "10th lord in lagna: Career and self-identity are merged. The native's work defines them. Strong career orientation from youth.",
+    "weight": 1.0,
+    "tags": [
+      "career"
+    ]
+  },
+  {
+    "rule_id": "BPHS_0124",
+    "source": "BPHS 47",
+    "required": [
+      {
+        "type": "house_lord_in_house",
+        "from_house": 10,
+        "to_house": 9
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.8,
+      "fortune": 0.75,
+      "dharma": 0.7
+    },
+    "interpretation": "10th lord in 9th: Dharmakarmadhipati \u2014 career aligned with dharma brings fortune. Success in religious, legal, or educational professions.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "fortune"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0125",
+    "source": "BPHS_Dasha 1",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 1
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "wisdom": 0.8,
+      "spirituality": 0.7,
+      "health": 0.6
+    },
+    "interpretation": "Jupiter mahadasha with Jupiter in lagna: excellent period for wisdom, spiritual growth, health improvement, and personal development.",
+    "weight": 1.2,
+    "tags": [
+      "spirituality",
+      "health"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0126",
+    "source": "BPHS_Dasha 2",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Jupiter"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Jupiter",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Jupiter",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "career": 0.9,
+      "fame": 0.85,
+      "authority": 0.8
+    },
+    "interpretation": "Jupiter mahadasha with Jupiter in 10th: outstanding career period. Promotions, recognition, and rise to authority positions.",
+    "weight": 1.4,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0127",
+    "source": "BPHS_Dasha 3",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Saturn"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Saturn",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Saturn",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "career": 0.8,
+      "discipline": 0.85,
+      "authority": 0.75
+    },
+    "interpretation": "Saturn mahadasha with Saturn in 10th: structured career growth through sustained effort. Slow but highly durable rise to authority.",
+    "weight": 1.2,
+    "tags": [
+      "career"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0128",
+    "source": "BPHS_Dasha 4",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Rahu"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Rahu",
+        "house": 10
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "career": 0.75,
+      "fame": 0.7,
+      "disruption": 0.5
+    },
+    "interpretation": "Rahu mahadasha with Rahu in 10th: sudden rise in career, possibly through unconventional means. Fame and controversies may co-exist.",
+    "weight": 1.0,
+    "tags": [
+      "career",
+      "fame"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0129",
+    "source": "BPHS_Dasha 5",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Venus"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Venus",
+        "house": 7
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Venus",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "marriage": 0.9,
+      "relationships": 0.85,
+      "luxury": 0.75
+    },
+    "interpretation": "Venus mahadasha with Venus in 7th: prime period for marriage, romantic happiness, and luxurious lifestyle. Best dasha for Venus themes.",
+    "weight": 1.4,
+    "tags": [
+      "marriage",
+      "romance"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0130",
+    "source": "BPHS_Dasha 6",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Mars"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Mars",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mars",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "career": 0.85,
+      "energy": 0.8,
+      "leadership": 0.8
+    },
+    "interpretation": "Mars mahadasha with Mars in 10th: peak period for career, executive leadership, and physical achievement.",
+    "weight": 1.3,
+    "tags": [
+      "career",
+      "leadership"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0131",
+    "source": "BPHS_Dasha 7",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Moon",
+        "house": 4
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Moon",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "home": 0.8,
+      "mother": 0.75,
+      "emotional": 0.7
+    },
+    "interpretation": "Moon mahadasha with Moon in 4th: deeply satisfying home life, close connection with mother, and emotional contentment.",
+    "weight": 1.0,
+    "tags": [
+      "home",
+      "mother"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0132",
+    "source": "BPHS_Dasha 8",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Sun"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Sun",
+        "house": 9
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Sun",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "fortune": 0.8,
+      "dharma": 0.75,
+      "father": 0.7
+    },
+    "interpretation": "Sun mahadasha with Sun in 9th: fortuitous period aligned with dharma. Father's blessings or father-like mentors are influential.",
+    "weight": 1.0,
+    "tags": [
+      "fortune",
+      "spirituality"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0133",
+    "source": "BPHS_Dasha 9",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Mercury"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Mercury",
+        "house": 10
+      }
+    ],
+    "optional": [
+      {
+        "type": "planet_dignity",
+        "planet": "Mercury",
+        "dignity": "exalted"
+      }
+    ],
+    "effects": {
+      "career": 0.8,
+      "business": 0.8,
+      "communication": 0.75
+    },
+    "interpretation": "Mercury mahadasha with Mercury in 10th: excellent for business, writing, and communication-based careers.",
+    "weight": 1.0,
+    "tags": [
+      "career",
+      "business"
+    ]
+  },
+  {
+    "rule_id": "BPHS_DASHA_0134",
+    "source": "BPHS_Dasha 10",
+    "required": [
+      {
+        "type": "dasha_active",
+        "planet": "Ketu"
+      },
+      {
+        "type": "planet_in_house",
+        "planet": "Ketu",
+        "house": 12
+      }
+    ],
+    "optional": [],
+    "effects": {
+      "spirituality": 0.85,
+      "moksha": 0.8,
+      "foreign": 0.6
+    },
+    "interpretation": "Ketu mahadasha with Ketu in 12th: deeply spiritual period. Renunciation, meditation, and liberation-seeking are emphasized.",
+    "weight": 1.0,
+    "tags": [
+      "spirituality",
+      "moksha"
+    ]
+  }
+]

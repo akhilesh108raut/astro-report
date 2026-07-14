@@ -1,0 +1,208 @@
+{% extends "store/_base.html" %}
+{% block title %}Your Free Preview — Unlock the Full Report{% endblock %}
+
+{% block content %}
+<div class="wrap" style="max-width:760px;padding-top:64px;padding-bottom:80px">
+
+  <div style="text-align:center;margin-bottom:40px" class="fade-up">
+    <div class="eyebrow">Step 2 of 2 · Free preview</div>
+    <h1 style="font-size:clamp(30px,5vw,44px);margin-top:14px">
+      {{ purchase.name or "Your" }}{{ "’s" if purchase.name else "" }} Cosmic Blueprint
+    </h1>
+    <p style="color:var(--ink-dim);margin-top:8px;font-size:14px">
+      Born {{ "%02d"|format(purchase.day) }}-{{ "%02d"|format(purchase.month) }}-{{ purchase.year }}
+      at {{ "%02d"|format(purchase.hour) }}:{{ "%02d"|format(purchase.minute) }}
+      {% if purchase.birth_place %} · {{ purchase.birth_place }}{% endif %}
+    </p>
+  </div>
+
+  <!-- ── FREE PREVIEW ─────────────────────────────────────────────── -->
+  <div class="card fade-up d1" style="margin-bottom:22px">
+    <div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center">
+      <div class="score-ring">
+        <svg width="130" height="130">
+          <circle cx="65" cy="65" r="56" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="9"/>
+          <circle cx="65" cy="65" r="56" fill="none" stroke="url(#gg)" stroke-width="9"
+                  stroke-linecap="round"
+                  stroke-dasharray="{{ (preview.overall_score / 100 * 351.8)|round(1) }} 351.8"/>
+          <defs><linearGradient id="gg"><stop offset="0%" stop-color="#9b5cff"/><stop offset="100%" stop-color="#ffd700"/></linearGradient></defs>
+        </svg>
+        <div class="val">{{ preview.overall_score }}<small>Overall</small></div>
+      </div>
+      <div style="flex:1;min-width:260px">
+        <div class="grid-2" style="gap:12px">
+          <div>
+            <div class="eyebrow" style="font-size:10px">Lagna (Ascendant)</div>
+            <div style="font-family:var(--font-head);font-size:24px;color:var(--gold-bright)">{{ preview.lagna.sign }}</div>
+            <div style="color:var(--ink-dim);font-size:12px">Lord: {{ preview.lagna.lord }}</div>
+          </div>
+          <div>
+            <div class="eyebrow" style="font-size:10px">Moon Sign</div>
+            <div style="font-family:var(--font-head);font-size:24px;color:var(--gold-bright)">{{ preview.moon.sign }}</div>
+            <div style="color:var(--ink-dim);font-size:12px">{{ preview.moon.nakshatra }} · Pada {{ preview.moon.nakshatra_pada }}</div>
+          </div>
+          <div>
+            <div class="eyebrow" style="font-size:10px">Sun Sign</div>
+            <div style="font-family:var(--font-head);font-size:24px;color:var(--gold-bright)">{{ preview.sun_sign }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if preview.yogas %}
+    <div style="margin-top:24px;border-top:1px solid rgba(217,178,91,.15);padding-top:20px">
+      <div class="eyebrow" style="font-size:10px;margin-bottom:10px">Yogas detected in your chart</div>
+      {% for y in preview.yogas %}
+      <div style="margin-bottom:10px">
+        <span class="chip gold">{{ y.name }}</span>
+        <span style="color:var(--ink-dim);font-size:13.5px">{{ y.effect }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ── LOCKED PREMIUM CONTENT ───────────────────────────────────── -->
+  <div class="locked-section card fade-up d2" style="padding:0">
+    <div class="locked-blur" style="padding:28px">
+      {% for title in ["Classical Rules — BPHS & Phaladeepika", "Career & Success Timeline",
+                       "Marriage & Relationships", "Wealth & Finance Windows",
+                       "Health & Longevity", "Vimshottari Dasha — 120-Year Map",
+                       "Life Purpose & Past Karma", "Remedies & Lucky Periods",
+                       "Important Ages & Warnings"] %}
+      <div style="margin-bottom:22px">
+        <h3 style="font-size:19px;margin-bottom:8px">{{ title }}</h3>
+        <div class="skeleton" style="width:92%;height:13px;margin-bottom:7px"></div>
+        <div class="skeleton" style="width:84%;height:13px;margin-bottom:7px"></div>
+        <div class="skeleton" style="width:64%;height:13px"></div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="lock-overlay">
+      <div class="lock-icon">🔒</div>
+      <h2 style="font-size:26px">Unlock Full 40+ Page Report</h2>
+      <p style="color:var(--ink-dim);max-width:420px;font-size:14px;padding:0 18px">
+        22 in-depth sections: career, marriage, finance, health, dashas, karma,
+        remedies, important ages — generated from your exact chart. Yours forever.
+      </p>
+      <button id="pay-btn" class="btn btn-gold" style="font-size:18px;padding:18px 44px" onclick="startPayment()">
+        Pay ₹{{ price.current_price }} — Unlock Now
+      </button>
+      {% if price.reports_left_at_this_price and price.next_price %}
+      <div style="color:var(--ink-dim);font-size:12px">
+        Price rises to ₹{{ price.next_price }} after {{ "{:,}".format(price.reports_left_at_this_price) }} more reports
+      </div>
+      {% endif %}
+      {% if dev_mode %}
+      <div class="chip" style="border-color:var(--red);color:var(--red)">DEV MODE — payment simulated locally</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div id="pay-err" style="display:none;color:var(--red);text-align:center;margin-top:16px"></div>
+
+  <!-- ── GENERATION OVERLAY ───────────────────────────────────────── -->
+  <div id="gen-overlay" style="display:none;position:fixed;inset:0;z-index:100;
+       background:rgba(6,4,15,.94);backdrop-filter:blur(8px);
+       flex-direction:column;align-items:center;justify-content:center;gap:22px">
+    <div style="font-size:44px">✦</div>
+    <h2 style="font-size:26px">Writing your report…</h2>
+    <p id="gen-msg" style="color:var(--ink-dim);font-size:14px">Consulting the classical texts</p>
+    <div class="progress-track" style="width:min(420px,80vw)">
+      <div id="gen-bar" class="progress-fill" style="width:4%"></div>
+    </div>
+  </div>
+
+  <div class="no-print" style="text-align:center;margin-top:26px">
+    <a href="/store/" class="btn btn-ghost" style="font-size:13px;padding:10px 22px">← Edit birth details</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if not dev_mode %}<script src="https://checkout.razorpay.com/v1/checkout.js"></script>{% endif %}
+<script>
+const PURCHASE_UUID = {{ purchase.uuid|tojson }};
+const DEV_MODE = {{ 'true' if dev_mode else 'false' }};
+
+const GEN_MSGS = [
+  "Consulting the classical texts", "Mapping your Vimshottari dasha",
+  "Weighing planetary dignities", "Matching BPHS rules to your chart",
+  "Writing career & wealth sections", "Compiling remedies", "Polishing your report"
+];
+
+function showGenerating() {
+  const ov = document.getElementById('gen-overlay');
+  ov.style.display = 'flex';
+  let i = 0, w = 4;
+  const bar = document.getElementById('gen-bar'), msg = document.getElementById('gen-msg');
+  const tick = setInterval(() => {
+    w = Math.min(w + Math.random() * 9, 92);
+    bar.style.width = w + '%';
+    msg.textContent = GEN_MSGS[(i++) % GEN_MSGS.length];
+  }, 1400);
+  return () => { clearInterval(tick); bar.style.width = '100%'; };
+}
+
+function fail(msg) {
+  const e = document.getElementById('pay-err');
+  e.textContent = msg; e.style.display = 'block';
+  document.getElementById('gen-overlay').style.display = 'none';
+  document.getElementById('pay-btn').disabled = false;
+}
+
+async function startPayment() {
+  const btn = document.getElementById('pay-btn');
+  btn.disabled = true;
+  document.getElementById('pay-err').style.display = 'none';
+
+  let order;
+  try {
+    const r = await fetch('/store/api/create-order', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ purchase_uuid: PURCHASE_UUID })
+    });
+    order = await r.json();
+    if (!r.ok) throw new Error(order.error || 'Could not start payment');
+  } catch (e) { return fail(e.message); }
+
+  if (order.dev_mode) {
+    // Local development: simulate the gateway
+    const done = showGenerating();
+    try {
+      const r = await fetch('/store/api/dev-pay', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ purchase_uuid: PURCHASE_UUID })
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || 'Simulation failed');
+      done(); window.location.href = d.report_url;
+    } catch (e) { fail(e.message); }
+    return;
+  }
+
+  const rzp = new Razorpay({
+    key: order.key_id,
+    amount: order.amount,
+    currency: 'INR',
+    name: 'Astro Report Store',
+    description: 'Complete Vedic Astrology Report',
+    order_id: order.order_id,
+    theme: { color: '#d9b25b' },
+    modal: { ondismiss: () => { window.location.href = '/store/cancel'; } },
+    handler: async function (resp) {
+      const done = showGenerating();
+      try {
+        const r = await fetch('/store/api/verify', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(resp)
+        });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || 'Verification failed');
+        done(); window.location.href = d.report_url;
+      } catch (e) { fail(e.message); }
+    }
+  });
+  rzp.open();
+}
+</script>
+{% endblock %}

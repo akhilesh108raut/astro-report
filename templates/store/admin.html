@@ -1,0 +1,92 @@
+{% extends "store/_base.html" %}
+{% block title %}Store Admin — Astro Report Store{% endblock %}
+
+{% block content %}
+<div class="wrap" style="max-width:1000px;padding:60px 24px 90px">
+  <div class="eyebrow">Astro Report Store</div>
+  <h1 style="font-size:38px;margin:12px 0 34px">Admin <span class="gold-text">Dashboard</span></h1>
+
+  <!-- ── STAT CARDS ─────────────────────────────────────────────────── -->
+  <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card lift"><div class="eyebrow" style="font-size:10px">Reports Sold</div>
+      <div class="stat-num">{{ "{:,}".format(total_paid) }}</div></div>
+    <div class="card lift"><div class="eyebrow" style="font-size:10px">Today's Revenue</div>
+      <div class="stat-num">₹{{ "{:,}".format(todays_revenue) }}</div></div>
+    <div class="card lift"><div class="eyebrow" style="font-size:10px">Total Revenue</div>
+      <div class="stat-num">₹{{ "{:,}".format(total_revenue) }}</div></div>
+    <div class="card lift"><div class="eyebrow" style="font-size:10px">Pending</div>
+      <div class="stat-num">{{ pending }}</div></div>
+  </div>
+
+  <!-- ── PRICE TIER PROGRESS ────────────────────────────────────────── -->
+  <div class="card" style="margin-top:26px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+      <h2 style="font-size:22px">Current Price: <span class="gold-text">₹{{ info.current_price }}</span></h2>
+      {% if info.next_price and info.reports_left_at_this_price %}
+      <span style="color:var(--ink-dim);font-size:13px">
+        {{ "{:,}".format(info.reports_left_at_this_price) }} reports until ₹{{ info.next_price }}
+      </span>
+      {% endif %}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap">
+      {% for lo, hi, p in tiers %}
+      <div style="flex:1;min-width:110px">
+        <div class="progress-track">
+          {% if total_paid > (hi if hi is not none else total_paid) %}
+            <div class="progress-fill" style="width:100%"></div>
+          {% elif total_paid >= lo %}
+            {% set span = ((hi - lo + 1) if hi is not none else 1000000) %}
+            <div class="progress-fill" style="width:{{ (((total_paid - lo) / span) * 100)|round(1) }}%"></div>
+          {% endif %}
+        </div>
+        <div style="font-size:11px;color:var(--ink-dim);margin-top:6px">
+          ₹{{ p }} · {{ "{:,}".format(lo) }}{{ ("–" + "{:,}".format(hi)) if hi is not none else "+" }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- ── 14-DAY REVENUE CHART ───────────────────────────────────────── -->
+  <div class="card" style="margin-top:26px">
+    <h2 style="font-size:20px;margin-bottom:22px">Revenue — last 14 days</h2>
+    <div class="bars">
+      {% for d in days %}
+      <div class="bar" data-tip="{{ d.label }} · ₹{{ d.revenue }} · {{ d.count }} sold"
+           style="height:{{ ((d.revenue / max_rev) * 100)|round(1) }}%"></div>
+      {% endfor %}
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink-dim);margin-top:8px">
+      <span>{{ days[0].label }}</span><span>{{ days[-1].label }}</span>
+    </div>
+  </div>
+
+  <!-- ── RECENT PURCHASES ───────────────────────────────────────────── -->
+  <div class="card" style="margin-top:26px;overflow-x:auto">
+    <h2 style="font-size:20px;margin-bottom:18px">Recent Purchases</h2>
+    <table class="ptable">
+      <thead><tr><th>When</th><th>Name</th><th>Place</th><th>Price</th><th>Status</th><th>Report</th></tr></thead>
+      <tbody>
+      {% for p in recent %}
+        <tr>
+          <td style="white-space:nowrap">{{ p.created_at.strftime("%d %b %H:%M") }}</td>
+          <td>{{ p.name or "—" }}</td>
+          <td>{{ p.birth_place or "—" }}</td>
+          <td>{{ ("₹" ~ p.price_paid) if p.price_paid else "—" }}</td>
+          <td>
+            <span class="chip" style="{% if p.status == 'paid' %}border-color:var(--green);color:var(--green)
+              {% elif p.status == 'failed' %}border-color:var(--red);color:var(--red){% endif %}">
+              {{ p.status }}</span>
+          </td>
+          <td>{% if p.report and p.status == 'paid' %}
+            <a href="/store/report/{{ p.report.uuid }}" style="color:var(--gold)">open</a>
+          {% else %}—{% endif %}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" style="text-align:center;color:var(--ink-dim)">No purchases yet</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

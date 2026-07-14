@@ -1,0 +1,16 @@
+{% extends "store/_base.html" %}
+{% block title %}Payment Successful — Astro Report Store{% endblock %}
+
+{% block content %}
+<div class="wrap" style="max-width:520px;padding-top:130px;text-align:center">
+  <div class="card fade-up" style="padding:48px 36px">
+    <div style="font-size:52px;margin-bottom:18px">✨</div>
+    <h1 style="font-size:32px;margin-bottom:10px">Report <span class="gold-text">Unlocked</span></h1>
+    <p style="color:var(--ink-dim);line-height:1.8;margin-bottom:28px">
+      {% if price %}Payment of ₹{{ price }} confirmed.{% endif %}
+      Your complete Vedic report is ready and saved forever.
+    </p>
+    <a class="btn btn-gold" href="/store/report-v2/{{ report_uuid }}">Open My Report →</a>
+  </div>
+</div>
+{% endblock %}

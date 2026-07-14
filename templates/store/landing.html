@@ -1,0 +1,173 @@
+{% extends "store/_base.html" %}
+{% block title %}Discover Your Destiny — Vedic AI Report{% endblock %}
+
+{% block content %}
+<!-- ── HERO ─────────────────────────────────────────────────────────── -->
+<header class="wrap" style="padding-top:96px;text-align:center">
+  <div class="eyebrow fade-up">Vedic Report Engine</div>
+  <h1 class="fade-up d1" style="font-size:clamp(42px,7vw,76px);line-height:1.08;margin:22px 0 10px">
+    Discover Your <span class="gold-text">Destiny</span>
+  </h1>
+  <p class="fade-up d2" style="font-family:var(--font-head);font-size:clamp(19px,2.6vw,26px);color:var(--ink-dim)">
+    Ancient Vedic Wisdom · Powered by AI
+  </p>
+  <p class="fade-up d2" style="max-width:620px;margin:18px auto 0;color:var(--ink-dim);line-height:1.8">
+    A 40+ page personalised reading built from your exact birth chart — planetary positions,
+    Vimshottari dasha, yogas and classical rules from BPHS &amp; Phaladeepika, interpreted by AI.
+  </p>
+  <div class="fade-up d3" style="margin-top:36px">
+    <a href="#form" class="btn btn-gold" style="font-size:18px;padding:18px 46px">✦ Generate My Report</a>
+  </div>
+  <div class="fade-up d4" style="margin-top:18px">
+    <span class="chip gold">Current Price ₹{{ price.current_price }}</span>
+    {% if price.reports_left_at_this_price and price.next_price %}
+    <span class="chip">Only {{ "{:,}".format(price.reports_left_at_this_price) }} reports left before ₹{{ price.next_price }}</span>
+    {% endif %}
+  </div>
+</header>
+
+<!-- ── STATS ────────────────────────────────────────────────────────── -->
+<section class="wrap" style="margin-top:84px">
+  <div class="stats">
+    <div class="card lift fade-up" style="text-align:center">
+      <div class="stat-num">{{ "{:,}".format(display_reports) }}+</div>
+      <div style="color:var(--ink-dim);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px">Reports Generated</div>
+    </div>
+    <div class="card lift fade-up d1" style="text-align:center">
+      <div class="stat-num">4.9★</div>
+      <div style="color:var(--ink-dim);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px">Average Rating</div>
+    </div>
+    <div class="card lift fade-up d2" style="text-align:center">
+      <div class="stat-num">📜</div>
+      <div style="color:var(--ink-dim);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px">Based on Ancient Scriptures</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BIRTH FORM ───────────────────────────────────────────────────── -->
+<section id="form" class="wrap" style="margin-top:90px;max-width:640px">
+  <div class="card fade-up">
+    <div class="eyebrow" style="margin-bottom:8px">Step 1 of 2</div>
+    <h2 style="font-size:30px;margin-bottom:6px">Your Birth Details</h2>
+    <p style="color:var(--ink-dim);font-size:14px;margin-bottom:26px">
+      Exact time and place give the most accurate reading.
+    </p>
+
+    <div class="field" style="margin-bottom:18px">
+      <label>Full Name (optional)</label>
+      <input id="f-name" type="text" placeholder="Your name" maxlength="100">
+    </div>
+
+    <div class="grid-2" style="margin-bottom:18px">
+      <div class="field"><label>Date of Birth *</label><input id="f-date" type="date" required></div>
+      <div class="field"><label>Time of Birth *</label><input id="f-time" type="time" required></div>
+    </div>
+
+    <div class="field" style="margin-bottom:18px">
+      <label>Birth Place *</label>
+      <select id="f-city">
+        <option value="21.1458,79.0882,5.5">Nagpur, India</option>
+        <option value="19.0760,72.8777,5.5">Mumbai, India</option>
+        <option value="28.6139,77.2090,5.5">Delhi, India</option>
+        <option value="18.5204,73.8567,5.5">Pune, India</option>
+        <option value="12.9716,77.5946,5.5">Bengaluru, India</option>
+        <option value="13.0827,80.2707,5.5">Chennai, India</option>
+        <option value="22.5726,88.3639,5.5">Kolkata, India</option>
+        <option value="17.3850,78.4867,5.5">Hyderabad, India</option>
+        <option value="23.0225,72.5714,5.5">Ahmedabad, India</option>
+        <option value="26.9124,75.7873,5.5">Jaipur, India</option>
+        <option value="custom">Other — enter coordinates</option>
+      </select>
+    </div>
+
+    <div id="custom-coords" class="grid-2" style="display:none;margin-bottom:18px">
+      <div class="field"><label>Latitude</label><input id="f-lat" type="number" step="0.0001" placeholder="21.1458"></div>
+      <div class="field"><label>Longitude</label><input id="f-lon" type="number" step="0.0001" placeholder="79.0882"></div>
+    </div>
+
+    <div id="f-err" style="display:none;color:var(--red);font-size:14px;margin-bottom:16px"></div>
+
+    <button id="f-submit" class="btn btn-gold" style="width:100%;font-size:17px" onclick="submitBirth()">
+      ✦ Preview My Free Reading
+    </button>
+    <p style="text-align:center;color:var(--ink-dim);font-size:12px;margin-top:14px">
+      Free preview · Full report ₹{{ price.current_price }} · Yours forever
+    </p>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ─────────────────────────────────────────────────── -->
+<section class="wrap" style="margin:100px auto">
+  <div class="eyebrow" style="text-align:center;margin-bottom:30px">What seekers say</div>
+  <div class="stats">
+    <div class="card lift"><p style="color:var(--ink-dim);line-height:1.8;font-size:14.5px">
+      “The career timing section matched my promotion to the month. The dasha analysis is
+      genuinely detailed — not generic horoscope filler.”</p>
+      <div style="margin-top:14px;color:var(--gold)">— Priya S., Pune</div></div>
+    <div class="card lift"><p style="color:var(--ink-dim);line-height:1.8;font-size:14.5px">
+      “I've paid ₹2,000 for readings that said less than this. The yoga explanations
+      cite the actual classical rules.”</p>
+      <div style="margin-top:14px;color:var(--gold)">— Rohan M., Mumbai</div></div>
+    <div class="card lift"><p style="color:var(--ink-dim);line-height:1.8;font-size:14.5px">
+      “Beautifully presented. The remedies section alone was worth it. Downloaded the
+      PDF and shared it with my family astrologer — he approved.”</p>
+      <div style="margin-top:14px;color:var(--gold)">— Ananya K., Bengaluru</div></div>
+  </div>
+</section>
+
+<footer style="text-align:center;padding:40px 0 60px;color:var(--ink-dim);font-size:12px">
+  ☽ Astro Report Store · Swiss Ephemeris · Lahiri Ayanamsha · Whole Sign Houses
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('f-city').addEventListener('change', function () {
+  document.getElementById('custom-coords').style.display =
+    this.value === 'custom' ? 'grid' : 'none';
+});
+
+async function submitBirth() {
+  const err = document.getElementById('f-err');
+  err.style.display = 'none';
+
+  const d = document.getElementById('f-date').value;
+  const t = document.getElementById('f-time').value;
+  if (!d || !t) { err.textContent = 'Date and time of birth are required.'; err.style.display = 'block'; return; }
+
+  let lat, lon, tz = 5.5, place;
+  const citySel = document.getElementById('f-city');
+  if (citySel.value === 'custom') {
+    lat = parseFloat(document.getElementById('f-lat').value);
+    lon = parseFloat(document.getElementById('f-lon').value);
+    place = 'Custom coordinates';
+    if (isNaN(lat) || isNaN(lon)) { err.textContent = 'Enter valid coordinates.'; err.style.display = 'block'; return; }
+  } else {
+    [lat, lon, tz] = citySel.value.split(',').map(Number);
+    place = citySel.options[citySel.selectedIndex].text;
+  }
+
+  const [year, month, day] = d.split('-').map(Number);
+  const [hour, minute] = t.split(':').map(Number);
+
+  const btn = document.getElementById('f-submit');
+  btn.disabled = true; btn.textContent = 'Casting your chart…';
+
+  try {
+    const r = await fetch('/store/api/preview', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: document.getElementById('f-name').value,
+        year, month, day, hour, minute, lat, lon, timezone: tz, birth_place: place
+      })
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || 'Server error');
+    window.location.href = data.checkout_url;
+  } catch (e) {
+    err.textContent = e.message; err.style.display = 'block';
+    btn.disabled = false; btn.textContent = '✦ Preview My Free Reading';
+  }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,490 @@
+{% extends "store/_base.html" %}
+{% block title %}{{ purchase.name or "Your" }} Destiny — Astro Report{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('report_store.static', filename='css/report_v2.css') }}?v={{ asset_version() }}">
+{% endblock %}
+
+{% block content %}
+{% set sc = ai.summary_card or {} %}
+{% set dna = chart.chart_dna or {} %}
+{% set cs = chart.confidence_scores or {} %}
+{% set adv = chart.advanced_predictions or {} %}
+{% set past = adv.past_lives or {} %}
+{% set karma = adv.karma_debts or {} %}
+{% set dharma = adv.dharma or {} %}
+{% set debt0 = (karma.pending_karmic_debts or [{}])[0] %}
+
+<div class="no-print" style="position:fixed;top:16px;right:16px;z-index:60">
+  <a href="/store/report/{{ report.uuid }}" class="btn btn-ghost" style="font-size:11px;padding:8px 16px">Classic view</a>
+</div>
+
+<!-- ══════════════════ HALL 1 — ARRIVAL ══════════════════ -->
+<section id="hall-arrival" class="hall">
+  <div class="hall-inner reveal in">
+    <div class="arrival-name">{{ purchase.name or "Seeker" }}</div>
+    <div class="arrival-facts">
+      <b>{{ chart.lagna.sign }}</b> Rising &nbsp;·&nbsp; Moon in <b>{{ chart.moon.sign }}</b>
+      &nbsp;·&nbsp; <b>{{ chart.dasha.mahadasha }}</b> Mahadasha
+      {% if age %}&nbsp;·&nbsp; Age <b>{{ age }}</b>{% endif %}
+    </div>
+    <p class="arrival-hook">“{{ dna.one_liner or (sc.insight_sentence) or "Your chart holds a story only the stars could write." }}”</p>
+    <button class="scroll-cue" onclick="document.getElementById('hall-onepage').scrollIntoView({behavior:'smooth'})">
+      <span>Begin Your Journey</span><span class="arrow">↓</span>
+    </button>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 1.5 — IF I ONLY READ ONE PAGE ══════════════════ -->
+{% if onepage %}
+<section id="hall-onepage" class="hall compact">
+  <div class="hall-inner reveal">
+    <div class="hall-eyebrow">🪞 If You Only Read One Page</div>
+    <div class="card" style="padding:34px 30px">
+      {% for label, val in [
+          ("Soul Archetype", onepage.archetype),
+          ("Current Chapter", onepage.life_chapter),
+          ("Biggest Strength", onepage.strength),
+          ("Biggest Challenge", onepage.challenge),
+          ("Next Turning Point", onepage.turning_point),
+      ] %}
+      {% if val %}
+      <div style="margin-bottom:16px">
+        <div class="summary-label" style="margin-bottom:4px">{{ label }}</div>
+        <div style="font-size:16px;color:var(--ink)">{{ val }}</div>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% if onepage.recommendations %}
+      <div style="margin-bottom:16px">
+        <div class="summary-label" style="margin-bottom:8px">Top Recommendations</div>
+        {% for r in onepage.recommendations %}
+        <div style="font-size:14px;color:var(--ink);margin-bottom:5px">✓ {{ r }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if onepage.north_star %}
+      <p class="summary-insight" style="margin-top:26px">“{{ onepage.north_star }}”</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<div class="hall-divider reveal" style="margin-top:0"><span>✦</span></div>
+
+<!-- ══════════════════ HALL 2 — SOUL ARCHETYPE ══════════════════ -->
+{% if dna.archetype_name %}
+<section id="hall-archetype" class="hall">
+  <div class="hall-inner reveal">
+    <div class="archetype-card">
+      <div class="archetype-sigil">✦</div>
+      <div class="archetype-name">{{ dna.archetype_name }}</div>
+      {% if dna.one_liner %}<p class="archetype-hook">“{{ dna.one_liner }}”</p>{% endif %}
+      <div class="archetype-tiles">
+        {% for label, val, shadow in [
+            ("Primary Axis", dna.primary_life_axis, false),
+            ("Destiny", dna.destiny_type, false),
+            ("Life Mission", dna.life_gift, false),
+            ("Shadow Theme", dna.shadow_theme, true),
+        ] %}
+        {% if val %}
+        <div class="archetype-tile{{ ' shadow' if shadow else '' }}">
+          <div class="tk">{{ label }}</div><div class="tv">{{ val }}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ HALL 3 — EXECUTIVE SUMMARY ══════════════════ -->
+<section id="hall-summary" class="hall compact">
+  <div class="hall-inner reveal">
+    <div class="hall-eyebrow">What You're Living Through Now</div>
+    <div class="summary-card">
+      <div class="summary-row">
+        <div class="summary-label">Life Chapter</div>
+        <div class="summary-value" style="color:var(--gold-bright)">{{ sc.life_chapter or chart.dasha.mahadasha ~ " Mahadasha" }}</div>
+      </div>
+      <div class="summary-pair">
+        <div>
+          <div class="summary-label">Greatest Gift</div>
+          <div class="summary-value" style="font-size:16px">{{ sc.greatest_gift or "—" }}</div>
+        </div>
+        <div>
+          <div class="summary-label">Greatest Challenge</div>
+          <div class="summary-value" style="font-size:16px">{{ sc.greatest_challenge or "—" }}</div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div class="summary-label">Big Opportunity</div>
+        <div class="summary-value" style="font-size:16px">{{ sc.big_opportunity or "—" }}</div>
+      </div>
+      <p class="summary-insight">{{ sc.insight_sentence or "" }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 3.5 — REVEAL CARDS ══════════════════ -->
+<section id="hall-reveal" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:920px">
+    <div class="hall-eyebrow">What Makes You Different</div>
+    <div class="hall-title">Three Things About You</div>
+    <div class="reveal-grid">
+      <div class="reveal-card gift">
+        <div class="reveal-icon">✨</div>
+        <div class="reveal-label">Hidden Gift</div>
+        <div class="reveal-headline">{{ hidden_gift.headline }}</div>
+        <div class="reveal-detail">{{ hidden_gift.detail }}</div>
+        {% if hidden_gift.why %}<div class="reveal-why">{{ hidden_gift.why }}</div>{% endif %}
+      </div>
+      <div class="reveal-card power">
+        <div class="reveal-icon">⚡</div>
+        <div class="reveal-label">Your Superpower</div>
+        <div class="reveal-headline">{{ superpower.headline }}</div>
+        <div class="reveal-detail">{{ superpower.detail }}</div>
+        {% if superpower.why %}<div class="reveal-why">{{ superpower.why }}</div>{% endif %}
+      </div>
+      <div class="reveal-card blind">
+        <div class="reveal-icon">🌫</div>
+        <div class="reveal-label">Your Blind Spot</div>
+        <div class="reveal-headline">{{ blind_spot.headline }}</div>
+        <div class="reveal-detail">{{ blind_spot.detail }}</div>
+        {% if blind_spot.why %}<div class="reveal-why">{{ blind_spot.why }}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REFLECTION PAUSE ── -->
+<section class="reflection reveal">
+  <div class="reflection-inner">
+    <div class="reflection-mark">✦</div>
+    <p class="reflection-q">Have you noticed this pattern quietly repeating throughout your life?</p>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 4 — LIFE STORY ══════════════════ -->
+{% if chapters %}
+<section id="hall-story" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:960px">
+    <div class="hall-eyebrow">Who You Are Becoming</div>
+    <div class="hall-title">The Chapters of Your Life</div>
+    <div class="chapters-track">
+      {% for ch in chapters %}
+      <div class="chapter-node">
+        <div class="chapter-connector"></div>
+        <div class="chapter-roman">Chapter {{ ch.roman }}</div>
+        <div class="chapter-title">{{ ch.title }}</div>
+        <div class="chapter-age">Age {{ ch.age_range }}</div>
+        {% for theme in ch.themes %}
+        <div class="chapter-theme">{{ theme }}</div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ HALL 5 — KARMA CHAMBER ══════════════════ -->
+<section id="hall-karma" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:920px">
+    <div class="hall-eyebrow">What Shaped You</div>
+    <div class="hall-title">Where You Come From, Where You're Going</div>
+    <div class="karma-grid">
+      <div class="karma-card past">
+        <div class="karma-icon">🌙</div>
+        <div class="karma-label">Past Life</div>
+        <div class="karma-headline">{{ past.past_life_focus or "Spiritual evolution" }}</div>
+        <div class="karma-detail">{{ (past.karmic_skills or [])|join(", ") }}</div>
+      </div>
+      <div class="karma-card present">
+        <div class="karma-icon">🔥</div>
+        <div class="karma-label">Current Karma</div>
+        <div class="karma-headline">{{ debt0.resolution or "Build discipline. Master patience." }}</div>
+        <div class="karma-detail">{{ debt0.area }}{% if debt0.timeline %} · {{ debt0.timeline }}{% endif %}</div>
+      </div>
+      <div class="karma-card future">
+        <div class="karma-icon">✦</div>
+        <div class="karma-label">Soul Purpose</div>
+        <div class="karma-headline">{{ dharma.life_purpose or "Create, guide, and grow" }}</div>
+        <div class="karma-detail">{{ dharma.core_mission or "" }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REFLECTION PAUSE ── -->
+<section class="reflection reveal">
+  <div class="reflection-inner">
+    <div class="reflection-mark">✦</div>
+    <p class="reflection-q">What part of yourself have you been quietly setting aside?</p>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 6 — DESTINY COMPASS ══════════════════ -->
+{% if cs %}
+<section id="hall-compass" class="hall compact">
+  <div class="hall-inner reveal">
+    <div class="hall-eyebrow">Where Your Energy Flows</div>
+    <div class="hall-title">Your Four Directions</div>
+    <div class="compass-wrap">
+      <div class="compass-ring"></div>
+      {% set points = [
+          ("top",    "Career",       cs.get("Career & Authority", {})),
+          ("right",  "Love",         cs.get("Marriage & Partnerships", {})),
+          ("bottom", "Spirituality", cs.get("Spirituality & Growth", {})),
+          ("left",   "Money",        cs.get("Wealth & Finances", {})),
+      ] %}
+      {% for pos, label, data in points %}
+      {% set score = data.score if data is mapping else data %}
+      <div class="compass-point {{ pos }}" onclick="toggleCompass('{{ pos }}')">
+        <div class="compass-dot"></div>
+        <div class="compass-label">{{ label }}</div>
+        <div class="compass-score">{{ score or "—" }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% for pos, label, data in points %}
+    <div class="compass-detail" id="compass-{{ pos }}">
+      <strong style="color:var(--gold-bright)">{{ label }}</strong> — confidence {{ (data.confidence if data is mapping else "") or "Moderate" }}<br>
+      {{ (data.reasoning if data is mapping else [])|join(" · ") }}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ HALL 7 — YOUR INNER COUNCIL ══════════════════ -->
+{% if council %}
+<section id="hall-planets" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:760px">
+    <div class="hall-eyebrow">Who Walks With You</div>
+    <div class="hall-title">Your Inner Council</div>
+    <p style="text-align:center;color:var(--ink-dim);font-size:14px;margin:-24px auto 34px;max-width:520px">
+      Nine voices live inside you. Each wants something different. Learning to hear them
+      is how you understand your own contradictions.
+    </p>
+    {% for c in council %}
+    <div class="council-card" onclick="this.classList.toggle('expanded')">
+      <div class="council-symbol">{{ c.symbol }}</div>
+      <div class="council-body">
+        <div class="council-character">{{ c.character }}</div>
+        <div class="council-planet">the voice of your {{ c.planet }}</div>
+        <p class="council-voice">“{{ c.voice }}”</p>
+        <div class="council-detail">In your chart, this voice speaks from {{ c.sign }}
+          (house {{ c.house }}){% if c.dignity and c.dignity != 'neutral' %} — and here it is
+          especially {{ c.dignity }}, meaning it plays an outsized role in who you are{% endif %}.</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ HALL 8 — YOGA GALLERY ══════════════════ -->
+{% if yogas_v2 %}
+<section id="hall-yogas" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:720px">
+    <div class="hall-eyebrow">What Makes You Rare</div>
+    <div class="hall-title">The Patterns Few People Carry</div>
+    {% for y in yogas_v2 %}
+    <div class="yoga-card">
+      <div class="yoga-title">{{ y.name }}</div>
+      <div class="yoga-rarity">{{ y.rarity }}</div>
+      <div class="yoga-stars">{{ "★★★★★" if y.rarity == "Very Rare" else "★★★★☆" if y.rarity == "Rare" else "★★★☆☆" }}</div>
+      <div class="yoga-effect">{{ y.effect or y.description or "" }}</div>
+      {% if y.planets %}
+      <div style="margin-top:10px">{% for pl in y.planets %}<span class="chip">{{ pl }}</span>{% endfor %}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ HALL 8.5 — ACHIEVEMENT BADGES ══════════════════ -->
+{% if badges %}
+<section id="hall-badges" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:700px">
+    <div class="hall-eyebrow">Your Chart's Signature</div>
+    <div class="hall-title">Achievements</div>
+    <div class="badge-grid">
+      {% for b in badges %}
+      <div class="badge"><span class="bicon">{{ b.icon }}</span>{{ b.label }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ HALL 9 — ANCIENT WISDOM ══════════════════ -->
+{% if top_rules %}
+<section id="hall-wisdom" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:720px">
+    <div class="hall-eyebrow">What the Ancients Saw in You</div>
+    <div class="hall-title">Wisdom Written Long Before You</div>
+    {% for r in top_rules %}
+    {% set conf = (r.effects.values()|list|max * 100)|round|int if r.effects else 0 %}
+    <div class="quote-card" onclick="this.classList.toggle('expanded')">
+      <div class="quote-icon">📜</div>
+      <div class="quote-source">{{ r.source }}</div>
+      <div class="quote-text">“{{ r.interpretation[:120] }}{{ '…' if r.interpretation|length > 120 else '' }}”</div>
+      <div class="quote-conf">Confidence {{ conf }}%</div>
+      <div class="quote-expand">{{ r.interpretation }}
+        {% if r.tags %}<div style="margin-top:10px">{% for t in r.tags %}<span class="chip" style="font-size:10px">{{ t }}</span>{% endfor %}</div>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- ── REFLECTION PAUSE ── -->
+<section class="reflection reveal">
+  <div class="reflection-inner">
+    <div class="reflection-mark">✦</div>
+    <p class="reflection-q">What would change if you trusted your own intuition a little more?</p>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 10 — REMEDY TEMPLE ══════════════════ -->
+{% if ai.remedies %}
+<section id="hall-remedies" class="hall compact">
+  <div class="hall-inner reveal" style="max-width:960px">
+    <div class="hall-eyebrow">How to Move Forward</div>
+    <div class="hall-title">Small Practices, Real Shifts</div>
+    <div class="remedy-grid">
+      {% for r in ai.remedies %}
+      <div class="remedy-card">
+        <div class="remedy-icon">{{ planet_symbol.get(r.planet, '✦') if r is mapping else '✦' }}</div>
+        <div class="remedy-title">{{ r.title if r is mapping else r }}</div>
+        {% if r is mapping %}
+        <div class="remedy-meta">
+          {% if r.weekday %}<span>{{ r.weekday }}</span>{% endif %}
+          {% if r.difficulty %}<span>{{ r.difficulty }}</span>{% endif %}
+          {% if r.duration_minutes %}<span>{{ r.duration_minutes }} min</span>{% endif %}
+        </div>
+        {% if r.benefits %}
+        <div class="remedy-benefits">{% for b in r.benefits %}<span class="chip gold" style="font-size:10px">{{ b }}</span>{% endfor %}</div>
+        {% endif %}
+        <div class="remedy-why">{{ r.detail }}</div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── REFLECTION PAUSE — before the letter ── -->
+<section class="reflection reveal">
+  <div class="reflection-inner">
+    <div class="reflection-mark">✦</div>
+    <p class="reflection-q">Before you close this, read the next page slowly.<br>It was written for the person you're becoming.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 11 — LETTER FROM YOUR FUTURE SELF ══════════════════ -->
+<section id="hall-final" class="hall">
+  <div class="hall-inner reveal" style="max-width:640px">
+    <div class="hall-eyebrow">A Letter From Your Future Self</div>
+    <div class="letter">
+      {% for para in closing_letter.split('\n\n') %}
+      <p class="letter-line">{{ para }}</p>
+      {% endfor %}
+    </div>
+    <div class="final-actions no-print" style="margin-top:44px">
+      <button class="btn btn-gold" onclick="window.print()">⬇ Save as PDF</button>
+      <button class="btn btn-ghost" onclick="navigator.share ? navigator.share({title:document.title, url:location.href}) : navigator.clipboard.writeText(location.href).then(()=>alert('Link copied'))">Share</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ HALL 12 — ADVANCED (accordion) ══════════════════ -->
+<div class="no-print" style="max-width:900px;margin:0 auto;padding:0 24px 90px">
+  <button class="adv-toggle" onclick="document.getElementById('advanced-body').classList.toggle('show'); this.textContent = this.textContent.includes('Show') ? '🔍 Hide Advanced Astrology' : '🔍 Show Advanced Astrology'">
+    🔍 Show Advanced Astrology
+  </button>
+  <div id="advanced-body">
+    <div class="card" style="overflow-x:auto;margin-bottom:16px">
+      <h3 style="font-size:18px;margin-bottom:14px;color:var(--gold-bright)">Full Planetary Table</h3>
+      <table class="ptable">
+        <thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Nakshatra</th><th>Pada</th><th>Dignity</th></tr></thead>
+        <tbody>
+        {% for pname, p in chart.planets.items() %}
+          <tr><td>{{ pname }}</td><td>{{ p.sign }}</td><td>H{{ p.house }}</td><td>{{ p.nakshatra }}</td><td>{{ p.nakshatra_pada }}</td><td>{{ p.dignity or "—" }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if chart.classical_rules %}
+    <div class="card" style="margin-bottom:16px">
+      <h3 style="font-size:18px;margin-bottom:14px;color:var(--gold-bright)">All Classical Rules ({{ chart.classical_rules|length }})</h3>
+      {% for r in chart.classical_rules %}
+      <div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+        <span class="chip gold" style="font-family:monospace;font-size:10px">{{ r.source }}</span>
+        <p style="margin:6px 0 0;font-size:13px">{{ r.interpretation }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if chart.house_lords %}
+    <div class="card" style="margin-bottom:16px">
+      <h3 style="font-size:18px;margin-bottom:14px;color:var(--gold-bright)">House Lords</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px">
+        {% for i in range(1, 13) %}
+        {% set hl = chart.house_lords.get('house_' ~ i ~ '_lord') %}
+        {% if hl %}
+        <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border-radius:10px">
+          <div class="eyebrow" style="font-size:9px">H{{ i }}</div>
+          <div style="color:var(--gold-bright);font-weight:600">{{ hl.planet }}</div>
+          <div style="font-size:10px;color:var(--ink-dim)">in H{{ hl.placed_in_house }}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if chart.confidence_scores %}
+    <div class="card">
+      <h3 style="font-size:18px;margin-bottom:14px;color:var(--gold-bright)">All Life Area Scores</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">
+        {% for area, sc2 in chart.confidence_scores.items() %}
+        {% set score2 = sc2.score if sc2 is mapping else sc2 %}
+        <div style="text-align:center;padding:14px;background:rgba(255,255,255,.03);border-radius:10px">
+          <div class="eyebrow" style="font-size:9px">{{ area }}</div>
+          <div style="font-family:var(--font-head);font-size:28px;color:var(--gold-bright);margin:6px 0">{{ score2|round|int }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<footer style="text-align:center;color:var(--ink-dim);font-size:11px;padding-bottom:30px" class="no-print">
+  Report ID {{ report.uuid }} · ☽ Astro Report Store
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Scroll-reveal via IntersectionObserver
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) e.target.classList.add('in');
+}, { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function toggleCompass(pos) {
+  document.querySelectorAll('.compass-detail').forEach(el => {
+    if (el.id === 'compass-' + pos) el.classList.toggle('show');
+    else el.classList.remove('show');
+  });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Astro Report Store{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('report_store.static', filename='css/store.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div class="page">
+{% block content %}{% endblock %}
+</div>
+<script src="{{ url_for('report_store.static', filename='js/cosmos.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

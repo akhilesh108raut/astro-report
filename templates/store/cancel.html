@@ -1,0 +1,15 @@
+{% extends "store/_base.html" %}
+{% block title %}{{ title or "Payment cancelled" }} — Astro Report Store{% endblock %}
+
+{% block content %}
+<div class="wrap" style="max-width:520px;padding-top:130px;text-align:center">
+  <div class="card fade-up" style="padding:48px 36px">
+    <div style="font-size:52px;margin-bottom:18px">🌘</div>
+    <h1 style="font-size:30px;margin-bottom:10px">{{ title or "Payment cancelled" }}</h1>
+    <p style="color:var(--ink-dim);line-height:1.8;margin-bottom:28px">
+      {{ message or "No charge was made. You can return and unlock your report any time." }}
+    </p>
+    <a class="btn btn-gold" href="/store/">← Back to the Store</a>
+  </div>
+</div>
+{% endblock %}

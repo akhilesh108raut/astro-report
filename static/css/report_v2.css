@@ -1,0 +1,316 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   ASTRO REPORT V2 — "Halls" storytelling experience
+   Layers on top of store.css — reuses all color/font variables.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+html { scroll-behavior: smooth; }
+
+.hall {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 24px;
+  position: relative;
+  scroll-margin-top: 0;
+}
+.hall.compact { min-height: auto; padding: 90px 24px; }
+.hall-inner { max-width: 780px; width: 100%; margin: 0 auto; }
+
+/* fade/rise reveal — toggled by IntersectionObserver */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* Accessibility: honour reduced-motion — show everything, animate nothing */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .scroll-cue { animation: none; }
+}
+
+/* ── HALL 1 — ARRIVAL ─────────────────────────────────────────────── */
+#hall-arrival { text-align: center; }
+.arrival-name {
+  font-family: var(--font-head); font-weight: 600;
+  font-size: clamp(52px, 11vw, 108px); line-height: 1;
+  background: linear-gradient(120deg, #fff, var(--gold-bright) 55%, var(--gold));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-bottom: 22px;
+}
+.arrival-facts { font-size: clamp(14px, 2vw, 17px); color: var(--ink-dim); letter-spacing: .04em; margin-bottom: 30px; }
+.arrival-facts b { color: var(--gold-bright); font-weight: 600; }
+.arrival-hook {
+  font-family: var(--font-head); font-style: italic; font-size: clamp(19px, 3vw, 26px);
+  color: var(--ink); max-width: 560px; margin: 0 auto 46px; line-height: 1.5;
+}
+.scroll-cue {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--gold); font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+  cursor: pointer; background: none; border: none; font-family: var(--font-body);
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+.scroll-cue .arrow { font-size: 22px; }
+
+/* ── HALL 2 — ARCHETYPE ───────────────────────────────────────────── */
+.archetype-card {
+  text-align: center; padding: 60px 36px; border-radius: 28px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(155,92,255,.16), transparent 60%),
+              linear-gradient(160deg, rgba(20,16,42,.65), rgba(6,4,15,.75));
+  border: 1px solid rgba(155,92,255,.3); box-shadow: 0 30px 90px rgba(0,0,0,.6), 0 0 60px rgba(155,92,255,.08);
+  position: relative; overflow: hidden;
+}
+.archetype-sigil { font-size: 52px; margin-bottom: 6px; filter: drop-shadow(0 0 18px rgba(217,178,91,.6)); }
+.archetype-name {
+  font-family: var(--font-head); font-size: clamp(38px, 7vw, 62px); margin: 10px 0 14px;
+  background: linear-gradient(120deg, #f7e6b0, var(--gold-bright) 45%, #b8860b);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.archetype-hook { font-family: var(--font-head); font-style: italic; font-size: 18px; color: var(--ink-dim); max-width: 500px; margin: 0 auto 34px; }
+.archetype-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 12px; text-align: left; }
+.archetype-tile {
+  background: rgba(255,255,255,.03); border: 1px solid rgba(217,178,91,.18); border-radius: 12px;
+  padding: 13px 15px;
+}
+.archetype-tile.shadow { border-color: rgba(155,92,255,.3); }
+.archetype-tile .tk { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
+.archetype-tile .tv { font-size: 13.5px; color: var(--ink); margin-top: 5px; }
+
+/* ── HALL 3 — SUMMARY CARD ────────────────────────────────────────── */
+.summary-card { text-align: center; }
+.summary-row { margin-bottom: 26px; }
+.summary-label { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.summary-value { font-family: var(--font-head); font-size: clamp(19px,3vw,24px); color: var(--ink); }
+.summary-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 30px 0; }
+@media (max-width:600px) { .summary-pair { grid-template-columns: 1fr; } }
+.summary-insight {
+  font-family: var(--font-head); font-style: italic; font-size: clamp(18px,2.8vw,23px);
+  color: var(--gold-bright); margin-top: 30px; line-height: 1.5;
+}
+
+/* ── HALL 4 — CHAPTER TIMELINE ────────────────────────────────────── */
+.chapters-track { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 10px 4px 26px; -webkit-overflow-scrolling: touch; }
+.chapters-track::-webkit-scrollbar { height: 4px; }
+.chapter-node { flex: 0 0 240px; scroll-snap-align: center; text-align: center; padding: 0 18px; position: relative; }
+.chapter-roman { font-family: var(--font-head); font-size: 13px; color: var(--gold); letter-spacing: .2em; }
+.chapter-title { font-family: var(--font-head); font-size: 26px; color: var(--gold-bright); margin: 8px 0 4px; }
+.chapter-age { font-size: 12px; color: var(--ink-dim); margin-bottom: 10px; }
+.chapter-theme { font-size: 13px; color: var(--ink); margin-bottom: 4px; }
+.chapter-connector {
+  height: 2px; background: linear-gradient(90deg, rgba(217,178,91,.4), rgba(217,178,91,.1));
+  position: absolute; top: 8px; left: 50%; width: 100%; z-index: -1;
+}
+.chapter-node:last-child .chapter-connector { display: none; }
+
+/* ── HALL 5 — KARMA TRIPTYCH ──────────────────────────────────────── */
+.karma-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 720px) { .karma-grid { grid-template-columns: 1fr; } }
+.karma-card {
+  border-radius: 20px; padding: 28px 22px; text-align: center;
+  border: 1px solid; position: relative; overflow: hidden;
+}
+.karma-card::before {
+  content: ""; position: absolute; inset: 0; opacity: .5; z-index: -1;
+}
+.karma-card.past { border-color: rgba(155,92,255,.35); background: rgba(155,92,255,.05); }
+.karma-card.present { border-color: rgba(217,178,91,.35); background: rgba(217,178,91,.05); }
+.karma-card.future { border-color: rgba(74,222,128,.35); background: rgba(74,222,128,.05); }
+.karma-icon { font-size: 32px; margin-bottom: 10px; }
+.karma-label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 12px; }
+.karma-card.past .karma-label { color: #cdb4ff; }
+.karma-card.present .karma-label { color: var(--gold-bright); }
+.karma-card.future .karma-label { color: var(--green); }
+.karma-headline { font-family: var(--font-head); font-size: 20px; color: var(--ink); margin-bottom: 10px; }
+.karma-detail { font-size: 13px; color: var(--ink-dim); line-height: 1.6; }
+
+/* ── HALL 6 — DESTINY COMPASS ─────────────────────────────────────── */
+.compass-wrap { position: relative; width: min(340px, 80vw); height: min(340px, 80vw); margin: 0 auto; }
+.compass-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(217,178,91,.2); background: radial-gradient(circle, rgba(155,92,255,.06), transparent 70%);
+}
+.compass-point {
+  position: absolute; width: 96px; text-align: center; cursor: pointer;
+  transition: transform .25s;
+}
+.compass-point:hover { transform: scale(1.08); }
+.compass-point.top    { top: -8px; left: 50%; transform: translateX(-50%); }
+.compass-point.right  { right: -18px; top: 50%; transform: translateY(-50%); }
+.compass-point.bottom { bottom: -8px; left: 50%; transform: translateX(-50%); }
+.compass-point.left   { left: -18px; top: 50%; transform: translateY(-50%); }
+.compass-dot { width: 14px; height: 14px; border-radius: 50%; margin: 0 auto 8px;
+  background: var(--gold-bright); box-shadow: 0 0 16px rgba(217,178,91,.7); }
+.compass-label { font-size: 12px; color: var(--ink); font-weight: 600; }
+.compass-score { font-family: var(--font-head); font-size: 22px; color: var(--gold-bright); }
+.compass-detail {
+  margin-top: 30px; padding: 18px 22px; border-radius: 14px; background: rgba(255,255,255,.03);
+  border: 1px solid rgba(217,178,91,.18); font-size: 13.5px; color: var(--ink-dim); display: none; text-align: left;
+}
+.compass-detail.show { display: block; }
+
+/* ── HALL 7 — PLANET GALLERY (carousel) ───────────────────────────── */
+.h-carousel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 6px 4px 20px; -webkit-overflow-scrolling: touch; }
+.h-carousel::-webkit-scrollbar { height: 5px; }
+.planet-card {
+  flex: 0 0 200px; scroll-snap-align: start; border-radius: 18px; padding: 22px 18px;
+  background: var(--glass); border: 1px solid var(--glass-brd); cursor: pointer;
+  transition: transform .3s, border-color .3s;
+}
+.planet-card:hover { transform: translateY(-4px); border-color: rgba(217,178,91,.5); }
+.planet-card .pname { font-family: var(--font-head); font-size: 22px; color: var(--gold-bright); }
+.planet-card .pstars { color: var(--gold); letter-spacing: 2px; margin: 6px 0; font-size: 13px; }
+.planet-card .pdignity { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-dim); }
+.planet-card .pepithet { font-family: var(--font-head); font-style: italic; font-size: 14px; color: var(--ink); margin-top: 10px; }
+.planet-card .pdetail {
+  display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 12.5px; color: var(--ink-dim); line-height: 1.7; text-align: left;
+}
+.planet-card.expanded .pdetail { display: block; }
+
+/* ── HALL 8 — YOGA GALLERY ─────────────────────────────────────────── */
+.yoga-card {
+  border-radius: 18px; padding: 24px; margin-bottom: 14px;
+  border: 1px solid rgba(217,178,91,.25); position: relative; overflow: hidden;
+}
+.yoga-card:nth-child(3n+1) { background: linear-gradient(135deg, rgba(217,178,91,.08), rgba(20,16,42,.5)); }
+.yoga-card:nth-child(3n+2) { background: linear-gradient(135deg, rgba(155,92,255,.08), rgba(20,16,42,.5)); }
+.yoga-card:nth-child(3n+3) { background: linear-gradient(135deg, rgba(74,222,128,.06), rgba(20,16,42,.5)); }
+.yoga-title { font-family: var(--font-head); font-size: 22px; color: var(--gold-bright); }
+.yoga-rarity { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--purple); margin: 4px 0 10px; }
+.yoga-stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; margin-bottom: 8px; }
+.yoga-effect { font-size: 14px; color: var(--ink); }
+
+/* ── HALL 9 — SCRIPTURE QUOTES ─────────────────────────────────────── */
+.quote-card {
+  text-align: center; padding: 30px 26px; border-radius: 18px; margin-bottom: 16px;
+  background: var(--glass); border: 1px solid var(--glass-brd); cursor: pointer;
+}
+.quote-icon { font-size: 26px; margin-bottom: 10px; }
+.quote-source { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.quote-text { font-family: var(--font-head); font-style: italic; font-size: 17px; color: var(--ink); line-height: 1.6; }
+.quote-conf { font-size: 12px; color: var(--ink-dim); margin-top: 12px; }
+.quote-expand {
+  display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 12.5px; color: var(--ink-dim); text-align: left;
+}
+.quote-card.expanded .quote-expand { display: block; }
+
+/* ── HALL 10 — REMEDY TEMPLE ───────────────────────────────────────── */
+.remedy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; }
+.remedy-card { border-radius: 18px; padding: 22px; border: 1px solid rgba(217,178,91,.22); background: var(--glass); }
+.remedy-icon { font-size: 26px; margin-bottom: 8px; }
+.remedy-title { font-family: var(--font-head); font-size: 17px; color: var(--gold-bright); margin-bottom: 8px; }
+.remedy-meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 10.5px; color: var(--ink-dim); margin-bottom: 12px; }
+.remedy-meta span { background: rgba(255,255,255,.04); border-radius: 999px; padding: 3px 9px; }
+.remedy-benefits { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.remedy-why { font-size: 12.5px; color: var(--ink-dim); line-height: 1.6; }
+
+/* ── HALL 11 — FINAL DESTINY ───────────────────────────────────────── */
+#hall-final { text-align: center; }
+.final-quote { font-family: var(--font-head); font-style: italic; font-size: clamp(24px,4vw,36px);
+  color: var(--ink); line-height: 1.5; max-width: 620px; margin: 0 auto 40px; }
+.final-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ── HALL DIVIDER ──────────────────────────────────────────────────── */
+.hall-divider { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 300px; margin: 0 auto 40px; }
+.hall-divider::before, .hall-divider::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,178,91,.4), transparent); }
+.hall-divider span { font-size: 18px; }
+
+/* ── HALL EYEBROW / TITLE ─────────────────────────────────────────── */
+.hall-eyebrow { text-align: center; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.hall-title { text-align: center; font-family: var(--font-head); font-size: clamp(28px,5vw,42px); color: var(--ink); margin-bottom: 40px; }
+
+/* ── REVEAL CARDS (Hidden Gift / Superpower / Blind Spot) ──────────── */
+.reveal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 720px) { .reveal-grid { grid-template-columns: 1fr; } }
+.reveal-card {
+  border-radius: 20px; padding: 30px 24px; text-align: center; position: relative;
+  border: 1px solid; overflow: hidden;
+}
+.reveal-card.gift    { border-color: rgba(217,178,91,.4); background: linear-gradient(160deg, rgba(217,178,91,.1), rgba(20,16,42,.5)); }
+.reveal-card.power   { border-color: rgba(74,222,128,.4); background: linear-gradient(160deg, rgba(74,222,128,.1), rgba(20,16,42,.5)); }
+.reveal-card.blind   { border-color: rgba(155,92,255,.4); background: linear-gradient(160deg, rgba(155,92,255,.1), rgba(20,16,42,.5)); }
+.reveal-icon { font-size: 30px; margin-bottom: 10px; }
+.reveal-label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 14px; }
+.reveal-card.gift  .reveal-label { color: var(--gold-bright); }
+.reveal-card.power .reveal-label { color: var(--green); }
+.reveal-card.blind .reveal-label { color: #cdb4ff; }
+.reveal-headline { font-family: var(--font-head); font-size: 21px; color: var(--ink); margin-bottom: 12px; }
+.reveal-detail { font-size: 13px; color: var(--ink-dim); line-height: 1.6; }
+
+/* subtle astrology "why" footnote under human copy */
+.reveal-why {
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 11px; color: var(--ink-dim); opacity: .7; font-style: italic;
+}
+
+/* ── INNER COUNCIL ──────────────────────────────────────────────────── */
+.council-card {
+  display: flex; gap: 18px; align-items: flex-start; padding: 22px 24px; margin-bottom: 14px;
+  border-radius: 16px; background: var(--glass); border: 1px solid var(--glass-brd);
+  cursor: pointer; transition: border-color .25s, transform .25s;
+}
+.council-card:hover { border-color: rgba(217,178,91,.45); transform: translateX(3px); }
+.council-symbol {
+  font-size: 30px; color: var(--gold-bright); flex: 0 0 44px; text-align: center;
+  line-height: 1.2; padding-top: 4px;
+}
+.council-character { font-family: var(--font-head); font-size: 21px; color: var(--ink); }
+.council-planet { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin: 2px 0 12px; }
+.council-voice { font-family: var(--font-head); font-style: italic; font-size: 16px; color: var(--ink-dim); line-height: 1.6; margin: 0; }
+.council-detail {
+  display: none; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 12.5px; color: var(--ink-dim); line-height: 1.6;
+}
+.council-card.expanded .council-detail { display: block; }
+
+/* ── LETTER FROM YOUR FUTURE SELF ───────────────────────────────────── */
+.letter {
+  background: linear-gradient(170deg, rgba(30,24,52,.5), rgba(12,8,26,.6));
+  border: 1px solid rgba(217,178,91,.22); border-radius: 20px; padding: 46px 40px;
+  box-shadow: 0 24px 70px rgba(0,0,0,.5);
+}
+.letter-line {
+  font-family: var(--font-head); font-size: clamp(16px, 2.4vw, 19px); line-height: 1.85;
+  color: var(--ink); margin: 0 0 20px;
+}
+.letter-line:first-child { font-size: clamp(18px, 2.8vw, 22px); color: var(--gold-bright); }
+.letter-line:last-child { color: var(--ink-dim); font-style: italic; margin-bottom: 0; }
+@media (max-width: 600px) { .letter { padding: 34px 26px; } }
+
+/* ── REFLECTION PAUSE ───────────────────────────────────────────────── */
+.reflection {
+  min-height: 60vh; display: flex; align-items: center; justify-content: center;
+  padding: 80px 24px; text-align: center;
+}
+.reflection-inner { max-width: 560px; }
+.reflection-mark { font-size: 22px; color: var(--gold); opacity: .6; margin-bottom: 22px; }
+.reflection-q {
+  font-family: var(--font-head); font-style: italic;
+  font-size: clamp(22px, 3.6vw, 32px); line-height: 1.5; color: var(--ink);
+}
+
+/* ── ACHIEVEMENT BADGES ─────────────────────────────────────────────── */
+.badge-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.badge {
+  display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px;
+  background: var(--glass); border: 1px solid var(--glass-brd); font-size: 13.5px; color: var(--ink);
+}
+.badge .bicon { font-size: 17px; }
+
+/* ── ADVANCED ACCORDION ────────────────────────────────────────────── */
+.adv-toggle {
+  display: block; width: 100%; text-align: center; padding: 18px; margin: 30px 0;
+  background: none; border: 1px dashed rgba(217,178,91,.3); border-radius: 14px;
+  color: var(--ink-dim); font-size: 13px; letter-spacing: .1em; cursor: pointer;
+  font-family: var(--font-body); transition: border-color .25s, color .25s;
+}
+.adv-toggle:hover { border-color: var(--gold); color: var(--gold); }
+#advanced-body { display: none; }
+#advanced-body.show { display: block; }
