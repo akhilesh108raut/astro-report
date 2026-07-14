@@ -92,6 +92,40 @@ html { scroll-behavior: smooth; }
   color: var(--gold-bright); margin-top: 30px; line-height: 1.5;
 }
 
+/* ── HALL 1.5 — TODAY'S SNAPSHOT DASHBOARD ────────────────────────── */
+.snapshot-title { font-family: var(--font-head); font-size: 15px; color: var(--ink-dim); text-align: center; margin-bottom: 22px; }
+.snapshot-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+  margin-bottom: 26px; padding-bottom: 22px; border-bottom: 1px solid var(--glass-brd);
+}
+@media (max-width: 560px) { .snapshot-stats { grid-template-columns: 1fr; } }
+.snapshot-stat-val { font-family: var(--font-head); font-size: 18px; color: var(--ink); }
+.snapshot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+@media (max-width: 560px) { .snapshot-grid { grid-template-columns: 1fr; } }
+.snapshot-card {
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 14px;
+  padding: 18px 20px; cursor: pointer;
+}
+.snapshot-card summary { list-style: none; }
+.snapshot-card summary::-webkit-details-marker { display: none; }
+.snapshot-card-headline { font-family: var(--font-head); font-size: 16.5px; color: var(--ink); margin: 6px 0 4px; }
+.snapshot-card-detail { font-size: 13px; color: var(--ink-dim); line-height: 1.5; }
+.snapshot-why-hint { font-size: 11px; color: var(--gold); margin-top: 8px; letter-spacing: .06em; }
+.snapshot-why-text {
+  font-size: 13px; color: var(--ink-dim); line-height: 1.6; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--glass-brd);
+}
+.snapshot-weather { margin-bottom: 6px; }
+.snapshot-weather-row { display: grid; grid-template-columns: 90px 1fr 34px; align-items: center; gap: 12px; margin-bottom: 9px; }
+.snapshot-weather-label { font-size: 12.5px; color: var(--ink-dim); }
+.snapshot-weather-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); overflow: hidden; }
+.snapshot-weather-fill { height: 100%; border-radius: 3px; }
+.snapshot-weather-fill.zone-emerald { background: var(--green); }
+.snapshot-weather-fill.zone-gold    { background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+.snapshot-weather-fill.zone-amber   { background: #f0a94e; }
+.snapshot-weather-fill.zone-red     { background: var(--red); }
+.snapshot-weather-score { font-family: var(--font-body); font-weight: 700; font-size: 13px; text-align: right; }
+
 /* ── HALL 4 — CHAPTER TIMELINE ────────────────────────────────────── */
 .chapters-track { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory;
   padding: 10px 4px 26px; -webkit-overflow-scrolling: touch; }
@@ -465,12 +499,17 @@ html { scroll-behavior: smooth; }
 
   .archetype-card, .council-card, .quote-card, .remedy-card, .karma-card,
   .reveal-card, .summary-card, .yoga-card, .chapter-node, .letter, .badge,
-  .evidence-step, .evidence-result {
+  .evidence-step, .evidence-result, .snapshot-card {
     background: #fbf6ea !important;
     border: 1px solid #d9b25b !important;
     box-shadow: none !important;
     color: #2a2416 !important;
   }
+  .snapshot-card:not([open]) > *:not(summary) { display: block !important; }
+  .snapshot-stat-val, .snapshot-card-headline { color: #2a2416 !important; }
+  .snapshot-card-detail, .snapshot-why-text, .snapshot-weather-label { color: #4a4030 !important; }
+  .snapshot-weather-fill { background: #b8860b !important; }
+  .snapshot-title { color: #6b5d3f !important; }
   .archetype-tile, .council-character, .compass-detail {
     background: #f3ead2 !important;
     border-color: #d9b25b !important;

@@ -512,11 +512,20 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
     onepage = {
         "archetype": dna.get("archetype_name", ""),
         "life_chapter": sc.get("life_chapter", ""),
-        "strength": superpower["headline"] + " — " + superpower["detail"],
-        "challenge": blind_spot["headline"] + " — " + blind_spot["detail"],
+        "strength_headline": superpower["headline"], "strength_detail": superpower["detail"],
+        "strength_why": superpower.get("why", ""),
+        "challenge_headline": blind_spot["headline"], "challenge_detail": blind_spot["detail"],
+        "challenge_why": blind_spot.get("why", ""),
         "turning_point": (f"Age {next_turn['age_range']} — {next_turn['title']}" if next_turn else ""),
         "recommendations": top_recs,
         "north_star": dna.get("one_liner") or sc.get("insight_sentence", ""),
+        # Distinct from the arrival-hook quote (north_star) — derived from the
+        # real blind-spot data, not a repeat of the archetype one-liner.
+        "weekly_focus": (
+            f"Notice where {blind_spot['headline'].lower()} shows up this week — "
+            f"that tends to be exactly where growth is asking for your attention."
+            if blind_spot.get("headline") else ""
+        ),
     }
 
     # ── Energy Compass — radar polygon with score-driven node placement ──

@@ -40,32 +40,76 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 <section id="hall-onepage" class="hall compact">
   <div class="hall-inner reveal">
     <div class="hall-eyebrow">🪞 If You Only Read One Page</div>
-    <div class="card" style="padding:34px 30px">
-      {% for label, val in [
-          ("Soul Archetype", onepage.archetype),
-          ("Current Chapter", onepage.life_chapter),
-          ("Biggest Strength", onepage.strength),
-          ("Biggest Challenge", onepage.challenge),
-          ("Next Turning Point", onepage.turning_point),
-      ] %}
-      {% if val %}
-      <div style="margin-bottom:16px">
-        <div class="summary-label" style="margin-bottom:4px">{{ label }}</div>
-        <div style="font-size:16px;color:var(--ink)">{{ val }}</div>
-      </div>
+    <div class="card snapshot-dashboard" style="padding:34px 30px">
+    <div class="snapshot-title">Today's Snapshot</div>
+
+    <div class="snapshot-stats">
+      {% if onepage.archetype %}
+      <div class="snapshot-stat"><div class="summary-label">Soul Archetype</div><div class="snapshot-stat-val">{{ onepage.archetype }}</div></div>
       {% endif %}
+      {% if onepage.life_chapter %}
+      <div class="snapshot-stat"><div class="summary-label">Current Chapter</div><div class="snapshot-stat-val">{{ onepage.life_chapter }}</div></div>
+      {% endif %}
+    </div>
+
+    <div class="snapshot-grid">
+      {% if onepage.strength_headline %}
+      <details class="snapshot-card strength">
+        <summary>
+          <div class="summary-label" style="color:var(--green)">Biggest Strength</div>
+          <div class="snapshot-card-headline">{{ onepage.strength_headline }}</div>
+          <div class="snapshot-card-detail">{{ onepage.strength_detail }}</div>
+          {% if onepage.strength_why %}<div class="snapshot-why-hint">Why? ↓</div>{% endif %}
+        </summary>
+        {% if onepage.strength_why %}<p class="snapshot-why-text">{{ onepage.strength_why }}</p>{% endif %}
+      </details>
+      {% endif %}
+      {% if onepage.challenge_headline %}
+      <details class="snapshot-card challenge">
+        <summary>
+          <div class="summary-label" style="color:var(--red)">Biggest Challenge</div>
+          <div class="snapshot-card-headline">{{ onepage.challenge_headline }}</div>
+          <div class="snapshot-card-detail">{{ onepage.challenge_detail }}</div>
+          {% if onepage.challenge_why %}<div class="snapshot-why-hint">Why? ↓</div>{% endif %}
+        </summary>
+        {% if onepage.challenge_why %}<p class="snapshot-why-text">{{ onepage.challenge_why }}</p>{% endif %}
+      </details>
+      {% endif %}
+    </div>
+
+    {% if onepage.turning_point %}
+    <div class="snapshot-stat" style="margin-bottom:20px">
+      <div class="summary-label">Next Turning Point</div>
+      <div class="snapshot-stat-val" style="font-size:15px">{{ onepage.turning_point }}</div>
+    </div>
+    {% endif %}
+
+    {% if compass and compass.nodes %}
+    <div class="summary-label" style="margin-bottom:10px">Current Cosmic Weather</div>
+    <div class="snapshot-weather">
+      {% for n in compass.nodes %}
+      <div class="snapshot-weather-row">
+        <div class="snapshot-weather-label">{{ n.label }}</div>
+        <div class="snapshot-weather-bar"><div class="snapshot-weather-fill zone-{{ n.zone }}" style="width:{{ n.score }}%"></div></div>
+        <div class="snapshot-weather-score zone-text-{{ n.zone }}">{{ n.score }}</div>
+      </div>
       {% endfor %}
-      {% if onepage.recommendations %}
-      <div style="margin-bottom:16px">
-        <div class="summary-label" style="margin-bottom:8px">Top Recommendations</div>
-        {% for r in onepage.recommendations %}
-        <div style="font-size:14px;color:var(--ink);margin-bottom:5px">✓ {{ r }}</div>
-        {% endfor %}
-      </div>
-      {% endif %}
-      {% if onepage.north_star %}
-      <p class="summary-insight" style="margin-top:26px">“{{ onepage.north_star }}”</p>
-      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if onepage.recommendations %}
+    <div class="summary-label" style="margin:22px 0 8px">Top Recommendations</div>
+    {% for r in onepage.recommendations %}
+    <div style="font-size:14px;color:var(--ink);margin-bottom:5px">✓ {{ r }}</div>
+    {% endfor %}
+    {% endif %}
+
+    {% if onepage.weekly_focus %}
+    <div class="snapshot-card" style="margin-top:26px;padding:22px">
+      <div class="summary-label" style="margin-bottom:8px">This Week's Focus</div>
+      <p style="font-size:14.5px;color:var(--ink);line-height:1.7;margin:0">{{ onepage.weekly_focus }}</p>
+    </div>
+    {% endif %}
     </div>
   </div>
 </section>
