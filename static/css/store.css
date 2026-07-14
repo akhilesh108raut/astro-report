@@ -240,11 +240,11 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 600; letter-spacing: .0
   border: 1px solid var(--glass-brd);
 }
 
-/* Print (PDF download) */
+/* Print (PDF download) — warm parchment, not flat white/black */
 @media print {
-  body { background: #fff; color: #111; }
+  body { background: #f8f1e0; color: #2a2416; }
   #starfield, .report-nav, .no-print { display: none !important; }
-  .card { background: #fff; border: 1px solid #ddd; box-shadow: none; backdrop-filter: none; }
-  .report-section p, .ptable td { color: #333; }
-  .gold-text { -webkit-text-fill-color: #8a6d1f; color: #8a6d1f; }
+  .card { background: #fbf6ea; border: 1px solid #d9b25b; box-shadow: none; backdrop-filter: none; }
+  .report-section p, .ptable td { color: #3a3225; }
+  .gold-text { -webkit-text-fill-color: #8a6d1f; color: #8a6d1f; background: none; }
 }

@@ -314,3 +314,30 @@ html { scroll-behavior: smooth; }
 .adv-toggle:hover { border-color: var(--gold); color: var(--gold); }
 #advanced-body { display: none; }
 #advanced-body.show { display: block; }
+
+/* ── PRINT (PDF download) — warm parchment card treatment ────────────
+   store.css sets the page-level background/ink/.card/.gold-text rules;
+   this covers the halls-specific card types that would otherwise keep
+   their translucent dark-theme backgrounds against a light page. */
+@media print {
+  .hall { min-height: auto; padding: 26px 0; page-break-inside: avoid; }
+  .hall-inner { max-width: 100%; }
+  .scroll-cue, .adv-toggle, .final-actions, .hall-divider, .chapter-connector { display: none !important; }
+
+  .arrival-name, .archetype-name {
+    background: none; -webkit-text-fill-color: #8a6d1f; color: #8a6d1f;
+  }
+  .arrival-hook, .archetype-hook, .hall-eyebrow, .eyebrow { color: #6b5d3f; }
+
+  .archetype-card, .council-card, .quote-card, .remedy-card, .karma-card,
+  .reveal-card, .summary-card, .yoga-card, .chapter-node, .letter, .badge {
+    background: #fbf6ea !important;
+    border: 1px solid #d9b25b !important;
+    box-shadow: none !important;
+    color: #2a2416 !important;
+  }
+  .archetype-tile, .council-character, .compass-wrap {
+    background: #f3ead2 !important;
+    border-color: #d9b25b !important;
+  }
+}
