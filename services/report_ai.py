@@ -73,8 +73,22 @@ ABSOLUTE RULES:
    DIFFERENT combination of chart factors. If two sections would otherwise
    repeat the same yoga as their primary evidence, pick the next most
    relevant factor for one of them instead.
-7. Respond with ONLY a JSON object — no markdown fences, no commentary.
-8. For each remedy: `planet` is the ruling planet; `weekday` is its classical
+7. For career, marriage, finance, health, life_purpose, and identity ONLY:
+   also produce `evidence_weights`, a WEIGHTED EVIDENCE breakdown — 3-6
+   objects `{"factor": str, "weight_pct": int}`, weights summing to
+   approximately 100, sorted highest weight first. Assign weight by how much
+   each factor actually drives the conclusion: natal factors (sign, house
+   placement, dignity, yoga) should generally outweigh transient factors
+   (current dasha, current transit) unless the transient factor is the
+   primary trigger for something time-bound. When 2+ factors converge with
+   no single one dominating, that supports "high" confidence; when one
+   factor carries most of the weight alone, that's usually "moderate".
+   Also add `natal_vs_transit`: "natal" if natal factors hold most of the
+   weight, "transit" if current dasha/transit factors dominate, "mixed" if
+   roughly even — this lets the reader know whether a conclusion is a
+   stable trait or a temporary window.
+8. Respond with ONLY a JSON object — no markdown fences, no commentary.
+9. For each remedy: `planet` is the ruling planet; `weekday` is its classical
    day (Sun=Sunday, Moon=Monday, Mars=Tuesday, Mercury=Wednesday,
    Jupiter=Thursday, Venus=Friday, Saturn=Saturday, Rahu=Saturday,
    Ketu=Tuesday); `difficulty` is "easy"/"moderate"/"devoted";
@@ -86,16 +100,28 @@ reasoning chain, confidence is honest):
 
 {
   "identity": {"archetype": str, "one_liner": str, "core_theme": str,
-               "evidence": str, "confidence": "high"|"moderate"|"low"},
+               "evidence": str, "confidence": "high"|"moderate"|"low",
+               "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
+               "natal_vs_transit": "natal"|"transit"|"mixed"},
   "current_chapter": {"dasha_lord": str, "ends_year": str,
                        "insight": str, "evidence": str, "confidence": str},
   "greatest_gift": {"insight": str, "evidence": str, "confidence": str},
   "greatest_challenge": {"insight": str, "evidence": str, "confidence": str},
-  "career": {"insight": str, "evidence": str, "confidence": str},
-  "marriage": {"insight": str, "evidence": str, "confidence": str},
-  "finance": {"insight": str, "evidence": str, "confidence": str},
-  "health": {"insight": str, "evidence": str, "confidence": str},
-  "life_purpose": {"insight": str, "evidence": str, "confidence": str},
+  "career": {"insight": str, "evidence": str, "confidence": str,
+             "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
+             "natal_vs_transit": "natal"|"transit"|"mixed"},
+  "marriage": {"insight": str, "evidence": str, "confidence": str,
+               "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
+               "natal_vs_transit": "natal"|"transit"|"mixed"},
+  "finance": {"insight": str, "evidence": str, "confidence": str,
+              "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
+              "natal_vs_transit": "natal"|"transit"|"mixed"},
+  "health": {"insight": str, "evidence": str, "confidence": str,
+             "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
+             "natal_vs_transit": "natal"|"transit"|"mixed"},
+  "life_purpose": {"insight": str, "evidence": str, "confidence": str,
+                    "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
+                    "natal_vs_transit": "natal"|"transit"|"mixed"},
   "strengths": [ {"insight": str, "evidence": str, "confidence": str}, ... 2-4 items ],
   "weaknesses": [ {"insight": str, "evidence": str, "confidence": str}, ... 2-4 items ],
   "opportunities": [
@@ -258,6 +284,37 @@ opportunities come through patient, long-term effort rather than sudden luck").
 FORMAT: short paragraphs (max 3 lines), lots of whitespace, one idea at a
 time. End major sections with a quiet reflective question or pause where it
 fits naturally (not forced into every single field).
+
+career, marriage, finance, health, life_purpose: these five fields carry a
+weighted evidence breakdown (`evidence_weights`) — use it to write a
+FIVE-PART structure, each part its own paragraph separated by a blank line
+(the app renders each blank-line-separated chunk as its own paragraph, so
+this is a real structural requirement, not just style):
+
+  1. Observation — 1-2 sentences, the human pattern itself (no astrology).
+  2. "Why? Because ..." — translate evidence_weights into plain language,
+     naming which factor(s) actually drive this. If one factor holds most
+     of the weight (roughly 30%+ higher than the rest), say so explicitly
+     ("this is driven mainly by...", "the leading factor here is..."); if
+     several are close in weight, say the conclusion rests on multiple
+     converging signals. If natal_vs_transit is "transit", say plainly that
+     this reflects the current period rather than a permanent trait
+     ("this is a current-period signal, not a lifelong trait, because...");
+     if "natal", say it's a stable pattern; if "mixed", say both apply.
+  3. "What this means" — how this shows up in daily life/decisions.
+  4. "What to avoid" and "Best strategy" — one sentence each, concrete and
+     actionable, not vague encouragement.
+  5. "Evidence:" — a short compact line listing the evidence_weights
+     factors as plain terms (e.g. "Evidence: 10th house placement, a Raja
+     Yoga with Saturn, the current dasha, and a supporting Jupiter aspect.")
+     — translate jargon into plain terms here too, but keep it a single
+     dense line, not prose.
+
+Apply this same five-part structure to identity's `evidence_weights` inside
+the `executive_summary` field. Every other field (strengths, weaknesses,
+opportunities, warnings, remedies) keeps the simpler observation + one
+"Because..." sentence style from the GOLDEN RULE above — don't force the
+five-part structure where there's no evidence_weights data for it.
 
 closing_letter: written AS the reader's own future self, speaking to them.
 No astrology terms. No predictions. No clichés. Should feel handwritten and
