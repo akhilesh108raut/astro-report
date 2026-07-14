@@ -119,10 +119,11 @@
 {% endblock %}
 
 {% block scripts %}
-{% if not dev_mode %}<script src="https://checkout.razorpay.com/v1/checkout.js"></script>{% endif %}
+{% if not dev_mode and not payment_link_url %}<script src="https://checkout.razorpay.com/v1/checkout.js"></script>{% endif %}
 <script>
 const PURCHASE_UUID = {{ purchase.uuid|tojson }};
 const DEV_MODE = {{ 'true' if dev_mode else 'false' }};
+const PAYMENT_LINK_URL = {{ payment_link_url|tojson }};
 
 const GEN_MSGS = [
   "Consulting the classical texts", "Mapping your Vimshottari dasha",
@@ -154,6 +155,13 @@ async function startPayment() {
   const btn = document.getElementById('pay-btn');
   btn.disabled = true;
   document.getElementById('pay-err').style.display = 'none';
+
+  // Payment Links require no API credentials. Razorpay hosts the payment page.
+  // The merchant must confirm and deliver reports manually from the dashboard.
+  if (PAYMENT_LINK_URL) {
+    window.location.assign(PAYMENT_LINK_URL);
+    return;
+  }
 
   let order;
   try {

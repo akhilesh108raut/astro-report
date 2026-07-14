@@ -138,6 +138,7 @@ def checkout(purchase_uuid):
         price=info,
         dev_mode=_dev_mode(),
         razorpay_key_id=(payments.get_keys()[0] or ""),
+        payment_link_url=os.getenv("RAZORPAY_PAYMENT_LINK_URL", "").strip(),
     )
 
 
