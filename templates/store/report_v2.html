@@ -2,7 +2,8 @@
 {% block title %}{{ purchase.name or "Your" }} Destiny — Astro Report{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('report_store.static', filename='css/report_v2.css') }}?v={{ asset_version() }}">
+<link rel="stylesheet"
+href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 {% endblock %}
 
 {% block content %}
