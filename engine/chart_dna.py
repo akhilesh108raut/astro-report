@@ -6,6 +6,15 @@ One sentence that captures the entire chart's essence.
 from typing import Any
 
 
+def _truncate_at_word(text: str, limit: int = 90) -> str:
+    """Truncate at a word boundary, never mid-word, and only append '...'
+    when something was actually cut."""
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0]
+    return cut + "..."
+
+
 def extract_chart_dna(chart: dict) -> dict:
     """
     Distill a chart into its core archetype and life story.
@@ -108,7 +117,7 @@ def _identify_challenge(contradictions: dict) -> str:
         return "Learning to balance multiple competing interests."
 
     for theme, info in contradictions.items():
-        return f"{theme.title()}: {info['resolution'][:50]}..."
+        return f"{theme.title()}: {_truncate_at_word(info['resolution'])}"
 
     return "Integrating internal contradictions."
 
@@ -117,7 +126,7 @@ def _identify_gift(mechanisms: list, yogas: list) -> str:
     """What is the life gift/strength."""
     if mechanisms:
         top = mechanisms[0]
-        return f"Strength in {top['name']}: {top['reasoning'][:50]}..."
+        return f"Strength in {top['name']}: {_truncate_at_word(top['reasoning'])}"
 
     if yogas:
         top_yoga = yogas[0]
