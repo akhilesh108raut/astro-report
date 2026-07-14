@@ -341,9 +341,12 @@ summary_card: an ultra-condensed distillation, 120 words MAXIMUM combined —
 compress to the single sharpest phrase per field, don't just copy sentences
 from the fuller sections.
 
-Respond with ONLY a JSON object — no markdown fences, no commentary. Return
-exactly these keys (matching the blueprint's structure, but now in finished
-prose — 2-4 short paragraphs per long-form field):
+Respond with ONLY a JSON object — no markdown fences, no commentary. This
+must be strictly valid JSON: escape every double-quote and backslash that
+appears inside a string value (e.g. a quoted phrase within a paragraph),
+and never leave a string unterminated. Return exactly these keys (matching
+the blueprint's structure, but now in finished prose — 2-4 short paragraphs
+per long-form field):
 
 {
   "executive_summary": str,
@@ -435,8 +438,22 @@ def generate_report_ai(chart: dict, language: str = "en") -> dict:
                 timeout=140.0,
                 max_retries=1,
             )
-            blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
-            data = _write_from_blueprint(blueprint, client, WRITER_MODEL, language)
+            # A malformed JSON response (e.g. an unescaped character breaking
+            # a long paragraph mid-string) is a stochastic writing mistake,
+            # not a network failure — the SDK's max_retries doesn't cover it
+            # since the HTTP call itself succeeded. One retry here is cheap
+            # and usually succeeds, versus falling all the way back to the
+            # generic template for a one-off parsing fluke.
+            try:
+                blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
+            except json.JSONDecodeError:
+                log.warning("Orchestrator returned malformed JSON, retrying once")
+                blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
+            try:
+                data = _write_from_blueprint(blueprint, client, WRITER_MODEL, language)
+            except json.JSONDecodeError:
+                log.warning("Writer returned malformed JSON, retrying once")
+                data = _write_from_blueprint(blueprint, client, WRITER_MODEL, language)
             data["_source"] = "claude-orchestrated"
             return data
         except Exception:                 # noqa: BLE001 — any API failure falls back
