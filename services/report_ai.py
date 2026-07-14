@@ -200,7 +200,11 @@ def _generate_blueprint(chart: dict, client, model: str) -> dict:
     payload = json.dumps(_compact_chart(chart), separators=(",", ":"), default=str)
     msg = client.messages.create(
         model=model,
-        max_tokens=8000,
+        # The evidence_weights/confidence/natal_vs_transit additions made this
+        # blueprint noticeably bigger than 8000 tokens covers — that ceiling
+        # was truncating the JSON mid-string (JSONDecodeError: Unterminated
+        # string), not a generation failure. 12000 gives real headroom.
+        max_tokens=12000,
         system=ORCHESTRATOR_SYSTEM_PROMPT,
         messages=[{
             "role": "user",
@@ -393,7 +397,10 @@ def _write_from_blueprint(blueprint: dict, client, model: str, language: str = "
         )
     msg = client.messages.create(
         model=model,
-        max_tokens=8000,
+        # The five-part paragraph structure (Observation/Why/Manifestation/
+        # Advice/Evidence) across 5 domains made this output longer too —
+        # matching headroom to the orchestrator's increase.
+        max_tokens=10000,
         system=system,
         messages=[{
             "role": "user",
@@ -420,12 +427,12 @@ def generate_report_ai(chart: dict, language: str = "en") -> dict:
             import anthropic
             client = anthropic.Anthropic(
                 api_key=api_key,
-                # An 8000-token structured response can legitimately take a
+                # A 10-12k-token structured response can legitimately take a
                 # while — more so for non-English output, which needs more
                 # tokens for the same content. This must be a single generous
                 # attempt, not several short ones, since retrying a call
                 # that's merely slow just repeats the wait.
-                timeout=100.0,
+                timeout=140.0,
                 max_retries=1,
             )
             blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
