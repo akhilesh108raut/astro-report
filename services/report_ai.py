@@ -266,13 +266,17 @@ def generate_report_ai(chart: dict) -> dict:
     if api_key and not api_key.startswith("sk-ant-your"):
         try:
             import anthropic
-            client = anthropic.Anthropic(api_key=api_key)
+            client = anthropic.Anthropic(
+                api_key=api_key,
+                timeout=60.0,       # cold-start containers can be slow to open a connection
+                max_retries=4,
+            )
             blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
             data = _write_from_blueprint(blueprint, client, WRITER_MODEL)
             data["_source"] = "claude-orchestrated"
             return data
-        except Exception as e:            # noqa: BLE001 — any API failure falls back
-            log.warning("Two-stage Claude pipeline failed, using engine fallback: %s", e)
+        except Exception:                 # noqa: BLE001 — any API failure falls back
+            log.exception("Two-stage Claude pipeline failed, using engine fallback")
     return _engine_fallback(chart)
 
 

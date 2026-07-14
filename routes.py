@@ -89,14 +89,18 @@ def _preview_payload(chart: dict) -> dict:
 
 
 def _ensure_ai(report: Report) -> dict:
-    """Generate the AI sections once; afterwards always serve from DB."""
+    """Generate the AI sections once Claude succeeds; afterwards always serve
+    from DB. A fallback result is served but not cached, so a transient
+    Claude failure (e.g. a cold-start connection error) retries on the next
+    view instead of permanently baking generic text into a paid report."""
     if report.ai_json:
         return json.loads(report.ai_json)
     from services.report_ai import generate_report_ai
     ai = generate_report_ai(report.chart())
-    report.ai_json = json.dumps(ai, separators=(",", ":"), default=str)
-    report.generated_at = datetime.utcnow()
-    db.session.commit()
+    if ai.get("_source") == "claude-orchestrated":
+        report.ai_json = json.dumps(ai, separators=(",", ":"), default=str)
+        report.generated_at = datetime.utcnow()
+        db.session.commit()
     return ai
 
 
@@ -645,7 +649,7 @@ def _mark_paid_and_generate(purchase: Purchase, event: str, detail: str) -> str:
 
     report = purchase.report
     _grant_ownership(report.uuid)
-    _ensure_ai(report)          # generate once, cache forever
+    _ensure_ai(report)          # generate + cache once Claude succeeds
     return f"/store/report-v2/{report.uuid}"
 
 
