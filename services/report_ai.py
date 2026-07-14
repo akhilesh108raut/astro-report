@@ -3,7 +3,7 @@ Premium report writer — two-stage pipeline.
 
     Swiss Ephemeris → Chart/Yoga/Dasha Engine → RAG (BPHS, Phaladeepika, ...)
         ↓
-    ORCHESTRATOR (Claude Sonnet) — interprets the chart into a structured
+    ORCHESTRATOR (Claude Haiku) — interprets the chart into a structured
     "Story Blueprint": human insights + short astrology "evidence" tags.
     Never writes final prose.
         ↓
@@ -28,7 +28,7 @@ import logging
 
 log = logging.getLogger("store.report_ai")
 
-ORCHESTRATOR_MODEL = os.getenv("REPORT_ORCHESTRATOR_MODEL", "claude-sonnet-5")
+ORCHESTRATOR_MODEL = os.getenv("REPORT_ORCHESTRATOR_MODEL", "claude-haiku-4-5-20251001")
 WRITER_MODEL = os.getenv("REPORT_AI_MODEL", "claude-haiku-4-5-20251001")
 
 SECTIONS = [
@@ -268,10 +268,10 @@ def generate_report_ai(chart: dict) -> dict:
             import anthropic
             client = anthropic.Anthropic(
                 api_key=api_key,
-                # Sonnet's adaptive thinking + an 8000-token structured response
-                # can legitimately take close to a minute — this must be a
-                # single generous attempt, not several short ones, since
-                # retrying a call that's merely slow just repeats the wait.
+                # An 8000-token structured response can legitimately take a
+                # while — this must be a single generous attempt, not several
+                # short ones, since retrying a call that's merely slow just
+                # repeats the wait.
                 timeout=60.0,
                 max_retries=1,
             )
