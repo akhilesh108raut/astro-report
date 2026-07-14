@@ -43,7 +43,23 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        _run_light_migrations()
     return app
+
+
+def _run_light_migrations():
+    """create_all() only adds missing tables, never columns on existing ones.
+    Guard new columns here so a persistent DB doesn't break on deploy."""
+    from sqlalchemy import inspect, text
+    inspector = inspect(db.engine)
+    if "store_purchases" not in inspector.get_table_names():
+        return
+    existing = {c["name"] for c in inspector.get_columns("store_purchases")}
+    if "language" not in existing:
+        with db.engine.begin() as conn:
+            conn.execute(text(
+                "ALTER TABLE store_purchases ADD COLUMN language VARCHAR(8) DEFAULT 'en'"
+            ))
 
 
 app = create_app()

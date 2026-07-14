@@ -19,6 +19,8 @@ from models import Purchase, Report, PaymentEvent, PricingHistory
 from pricing import get_current_price, get_price_info, PRICE_TIERS
 import payments
 
+SUPPORTED_LANGUAGES = {"en", "hi", "ta", "te", "bn", "mr", "kn", "gu", "ml", "pa"}
+
 log = logging.getLogger("store")
 
 store_bp = Blueprint(
@@ -96,7 +98,7 @@ def _ensure_ai(report: Report) -> dict:
     if report.ai_json:
         return json.loads(report.ai_json)
     from services.report_ai import generate_report_ai
-    ai = generate_report_ai(report.chart())
+    ai = generate_report_ai(report.chart(), language=report.purchase.language or "en")
     if ai.get("_source") == "claude-orchestrated":
         report.ai_json = json.dumps(ai, separators=(",", ":"), default=str)
         report.generated_at = datetime.utcnow()
@@ -579,6 +581,10 @@ def api_preview():
         log.exception("chart build failed")
         return jsonify(error=f"Chart calculation failed: {e}"), 500
 
+    language = str(data.get("language", "en")).strip().lower()
+    if language not in SUPPORTED_LANGUAGES:
+        language = "en"
+
     purchase = Purchase(
         name=str(data.get("name", ""))[:100],
         email=email[:255],
@@ -586,6 +592,7 @@ def api_preview():
         birth_place=str(data.get("birth_place", ""))[:180],
         year=year, month=month, day=day, hour=hour, minute=minute,
         lat=lat, lon=lon, timezone=tz,
+        language=language,
         user_id=session.get("user_id"),
     )
     db.session.add(purchase)

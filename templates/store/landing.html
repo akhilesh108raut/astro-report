@@ -97,6 +97,22 @@
       <div class="field"><label>Longitude</label><input id="f-lon" type="number" step="0.0001" placeholder="79.0882"></div>
     </div>
 
+    <div class="field" style="margin-bottom:18px">
+      <label>Report Language</label>
+      <select id="f-language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="bn">বাংলা (Bengali)</option>
+        <option value="mr">मराठी (Marathi)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="gu">ગુજરાતી (Gujarati)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+      </select>
+    </div>
+
     <div id="f-err" style="display:none;color:var(--red);font-size:14px;margin-bottom:16px"></div>
 
     <button id="f-submit" class="btn btn-gold" style="width:100%;font-size:17px" onclick="submitBirth()">
@@ -174,6 +190,7 @@ async function submitBirth() {
         name: document.getElementById('f-name').value,
         email,
         mobile: document.getElementById('f-mobile').value,
+        language: document.getElementById('f-language').value,
         year, month, day, hour, minute, lat, lon, timezone: tz, birth_place: place
       })
     });

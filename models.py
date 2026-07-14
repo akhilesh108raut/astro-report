@@ -39,6 +39,7 @@ class Purchase(db.Model):
     lat         = db.Column(db.Float, nullable=False)
     lon         = db.Column(db.Float, nullable=False)
     timezone    = db.Column(db.Float, default=5.5)
+    language    = db.Column(db.String(8), default='en')  # report output language
 
     # Money — price is locked server-side at order creation time
     price_paid  = db.Column(db.Integer, nullable=True)          # INR, whole rupees

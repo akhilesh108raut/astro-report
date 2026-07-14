@@ -240,13 +240,31 @@ prose — 2-4 short paragraphs per long-form field):
 }"""
 
 
-def _write_from_blueprint(blueprint: dict, client, model: str) -> dict:
+LANGUAGE_NAMES = {
+    "en": "English", "hi": "Hindi", "ta": "Tamil", "te": "Telugu",
+    "bn": "Bengali", "mr": "Marathi", "kn": "Kannada", "gu": "Gujarati",
+    "ml": "Malayalam", "pa": "Punjabi",
+}
+
+
+def _write_from_blueprint(blueprint: dict, client, model: str, language: str = "en") -> dict:
     """Stage 2: writer turns the blueprint into prose. Raises on failure."""
     payload = json.dumps(blueprint, separators=(",", ":"), default=str)
+    lang_name = LANGUAGE_NAMES.get(language, "English")
+    system = WRITER_SYSTEM_PROMPT
+    if language != "en":
+        system += (
+            f"\n\nWrite the ENTIRE response in {lang_name}, including every string "
+            f"value — not just a translated summary. Keep JSON keys in English "
+            f"exactly as specified below; only the values are in {lang_name}. "
+            f"Astrological terms (planet names, yoga names) may stay in their "
+            f"conventional form if there is no natural {lang_name} equivalent, "
+            f"but all surrounding prose must be fully in {lang_name}."
+        )
     msg = client.messages.create(
         model=model,
         max_tokens=8000,
-        system=WRITER_SYSTEM_PROMPT,
+        system=system,
         messages=[{
             "role": "user",
             "content": "STORY BLUEPRINT (transform these insights into prose; "
@@ -260,7 +278,7 @@ def _write_from_blueprint(blueprint: dict, client, model: str) -> dict:
     return data
 
 
-def generate_report_ai(chart: dict) -> dict:
+def generate_report_ai(chart: dict, language: str = "en") -> dict:
     """Two-stage pipeline. Falls back to engine-derived text on any failure."""
     api_key = (os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY") or "").strip()
     if api_key and not api_key.startswith("sk-ant-your"):
@@ -276,7 +294,7 @@ def generate_report_ai(chart: dict) -> dict:
                 max_retries=1,
             )
             blueprint = _generate_blueprint(chart, client, ORCHESTRATOR_MODEL)
-            data = _write_from_blueprint(blueprint, client, WRITER_MODEL)
+            data = _write_from_blueprint(blueprint, client, WRITER_MODEL, language)
             data["_source"] = "claude-orchestrated"
             return data
         except Exception:                 # noqa: BLE001 — any API failure falls back
