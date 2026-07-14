@@ -262,7 +262,7 @@ def _write_from_blueprint(blueprint: dict, client, model: str) -> dict:
 
 def generate_report_ai(chart: dict) -> dict:
     """Two-stage pipeline. Falls back to engine-derived text on any failure."""
-    api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
+    api_key = (os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY") or "").strip()
     if api_key and not api_key.startswith("sk-ant-your"):
         try:
             import anthropic
