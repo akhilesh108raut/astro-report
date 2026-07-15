@@ -1,0 +1,79 @@
+{% extends "store/_base.html" %}
+{% block title %}Writing your report…{% endblock %}
+
+{% block content %}
+<div style="position:fixed;inset:0;display:flex;flex-direction:column;
+     align-items:center;justify-content:center;gap:22px;text-align:center;padding:24px">
+  <div style="font-size:44px">✦</div>
+  <h2 style="font-size:26px">Writing your report…</h2>
+  <p id="gen-msg" style="color:var(--ink-dim);font-size:14px">Consulting the classical texts</p>
+  <div class="progress-track" style="width:min(420px,80vw)">
+    <div id="gen-bar" class="progress-fill" style="width:4%"></div>
+  </div>
+  <p id="gen-note" style="display:none;color:var(--ink-dim);font-size:12.5px;max-width:360px">
+    This is taking a little longer than usual — hang tight, your report is still being written.
+  </p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const REPORT_UUID = {{ report_uuid|tojson }};
+const GEN_URL = "/store/api/report/" + REPORT_UUID + "/generate";
+
+const GEN_MSGS = [
+  "Consulting the classical texts", "Mapping your Vimshottari dasha",
+  "Weighing planetary dignities", "Matching BPHS rules to your chart",
+  "Writing career & wealth sections", "Compiling remedies", "Polishing your report"
+];
+
+// Cosmetic progress — real generation is a single long call, so the bar
+// eases toward 92% and only completes when the report is actually ready.
+let w = 4, mi = 0;
+const bar = document.getElementById('gen-bar');
+const msg = document.getElementById('gen-msg');
+const note = document.getElementById('gen-note');
+const ticker = setInterval(() => {
+  w = Math.min(92, w + Math.random() * 6);
+  bar.style.width = w + '%';
+  if (Math.random() < 0.4) { mi = (mi + 1) % GEN_MSGS.length; msg.textContent = GEN_MSGS[mi]; }
+}, 1400);
+
+function finish() {
+  clearInterval(ticker);
+  bar.style.width = '100%';
+  // Reload the same URL — now that ai_json is cached, it renders the report.
+  setTimeout(() => { window.location.href = window.location.pathname; }, 350);
+}
+
+function giveUpToFallback() {
+  clearInterval(ticker);
+  // After repeated Claude failures, show the engine report rather than
+  // spinning forever. The payment is already secured; this is never a dead end.
+  window.location.href = window.location.pathname + "?fallback=1";
+}
+
+let attempts = 0;
+const MAX_ATTEMPTS = 5;
+
+async function attemptGenerate() {
+  attempts += 1;
+  if (attempts > 2) note.style.display = 'block';
+  try {
+    const r = await fetch(GEN_URL, { method: 'POST' });
+    const d = await r.json();
+    if (d.ready) { finish(); return; }
+    // Generation ran but Claude didn't succeed (timeout / out of credits).
+    if (attempts >= MAX_ATTEMPTS) { giveUpToFallback(); return; }
+    setTimeout(attemptGenerate, 2500);
+  } catch (e) {
+    // Network error or the instance restarted mid-generation — just retry.
+    // The payment is already confirmed, so retrying is always safe.
+    if (attempts >= MAX_ATTEMPTS) { giveUpToFallback(); return; }
+    setTimeout(attemptGenerate, 3500);
+  }
+}
+
+attemptGenerate();
+</script>
+{% endblock %}

@@ -202,7 +202,11 @@ def _ensure_ai(report: Report) -> dict:
     """Generate the AI sections once Claude succeeds; afterwards always serve
     from DB. A fallback result is served but not cached, so a transient
     Claude failure (e.g. a cold-start connection error) retries on the next
-    view instead of permanently baking generic text into a paid report."""
+    view instead of permanently baking generic text into a paid report.
+
+    This runs the heavy 60-140s Claude pipeline, so it is called ONLY from the
+    dedicated /generate endpoint — never inside the payment-verify request,
+    which must return instantly (see _mark_paid)."""
     if report.ai_json:
         return json.loads(report.ai_json)
     from services.report_ai import generate_report_ai
@@ -212,6 +216,22 @@ def _ensure_ai(report: Report) -> dict:
         report.generated_at = datetime.utcnow()
         db.session.commit()
     return ai
+
+
+def _cached_or_fallback(report: Report, force_fallback: bool):
+    """Return (ai_dict, ready) WITHOUT ever calling Claude.
+
+    - Cached Claude report exists  → (it, True)
+    - force_fallback (client gave up waiting for Claude) → (engine fallback, True)
+    - otherwise → (None, False), signalling the view to show the loading page
+      while the /generate endpoint runs the real pipeline in its own request.
+    """
+    if report.ai_json:
+        return json.loads(report.ai_json), True
+    if force_fallback:
+        from services.report_ai import _engine_fallback
+        return _engine_fallback(report.chart()), True
+    return None, False
 
 
 def _record_tier_change(before: int, after: int):
@@ -268,7 +288,10 @@ def view_report(report_uuid):
                                        "your payment to view the full reading."), 403
 
     chart = report.chart()
-    ai = _ensure_ai(report)
+    ai, ready = _cached_or_fallback(report, bool(request.args.get("fallback")))
+    if not ready:
+        return render_template("store/report_loading.html",
+                               report_uuid=report_uuid, layout="classic")
     return render_template("store/report.html", chart=chart, ai=ai,
                            purchase=purchase, report=report)
 
@@ -825,7 +848,10 @@ def view_report_v2(report_uuid):
                                        "your payment to view the full reading."), 403
 
     chart = report.chart()
-    ai = _ensure_ai(report)
+    ai, ready = _cached_or_fallback(report, bool(request.args.get("fallback")))
+    if not ready:
+        return render_template("store/report_loading.html",
+                               report_uuid=report_uuid, layout="v2")
     derived = _v2_derived(chart, ai, purchase.name or "")
     return render_template("store/report_v2.html", chart=chart, ai=ai,
                            purchase=purchase, report=report, **derived)
@@ -983,7 +1009,7 @@ def api_create_order():
         db.session.add(PaymentEvent(purchase_id=purchase.id, event="order_created",
                                     detail="free — zero-price testing window"))
         db.session.commit()
-        url = _mark_paid_and_generate(purchase, "free_zero_price", "no payment required")
+        url = _mark_paid(purchase, "free_zero_price", "no payment required")
         return jsonify(free=True, amount=0, report_url=url)
 
     try:
@@ -1001,8 +1027,15 @@ def api_create_order():
                    name=purchase.name or "Astro Report")
 
 
-def _mark_paid_and_generate(purchase: Purchase, event: str, detail: str) -> str:
-    """Shared success path: mark paid, track tier, generate + cache report."""
+def _mark_paid(purchase: Purchase, event: str, detail: str) -> str:
+    """Shared success path: mark paid, track tier, return the report URL —
+    FAST. Report generation is deliberately NOT done here: the old code ran
+    the 60-140s Claude pipeline inside the payment-verify request, which on a
+    small instance tripped health-check restarts and returned 502 to the
+    customer *after* they'd paid. Generation now happens lazily in its own
+    /generate request once the report page loads, so the money path is
+    instant and reliable, and a slow/failed generation is retryable without
+    ever risking the payment."""
     before = Purchase.total_paid()
     purchase.status = "paid"
     purchase.paid_at = datetime.utcnow()
@@ -1012,7 +1045,6 @@ def _mark_paid_and_generate(purchase: Purchase, event: str, detail: str) -> str:
 
     report = purchase.report
     _grant_ownership(report.uuid)
-    _ensure_ai(report)          # generate + cache once Claude succeeds
     return f"/store/report-v2/{report.uuid}"
 
 
@@ -1040,7 +1072,7 @@ def api_verify():
 
     purchase.razorpay_payment_id = payment_id
     purchase.razorpay_signature = signature
-    url = _mark_paid_and_generate(purchase, "payment_verified", payment_id)
+    url = _mark_paid(purchase, "payment_verified", payment_id)
     return jsonify(success=True, report_url=url)
 
 
@@ -1064,9 +1096,34 @@ def razorpay_webhook():
     if purchase.status == "paid":
         return jsonify(status="already_processed"), 200
     purchase.razorpay_payment_id = payment.get("id") or purchase.razorpay_payment_id
-    _mark_paid_and_generate(purchase, "webhook_payment_captured",
+    _mark_paid(purchase, "webhook_payment_captured",
                             payment.get("id", ""))
     return jsonify(status="processed"), 200
+
+
+@store_bp.route("/api/report/<report_uuid>/generate", methods=["POST"])
+def api_generate_report(report_uuid):
+    """Run the heavy Claude pipeline for a PAID report, in its own request.
+
+    This is the ONLY place generation happens now, isolated from the payment
+    path. Idempotent: if the report is already generated it returns instantly;
+    otherwise it runs the pipeline and caches on Claude success. If Claude
+    fails (timeout, out of credits), nothing is cached and the client can
+    retry — or fall back to the engine report after a few attempts."""
+    report = Report.query.filter_by(uuid=report_uuid).first_or_404()
+    purchase = report.purchase
+    if not (_can_view_report(report_uuid, purchase) or _dev_mode()):
+        return jsonify(error="Report locked."), 403
+
+    if report.ai_json:
+        return jsonify(ready=True, source="cached")
+    try:
+        ai = _ensure_ai(report)
+    except Exception:
+        log.exception("Report generation failed for %s", report_uuid)
+        return jsonify(ready=False, source="error"), 200
+    source = ai.get("_source", "")
+    return jsonify(ready=(source == "claude-orchestrated"), source=source), 200
 
 
 @store_bp.route("/api/dev-pay", methods=["POST"])
@@ -1081,7 +1138,7 @@ def api_dev_pay():
         return jsonify(error="Purchase not found."), 404
     if purchase.status != "paid":
         purchase.razorpay_payment_id = "dev_payment_simulated"
-        url = _mark_paid_and_generate(purchase, "dev_simulated", "local dev payment")
+        url = _mark_paid(purchase, "dev_simulated", "local dev payment")
     else:
         url = f"/store/report-v2/{purchase.report.uuid}"
     return jsonify(success=True, report_url=url)
