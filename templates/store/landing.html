@@ -75,22 +75,14 @@
       <div class="field"><label>Time of Birth *</label><input id="f-time" type="time" required></div>
     </div>
 
-    <div class="field" style="margin-bottom:18px">
+    <div class="field" style="margin-bottom:8px">
       <label>Birth Place *</label>
-      <select id="f-city">
-        <option value="21.1458,79.0882,5.5">Nagpur, India</option>
-        <option value="19.0760,72.8777,5.5">Mumbai, India</option>
-        <option value="28.6139,77.2090,5.5">Delhi, India</option>
-        <option value="18.5204,73.8567,5.5">Pune, India</option>
-        <option value="12.9716,77.5946,5.5">Bengaluru, India</option>
-        <option value="13.0827,80.2707,5.5">Chennai, India</option>
-        <option value="22.5726,88.3639,5.5">Kolkata, India</option>
-        <option value="17.3850,78.4867,5.5">Hyderabad, India</option>
-        <option value="23.0225,72.5714,5.5">Ahmedabad, India</option>
-        <option value="26.9124,75.7873,5.5">Jaipur, India</option>
-        <option value="custom">Other — enter coordinates</option>
-      </select>
+      <input id="f-city" type="text" list="city-datalist" autocomplete="off" placeholder="Start typing your city or town…">
+      <datalist id="city-datalist"></datalist>
     </div>
+    <p style="font-size:12px;color:var(--ink-dim);margin:0 0 18px">
+      Can't find your town? <a href="#" id="toggle-custom" style="color:var(--gold)">Enter coordinates manually</a>
+    </p>
 
     <div id="custom-coords" class="grid-2" style="display:none;margin-bottom:18px">
       <div class="field"><label>Latitude</label><input id="f-lat" type="number" step="0.0001" placeholder="21.1458"></div>
@@ -150,9 +142,102 @@
 
 {% block scripts %}
 <script>
-document.getElementById('f-city').addEventListener('change', function () {
-  document.getElementById('custom-coords').style.display =
-    this.value === 'custom' ? 'grid' : 'none';
+// Major Indian cities & towns, covering every state/UT. All at IST (UTC+5.5).
+const CITY_COORDS = {
+  "Mumbai, Maharashtra": [19.0760, 72.8777], "Pune, Maharashtra": [18.5204, 73.8567],
+  "Nagpur, Maharashtra": [21.1458, 79.0882], "Nashik, Maharashtra": [19.9975, 73.7898],
+  "Aurangabad, Maharashtra": [19.8762, 75.3433], "Solapur, Maharashtra": [17.6599, 75.9064],
+  "Kolhapur, Maharashtra": [16.7050, 74.2433], "Amravati, Maharashtra": [20.9374, 77.7796],
+  "Thane, Maharashtra": [19.2183, 72.9781], "Navi Mumbai, Maharashtra": [19.0330, 73.0297],
+  "Delhi, Delhi": [28.6139, 77.2090], "New Delhi, Delhi": [28.6139, 77.2090],
+  "Chennai, Tamil Nadu": [13.0827, 80.2707], "Coimbatore, Tamil Nadu": [11.0168, 76.9558],
+  "Madurai, Tamil Nadu": [9.9252, 78.1198], "Tiruchirappalli, Tamil Nadu": [10.7905, 78.7047],
+  "Salem, Tamil Nadu": [11.6643, 78.1460], "Tirunelveli, Tamil Nadu": [8.7139, 77.7567],
+  "Vellore, Tamil Nadu": [12.9165, 79.1325], "Erode, Tamil Nadu": [11.3410, 77.7172],
+  "Kolkata, West Bengal": [22.5726, 88.3639], "Howrah, West Bengal": [22.5958, 88.2636],
+  "Durgapur, West Bengal": [23.5204, 87.3119], "Asansol, West Bengal": [23.6739, 86.9524],
+  "Siliguri, West Bengal": [26.7271, 88.3953],
+  "Bengaluru, Karnataka": [12.9716, 77.5946], "Mysuru, Karnataka": [12.2958, 76.6394],
+  "Hubballi, Karnataka": [15.3647, 75.1240], "Mangaluru, Karnataka": [12.9141, 74.8560],
+  "Belagavi, Karnataka": [15.8497, 74.4977], "Davanagere, Karnataka": [14.4644, 75.9218],
+  "Ballari, Karnataka": [15.1394, 76.9214],
+  "Hyderabad, Telangana": [17.3850, 78.4867], "Warangal, Telangana": [17.9689, 79.5941],
+  "Nizamabad, Telangana": [18.6725, 78.0941], "Karimnagar, Telangana": [18.4386, 79.1288],
+  "Ahmedabad, Gujarat": [23.0225, 72.5714], "Surat, Gujarat": [21.1702, 72.8311],
+  "Vadodara, Gujarat": [22.3072, 73.1812], "Rajkot, Gujarat": [22.3039, 70.8022],
+  "Bhavnagar, Gujarat": [21.7645, 72.1519], "Jamnagar, Gujarat": [22.4707, 70.0577],
+  "Gandhinagar, Gujarat": [23.2156, 72.6369], "Junagadh, Gujarat": [21.5222, 70.4579],
+  "Jaipur, Rajasthan": [26.9124, 75.7873], "Jodhpur, Rajasthan": [26.2389, 73.0243],
+  "Udaipur, Rajasthan": [24.5854, 73.7125], "Kota, Rajasthan": [25.2138, 75.8648],
+  "Bikaner, Rajasthan": [28.0229, 73.3119], "Ajmer, Rajasthan": [26.4499, 74.6399],
+  "Alwar, Rajasthan": [27.5530, 76.6346],
+  "Lucknow, Uttar Pradesh": [26.8467, 80.9462], "Kanpur, Uttar Pradesh": [26.4499, 80.3319],
+  "Varanasi, Uttar Pradesh": [25.3176, 82.9739], "Agra, Uttar Pradesh": [27.1767, 78.0081],
+  "Prayagraj, Uttar Pradesh": [25.4358, 81.8463], "Meerut, Uttar Pradesh": [28.9845, 77.7064],
+  "Ghaziabad, Uttar Pradesh": [28.6692, 77.4538], "Noida, Uttar Pradesh": [28.5355, 77.3910],
+  "Bareilly, Uttar Pradesh": [28.3670, 79.4304], "Aligarh, Uttar Pradesh": [27.8974, 78.0880],
+  "Moradabad, Uttar Pradesh": [28.8386, 78.7733], "Saharanpur, Uttar Pradesh": [29.9680, 77.5460],
+  "Gorakhpur, Uttar Pradesh": [26.7606, 83.3732], "Jhansi, Uttar Pradesh": [25.4484, 78.5685],
+  "Bhopal, Madhya Pradesh": [23.2599, 77.4126], "Indore, Madhya Pradesh": [22.7196, 75.8577],
+  "Jabalpur, Madhya Pradesh": [23.1815, 79.9864], "Gwalior, Madhya Pradesh": [26.2183, 78.1828],
+  "Ujjain, Madhya Pradesh": [23.1765, 75.7885], "Sagar, Madhya Pradesh": [23.8388, 78.7378],
+  "Satna, Madhya Pradesh": [24.5854, 80.8322],
+  "Patna, Bihar": [25.5941, 85.1376], "Gaya, Bihar": [24.7955, 84.9994],
+  "Bhagalpur, Bihar": [25.2445, 86.9718], "Muzaffarpur, Bihar": [26.1225, 85.3906],
+  "Darbhanga, Bihar": [26.1542, 85.8918],
+  "Raipur, Chhattisgarh": [21.2514, 81.6296], "Bhilai, Chhattisgarh": [21.2094, 81.4285],
+  "Bilaspur, Chhattisgarh": [22.0797, 82.1391], "Durg, Chhattisgarh": [21.1904, 81.2849],
+  "Bhubaneswar, Odisha": [20.2961, 85.8245], "Cuttack, Odisha": [20.4625, 85.8828],
+  "Rourkela, Odisha": [22.2604, 84.8536], "Puri, Odisha": [19.8135, 85.8312],
+  "Sambalpur, Odisha": [21.4669, 83.9756],
+  "Chandigarh, Chandigarh": [30.7333, 76.7794],
+  "Ludhiana, Punjab": [30.9010, 75.8573], "Amritsar, Punjab": [31.6340, 74.8723],
+  "Jalandhar, Punjab": [31.3260, 75.5762], "Patiala, Punjab": [30.3398, 76.3869],
+  "Bathinda, Punjab": [30.2110, 74.9455],
+  "Faridabad, Haryana": [28.4089, 77.3178], "Gurugram, Haryana": [28.4595, 77.0266],
+  "Panipat, Haryana": [29.3909, 76.9635], "Ambala, Haryana": [30.3782, 76.7767],
+  "Karnal, Haryana": [29.6857, 76.9905], "Hisar, Haryana": [29.1492, 75.7217],
+  "Rohtak, Haryana": [28.8955, 76.6066],
+  "Shimla, Himachal Pradesh": [31.1048, 77.1734], "Manali, Himachal Pradesh": [32.2432, 77.1892],
+  "Dharamshala, Himachal Pradesh": [32.2190, 76.3234],
+  "Dehradun, Uttarakhand": [30.3165, 78.0322], "Haridwar, Uttarakhand": [29.9457, 78.1642],
+  "Nainital, Uttarakhand": [29.3803, 79.4636], "Rishikesh, Uttarakhand": [30.0869, 78.2676],
+  "Ranchi, Jharkhand": [23.3441, 85.3096], "Jamshedpur, Jharkhand": [22.8046, 86.2029],
+  "Dhanbad, Jharkhand": [23.7957, 86.4304], "Bokaro, Jharkhand": [23.6693, 86.1511],
+  "Thiruvananthapuram, Kerala": [8.5241, 76.9366], "Kochi, Kerala": [9.9312, 76.2673],
+  "Kozhikode, Kerala": [11.2588, 75.7804], "Thrissur, Kerala": [10.5276, 76.2144],
+  "Kollam, Kerala": [8.8932, 76.6141], "Kannur, Kerala": [11.8745, 75.3704],
+  "Kottayam, Kerala": [9.5916, 76.5222], "Alappuzha, Kerala": [9.4981, 76.3388],
+  "Palakkad, Kerala": [10.7867, 76.6548],
+  "Visakhapatnam, Andhra Pradesh": [17.6868, 83.2185], "Vijayawada, Andhra Pradesh": [16.5062, 80.6480],
+  "Guntur, Andhra Pradesh": [16.3067, 80.4365], "Tirupati, Andhra Pradesh": [13.6288, 79.4192],
+  "Nellore, Andhra Pradesh": [14.4426, 79.9865], "Kurnool, Andhra Pradesh": [15.8281, 78.0373],
+  "Rajahmundry, Andhra Pradesh": [17.0005, 81.8040], "Kadapa, Andhra Pradesh": [14.4673, 78.8242],
+  "Guwahati, Assam": [26.1445, 91.7362], "Silchar, Assam": [24.8333, 92.7789],
+  "Dibrugarh, Assam": [27.4728, 94.9120], "Jorhat, Assam": [26.7509, 94.2037],
+  "Panaji, Goa": [15.4909, 73.8278], "Margao, Goa": [15.2832, 73.9862],
+  "Srinagar, Jammu and Kashmir": [34.0837, 74.7973], "Jammu, Jammu and Kashmir": [32.7266, 74.8570],
+  "Leh, Ladakh": [34.1526, 77.5771],
+  "Puducherry, Puducherry": [11.9416, 79.8083], "Port Blair, Andaman and Nicobar Islands": [11.6234, 92.7265],
+  "Agartala, Tripura": [23.8315, 91.2868], "Imphal, Manipur": [24.8170, 93.9368],
+  "Shillong, Meghalaya": [25.5788, 91.8933], "Aizawl, Mizoram": [23.7271, 92.7176],
+  "Kohima, Nagaland": [25.6751, 94.1086], "Dimapur, Nagaland": [25.9091, 93.7266],
+  "Gangtok, Sikkim": [27.3389, 88.6065], "Itanagar, Arunachal Pradesh": [27.0844, 93.6053],
+};
+
+(function populateCityList() {
+  const dl = document.getElementById('city-datalist');
+  Object.keys(CITY_COORDS).sort().forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    dl.appendChild(opt);
+  });
+})();
+
+document.getElementById('toggle-custom').addEventListener('click', function (e) {
+  e.preventDefault();
+  const box = document.getElementById('custom-coords');
+  box.style.display = box.style.display === 'grid' ? 'none' : 'grid';
 });
 
 async function submitBirth() {
@@ -166,15 +251,20 @@ async function submitBirth() {
   if (!email) { err.textContent = 'Your email address is required to deliver the report.'; err.style.display = 'block'; return; }
 
   let lat, lon, tz = 5.5, place;
-  const citySel = document.getElementById('f-city');
-  if (citySel.value === 'custom') {
+  const cityInput = document.getElementById('f-city').value.trim();
+  const customVisible = document.getElementById('custom-coords').style.display === 'grid';
+  if (customVisible) {
     lat = parseFloat(document.getElementById('f-lat').value);
     lon = parseFloat(document.getElementById('f-lon').value);
-    place = 'Custom coordinates';
+    place = cityInput || 'Custom coordinates';
     if (isNaN(lat) || isNaN(lon)) { err.textContent = 'Enter valid coordinates.'; err.style.display = 'block'; return; }
+  } else if (CITY_COORDS[cityInput]) {
+    [lat, lon] = CITY_COORDS[cityInput];
+    place = cityInput;
   } else {
-    [lat, lon, tz] = citySel.value.split(',').map(Number);
-    place = citySel.options[citySel.selectedIndex].text;
+    err.textContent = 'Pick your city from the list, or use "Enter coordinates manually" below the field.';
+    err.style.display = 'block';
+    return;
   }
 
   const [year, month, day] = d.split('-').map(Number);
