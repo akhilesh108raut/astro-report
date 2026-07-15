@@ -237,7 +237,14 @@ def _generate_blueprint(chart: dict, client, model: str) -> dict:
         # was truncating the JSON mid-string (JSONDecodeError: Unterminated
         # string), not a generation failure. 12000 gives real headroom.
         max_tokens=12000,
-        system=ORCHESTRATOR_SYSTEM_PROMPT,
+        # ORCHESTRATOR_SYSTEM_PROMPT is a large, static block reused on every
+        # report — cache it so repeat calls only pay full price for the
+        # per-chart payload, not the whole instruction set.
+        system=[{
+            "type": "text",
+            "text": ORCHESTRATOR_SYSTEM_PROMPT,
+            "cache_control": {"type": "ephemeral"},
+        }],
         messages=[{
             "role": "user",
             "content": "BIRTH CHART JSON (interpret ONLY this data):\n" + payload,
@@ -429,23 +436,33 @@ def _write_from_blueprint(blueprint: dict, client, model: str, language: str = "
     """Stage 2: writer turns the blueprint into prose. Raises on failure."""
     payload = json.dumps(blueprint, separators=(",", ":"), default=str)
     lang_name = LANGUAGE_NAMES.get(language, "English")
-    system = WRITER_SYSTEM_PROMPT
+    # WRITER_SYSTEM_PROMPT is cached as its own block since it's identical
+    # across every language; the language addendum is appended uncached so
+    # the cached prefix still hits regardless of which language is requested.
+    system_blocks = [{
+        "type": "text",
+        "text": WRITER_SYSTEM_PROMPT,
+        "cache_control": {"type": "ephemeral"},
+    }]
     if language != "en":
-        system += (
-            f"\n\nWrite the ENTIRE response in {lang_name}, including every string "
-            f"value — not just a translated summary. Keep JSON keys in English "
-            f"exactly as specified below; only the values are in {lang_name}. "
-            f"Astrological terms (planet names, yoga names) may stay in their "
-            f"conventional form if there is no natural {lang_name} equivalent, "
-            f"but all surrounding prose must be fully in {lang_name}."
-        )
+        system_blocks.append({
+            "type": "text",
+            "text": (
+                f"Write the ENTIRE response in {lang_name}, including every string "
+                f"value — not just a translated summary. Keep JSON keys in English "
+                f"exactly as specified below; only the values are in {lang_name}. "
+                f"Astrological terms (planet names, yoga names) may stay in their "
+                f"conventional form if there is no natural {lang_name} equivalent, "
+                f"but all surrounding prose must be fully in {lang_name}."
+            ),
+        })
     msg = client.messages.create(
         model=model,
         # The five-part paragraph structure (Observation/Why/Manifestation/
         # Advice/Evidence) across 5 domains made this output longer too —
         # matching headroom to the orchestrator's increase.
         max_tokens=10000,
-        system=system,
+        system=system_blocks,
         messages=[{
             "role": "user",
             "content": "STORY BLUEPRINT (transform these insights into prose; "
