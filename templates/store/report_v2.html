@@ -500,13 +500,12 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
     <div class="hall-eyebrow">What the Ancients Saw in You</div>
     <div class="hall-title">Wisdom Written Long Before You</div>
     {% for r in top_rules %}
-    {% set conf = (r.effects.values()|list|max * 100)|round|int if r.effects else 0 %}
     <div class="quote-card" onclick="this.classList.toggle('expanded')">
       <div class="quote-icon">📜</div>
-      <div class="quote-source">{{ r.source }}</div>
-      <div class="quote-text">“{{ r.interpretation[:120] }}{{ '…' if r.interpretation|length > 120 else '' }}”</div>
-      <div class="quote-conf">Confidence {{ conf }}%</div>
-      <div class="quote-expand">{{ r.interpretation }}
+      <div class="quote-source">{{ r.label }}</div>
+      <div class="quote-text">“{{ r.text }}”</div>
+      {% if r.strength_pct %}<div class="quote-conf">How strongly this shows up: {{ r.strength_pct }}%</div>{% endif %}
+      <div class="quote-expand">{{ r.text_full }}
         {% if r.tags %}<div style="margin-top:10px">{% for t in r.tags %}<span class="chip" style="font-size:10px">{{ t }}</span>{% endfor %}</div>{% endif %}
       </div>
     </div>

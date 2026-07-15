@@ -76,6 +76,38 @@ def _can_view_report(report_uuid: str, purchase) -> bool:
 
 # ── Chart helpers ────────────────────────────────────────────────────────────
 
+def _truncate_at_word(text: str, limit: int = 130) -> str:
+    """Truncate at a word boundary, never mid-word, and only append '…'
+    when something was actually cut."""
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0]
+    return cut + "…"
+
+
+def _friendly_rule_source(source: str) -> str:
+    """Turn an internal RAG `source` key into a label a customer can read.
+    Raw examples: "300_Combinations 1", "Planetary Dignity (Moon Exalted)",
+    "Janma Nakshatra (Moon in Pushya)", "BPHS 24", "BPHS_Dasha 3"."""
+    import re
+    m = re.match(r"^Planetary Dignity \((\w+) (\w+)\)$", source)
+    if m:
+        planet, dignity = m.groups()
+        return f"Your {planet}, {dignity.capitalize()}"
+    m = re.match(r"^Janma Nakshatra \(Moon in (\w+)\)$", source)
+    if m:
+        return f"Your Birth Star: {m.group(1)}"
+    if source.startswith("BPHS_Dasha"):
+        return "Your Current Planetary Period"
+    if source.startswith("BPHS"):
+        return "The Brihat Parashara Hora Shastra"
+    if source.startswith("Phaladeepika"):
+        return "The Phaladeepika"
+    if source.startswith("300_Combinations") or source.startswith("300 Combinations"):
+        return "A Classical Planetary Combination"
+    return source.replace("_", " ") or "An Ancient Rule"
+
+
 def _overall_score(chart: dict) -> int:
     cs = chart.get("confidence_scores") or {}
     vals = []
@@ -509,14 +541,26 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
         "exceptional": sum(1 for y in yogas if y["rarity"] == "Very Rare"),
     }
 
-    # Top 6 classical rules by strongest effect
+    # Top 6 classical rules by strongest effect — rewritten into plain-language
+    # labels for display. The raw `source` field is an internal DB key
+    # ("300_Combinations 1", "Planetary Dignity (Moon Exalted)") never meant
+    # for customers to read directly.
     rules = chart.get("classical_rules") or []
 
     def _max_effect(r):
         eff = r.get("effects") or {}
         return max(eff.values()) if eff else 0
 
-    top_rules = sorted(rules, key=_max_effect, reverse=True)[:6]
+    top_rules = []
+    for r in sorted(rules, key=_max_effect, reverse=True)[:6]:
+        interp = r.get("interpretation", "")
+        top_rules.append({
+            "label": _friendly_rule_source(r.get("source", "")),
+            "text": _truncate_at_word(interp, 130),
+            "text_full": interp,
+            "strength_pct": round(_max_effect(r) * 100) if r.get("effects") else 0,
+            "tags": r.get("tags") or [],
+        })
 
     # ── Reveal cards: Hidden Gift / Superpower / Blind Spot ──────────
     dna = chart.get("chart_dna") or {}
