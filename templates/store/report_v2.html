@@ -497,6 +497,54 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 </section>
 {% endif %}
 
+<!-- ══════════════════ HALL 8.7 — YOUR SHAKTI ══════════════════ -->
+{% if ai.shakti and ai.shakti.shakti_name %}
+<section id="hall-shakti" class="hall">
+  <div class="hall-inner reveal" style="max-width:640px;text-align:center">
+    <div class="hall-eyebrow">Your Shakti — The Creative Power of Your Soul</div>
+    <div class="hall-title" style="font-size:clamp(30px,5vw,44px)">{{ ai.shakti.shakti_name }}</div>
+    {% if ai.shakti.tagline %}<p class="shakti-tagline">{{ ai.shakti.tagline }}</p>{% endif %}
+
+    <div class="shakti-divider"></div>
+
+    {% if ai.shakti.core_power %}<p class="shakti-core">{{ ai.shakti.core_power }}</p>{% endif %}
+    {% if ai.shakti.how_people_feel %}<p class="shakti-feel">How people experience it: {{ ai.shakti.how_people_feel }}</p>{% endif %}
+
+    <div class="shakti-cols">
+      {% if ai.shakti.highest_expression %}
+      <div class="shakti-col">
+        <div class="shakti-col-title">When fully expressed</div>
+        <ul>{% for x in ai.shakti.highest_expression %}<li>{{ x }}</li>{% endfor %}</ul>
+      </div>
+      {% endif %}
+      {% if ai.shakti.shadow_when_unused %}
+      <div class="shakti-col">
+        <div class="shakti-col-title">When suppressed</div>
+        <ul>{% for x in ai.shakti.shadow_when_unused %}<li>{{ x }}</li>{% endfor %}</ul>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if ai.shakti.best_environment %}<p class="shakti-env"><strong>Where it thrives:</strong> {{ ai.shakti.best_environment }}</p>{% endif %}
+    {% if ai.shakti.activation %}<p class="shakti-env">{{ ai.shakti.activation }}</p>{% endif %}
+
+    {% if ai.shakti.evidence_weights %}
+    <div class="shakti-why">
+      <div class="shakti-col-title">Why your chart says this</div>
+      {% for w in ai.shakti.evidence_weights %}
+      <div class="shakti-weight-row">
+        <span class="shakti-weight-label">{{ w.factor }}</span>
+        <div class="shakti-bar"><div class="shakti-bar-fill" style="width:{{ w.weight_pct }}%"></div></div>
+        <span class="shakti-weight-pct">{{ w.weight_pct }}%</span>
+      </div>
+      {% endfor %}
+      {% if ai.shakti.confidence %}<div class="shakti-conf">Confidence: {{ ai.shakti.confidence|capitalize }}</div>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
 <!-- ══════════════════ HALL 9 — ANCIENT WISDOM ══════════════════ -->
 {% if top_rules %}
 <section id="hall-wisdom" class="hall compact">

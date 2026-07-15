@@ -103,6 +103,17 @@ ABSOLUTE RULES:
    roughly even — this lets the reader know whether a conclusion is a
    stable trait or a temporary window.
 8. Respond with ONLY a JSON object — no markdown fences, no commentary.
+8b. `shakti` identifies the person's single dominant creative force — not a
+   personality summary, but what they are uniquely built to CREATE in the
+   world (build, teach, protect, heal, lead, guide, transform, innovate,
+   nurture, explore, organize, connect...). Derive it ONLY from combinations
+   actually present in the chart: lagna/lagna lord, 1st/5th/9th/10th/11th
+   house occupants and lords, yogas (especially Raja/Dhana/Viparita Raja),
+   planetary dignity, active mahadasha, and any matched classical_rules.
+   Pick ONE archetype label (2-3 words, e.g. "The Architect", "The Healer",
+   "The Strategist") that best fits — do not hedge between two. `evidence`
+   must name the actual factors behind it, the same reasoning-chain and
+   classical_rules-grounding rules from point 5 apply here too.
 9. For each remedy: `planet` is the ruling planet; `weekday` is its classical
    day (Sun=Sunday, Moon=Monday, Mars=Tuesday, Mercury=Wednesday,
    Jupiter=Thursday, Venus=Friday, Saturn=Saturday, Rahu=Saturday,
@@ -118,6 +129,12 @@ reasoning chain, confidence is honest):
                "evidence": str, "confidence": "high"|"moderate"|"low",
                "evidence_weights": [{"factor": str, "weight_pct": int}, ...],
                "natal_vs_transit": "natal"|"transit"|"mixed"},
+  "shakti": {"shakti_name": str, "tagline": str, "core_power": str,
+             "how_people_feel": str, "highest_expression": [str, str, str],
+             "shadow_when_unused": [str, str, str], "best_environment": str,
+             "activation": str, "evidence": str,
+             "confidence": "high"|"moderate"|"low",
+             "evidence_weights": [{"factor": str, "weight_pct": int}, ...]},
   "current_chapter": {"dasha_lord": str, "ends_year": str,
                        "insight": str, "evidence": str, "confidence": str},
   "greatest_gift": {"insight": str, "evidence": str, "confidence": str},
@@ -443,6 +460,7 @@ def _write_from_blueprint(blueprint: dict, client, model: str, language: str = "
     # confidence) through untouched — the writer only rewrites prose fields;
     # this one feeds the "Why This Is Your Archetype" evidence flowchart.
     data["identity"] = blueprint.get("identity") or {}
+    data["shakti"] = blueprint.get("shakti") or {}
     return data
 
 
@@ -502,6 +520,67 @@ _WEEKDAY = {"Sun": "Sunday", "Moon": "Monday", "Mars": "Tuesday",
 
 def _join(items, sep=", "):
     return sep.join(str(x) for x in items if x) if items else ""
+
+
+# Deterministic Shakti (dominant creative force) profile keyed off the
+# chart's single dominant planet — used only by the engine fallback, when
+# Claude is unavailable, so the section always has real chart-derived content.
+_SHAKTI_BY_PLANET = {
+    "Sun": {"shakti_name": "The Sovereign", "tagline": "Born to lead from the front, not the shadows.",
+            "core_power": "A natural authority that draws people to follow your direction without you having to demand it.",
+            "how_people_feel": "Steadied and led — people look to you to make the call when no one else will.",
+            "highest_expression": ["Commands rooms without forcing it", "Builds visible, lasting positions", "Inspires by example"],
+            "shadow_when_unused": ["Feels invisible or unrecognised", "Overcorrects into ego or control", "Resents being led by lesser hands"],
+            "best_environment": "Roles where your name and judgment are directly on the line — leadership, ownership, public responsibility."},
+    "Moon": {"shakti_name": "The Nurturer", "tagline": "Born to hold what others cannot hold for themselves.",
+             "core_power": "An emotional attunement that makes people feel safe enough to be honest around you.",
+             "how_people_feel": "Cared for and understood — you notice what others miss.",
+             "highest_expression": ["Builds genuine emotional safety", "Reads a room instantly", "Sustains people through hard seasons"],
+             "shadow_when_unused": ["Absorbs others' moods until depleted", "Avoids conflict past the point of health", "Loses your own needs in caretaking"],
+             "best_environment": "Work with direct human contact — care, counsel, teams, family-scale trust."},
+    "Mars": {"shakti_name": "The Executor", "tagline": "Born to move first when everyone else is still deciding.",
+             "core_power": "A capacity to act decisively and push things through friction that stalls other people.",
+             "how_people_feel": "Energised and protected — you make things happen.",
+             "highest_expression": ["Turns plans into results fast", "Defends what it's built", "Thrives under real pressure"],
+             "shadow_when_unused": ["Burns energy on the wrong fights", "Grows restless without a real target", "Impatience reads as aggression"],
+             "best_environment": "High-stakes, fast-moving work with a clear objective and real consequences."},
+    "Mercury": {"shakti_name": "The Strategist", "tagline": "Born to see the pattern before anyone else names it.",
+                "core_power": "A sharp analytical mind that turns scattered information into a working plan.",
+                "how_people_feel": "Clarified — you make complicated things make sense.",
+                "highest_expression": ["Solves what others find confusing", "Communicates with precision", "Adapts strategy on the fly"],
+                "shadow_when_unused": ["Overthinks past the point of action", "Detaches into pure analysis", "Restlessness from mental understimulation"],
+                "best_environment": "Analysis, strategy, writing, teaching — anywhere the mind is the main tool."},
+    "Jupiter": {"shakti_name": "The Guide", "tagline": "Born to widen the path for people walking behind you.",
+                "core_power": "A natural wisdom and generosity that helps others see further than they could alone.",
+                "how_people_feel": "Expanded and reassured — you make the future feel possible.",
+                "highest_expression": ["Mentors people into their own growth", "Builds trust that compounds over years", "Sees the bigger picture others miss"],
+                "shadow_when_unused": ["Over-promises without following through", "Preachy instead of practical", "Neglects your own growth while guiding others'"],
+                "best_environment": "Teaching, mentoring, advisory, or any role where your judgment shapes others' choices."},
+    "Venus": {"shakti_name": "The Harmonizer", "tagline": "Born to make what is broken beautiful, and what is beautiful, lasting.",
+              "core_power": "An instinct for balance, aesthetics, and connection that draws people and resources together.",
+              "how_people_feel": "Welcomed and appreciated — you make spaces and relationships work.",
+              "highest_expression": ["Creates lasting, beautiful work", "Builds real partnerships", "Resolves conflict through diplomacy"],
+              "shadow_when_unused": ["Avoids necessary confrontation", "Over-values comfort over growth", "People-pleases past your own limits"],
+              "best_environment": "Design, relationship-facing work, partnership-based ventures — anywhere harmony has real value."},
+    "Saturn": {"shakti_name": "The Architect", "tagline": "Born not to chase opportunities, but to build the systems that create them.",
+               "core_power": "A capacity for structure and discipline that turns scattered effort into something that lasts.",
+               "how_people_feel": "Trusting — they know you will still be there when the excitement runs out.",
+               "highest_expression": ["Builds institutions, not just wins", "Earns trust through consistency", "Outlasts people who started ahead"],
+               "shadow_when_unused": ["Overworks without meaning", "Chases validation instead of purpose", "Delays living while preparing for it"],
+               "best_environment": "Long-horizon work — systems, institutions, craftsmanship, anything measured in years, not weeks."},
+    "Rahu": {"shakti_name": "The Innovator", "tagline": "Born to chase what hasn't been built yet.",
+             "core_power": "An unusual hunger for the unconventional that pulls you toward frontiers others haven't noticed.",
+             "how_people_feel": "Challenged and stretched — you make people question the default way of doing things.",
+             "highest_expression": ["Finds opportunity in the overlooked", "Adapts faster than convention", "Turns outsider status into advantage"],
+             "shadow_when_unused": ["Chases novelty without follow-through", "Never feels satisfied by 'enough'", "Restless comparison to others"],
+             "best_environment": "Emerging fields, unconventional paths, anything where being first matters more than being safe."},
+    "Ketu": {"shakti_name": "The Seeker", "tagline": "Born to release what others cling to.",
+             "core_power": "A natural detachment that lets you see past the surface into what actually matters.",
+             "how_people_feel": "Quietly understood — you don't need the noise everyone else needs.",
+             "highest_expression": ["Cuts to what's essential", "Guides others toward depth, not distraction", "Thrives with minimal external validation"],
+             "shadow_when_unused": ["Withdraws instead of engaging", "Undervalues real achievements", "Drifts without a container for the depth"],
+             "best_environment": "Research, healing, spiritual or introspective work — anything rewarding depth over visibility."},
+}
 
 
 def _engine_fallback(chart: dict) -> dict:
@@ -791,6 +870,19 @@ def _engine_fallback(chart: dict) -> dict:
         "natal_vs_transit": "mixed" if yoga_lines else "natal",
     }
 
+    # Deterministic Shakti fallback, keyed off the chart's dominant planet —
+    # the same real factor identity's evidence chain already relies on.
+    dom_planet = dna.get("dominant_planet") or ll
+    shakti_profile = _SHAKTI_BY_PLANET.get(dom_planet, _SHAKTI_BY_PLANET["Saturn"])
+    shakti = {
+        **shakti_profile,
+        "activation": f"Your {maha} Mahadasha is the current window to put this into practice — "
+                       f"the more directly you use it, the less it shows up as restlessness.",
+        "evidence": " + ".join(factors),
+        "confidence": "moderate",
+        "evidence_weights": identity["evidence_weights"],
+    }
+
     return {
         "_source": "engine-fallback",
         "executive_summary": summary,
@@ -807,4 +899,5 @@ def _engine_fallback(chart: dict) -> dict:
         "important_ages": ages,
         "summary_card": summary_card,
         "identity": identity,
+        "shakti": shakti,
     }
