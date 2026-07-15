@@ -84,14 +84,47 @@ html { scroll-behavior: smooth; }
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .archetype-hook { font-family: var(--font-head); font-style: italic; font-size: 18px; color: var(--ink-dim); max-width: 500px; margin: 0 auto 34px; }
-.archetype-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 12px; text-align: left; }
-.archetype-tile {
+
+/* Axis Compass — Primary Axis as centerpiece, 4 real dimensions as satellites */
+.axis-compass {
+  display: grid; grid-template-columns: 1fr 1.3fr 1fr; grid-template-rows: auto auto auto;
+  grid-template-areas: ".    top    ." "left center right" ".    bottom .";
+  gap: 12px; text-align: left; max-width: 640px; margin: 0 auto;
+}
+.axis-top    { grid-area: top; }
+.axis-left   { grid-area: left; }
+.axis-right  { grid-area: right; }
+.axis-bottom { grid-area: bottom; }
+.axis-sat {
   background: rgba(255,255,255,.03); border: 1px solid rgba(217,178,91,.18); border-radius: 12px;
   padding: 13px 15px;
 }
-.archetype-tile.shadow { border-color: rgba(155,92,255,.3); }
-.archetype-tile .tk { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
-.archetype-tile .tv { font-size: 13.5px; color: var(--ink); margin-top: 5px; }
+.axis-left { border-color: rgba(155,92,255,.3); }
+.axis-sat .tk { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
+.axis-sat .tv { font-size: 13.5px; color: var(--ink); margin-top: 5px; }
+.axis-center {
+  grid-area: center; text-align: center; padding: 22px 16px; border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(217,178,91,.14), transparent 70%);
+  border: 1px solid var(--gold-bright);
+}
+.axis-center .tk { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.axis-center-val { font-family: var(--font-head); font-size: 19px; color: var(--gold-bright); margin-top: 6px; }
+@media (max-width: 640px) {
+  .axis-compass { grid-template-columns: 1fr; grid-template-areas: "top" "center" "left" "right" "bottom"; }
+}
+
+/* Stepped confidence bar — categorical (high/moderate/low), not a fabricated percentage */
+.confidence-steps { display: flex; gap: 4px; justify-content: center; margin: 12px 0 8px; }
+.confidence-step-seg { width: 32px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.1); }
+.confidence-step-seg.filled { background: var(--gold-bright); }
+.confidence-steps.conf-low .confidence-step-seg.filled { background: var(--red); }
+.confidence-steps.conf-moderate .confidence-step-seg.filled { background: var(--gold); }
+
+.what-this-means {
+  margin-top: 30px; padding: 20px 24px; border-radius: 14px;
+  background: var(--glass); border: 1px solid var(--glass-brd); text-align: center;
+}
+.what-this-means p { font-size: 14.5px; color: var(--ink); line-height: 1.7; margin: 8px 0 0; }
 
 /* ── HALL 3 — SUMMARY CARD ────────────────────────────────────────── */
 .summary-card { text-align: center; }
@@ -491,10 +524,14 @@ html { scroll-behavior: smooth; }
   .snapshot-weather-fill { background: #b8860b !important; }
   .ancestor-strength-row, .ancestor-caveat { color: #4a4030 !important; }
   .snapshot-title { color: #6b5d3f !important; }
-  .archetype-tile, .council-character, .compass-detail {
+  .axis-sat, .axis-center, .council-character, .compass-detail {
     background: #f3ead2 !important;
     border-color: #d9b25b !important;
   }
+  .axis-center-val { color: #8a6d1f !important; }
+  .confidence-step-seg.filled { background: #b8860b !important; }
+  .what-this-means { background: #fbf6ea !important; border: 1px solid #d9b25b !important; }
+  .what-this-means p { color: #2a2416 !important; }
   .evidence-result-name { background: none !important; -webkit-text-fill-color: #8a6d1f !important; color: #8a6d1f !important; }
   .evidence-step-detail, .evidence-full-chain p { color: #4a4030 !important; }
   .evidence-full-chain { display: block !important; }

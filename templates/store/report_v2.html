@@ -132,7 +132,8 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 
 <div class="hall-divider reveal" style="margin-top:0"><span>✦</span></div>
 
-<!-- ══════════════════ HALL 2 — SOUL ARCHETYPE ══════════════════ -->
+<!-- ══════════════════ HALL 2 — ARCHETYPE DISCOVERY (merged hero + reasoning) ══════════════════ -->
+{% set idn = ai.identity or {} %}
 {% if dna.archetype_name %}
 <section id="hall-archetype" class="hall">
   <div class="hall-inner reveal">
@@ -140,27 +141,24 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
       <div class="archetype-sigil">✦</div>
       <div class="archetype-name">{{ dna.archetype_name }}</div>
       {% if dna.one_liner %}<p class="archetype-hook">“{{ dna.one_liner }}”</p>{% endif %}
-      <div class="archetype-tiles">
-        {% for label, val, shadow in [
-            ("Primary Axis", dna.primary_life_axis, false),
-            ("Destiny", dna.destiny_type, false),
-            ("Life Mission", dna.life_gift, false),
-            ("Shadow Theme", dna.shadow_theme, true),
-        ] %}
-        {% if val %}
-        <div class="archetype-tile{{ ' shadow' if shadow else '' }}">
-          <div class="tk">{{ label }}</div><div class="tv">{{ val }}</div>
+
+      {% if dna.primary_life_axis %}
+      <div class="axis-compass">
+        {% if dna.destiny_type %}<div class="axis-sat axis-top"><div class="tk">Destiny</div><div class="tv">{{ dna.destiny_type }}</div></div>{% endif %}
+        {% if dna.shadow_theme %}<div class="axis-sat axis-left"><div class="tk">Shadow</div><div class="tv">{{ dna.shadow_theme }}</div></div>{% endif %}
+        <div class="axis-center">
+          <div class="tk">Primary Axis</div>
+          <div class="axis-center-val">{{ dna.primary_life_axis }}</div>
         </div>
-        {% endif %}
-        {% endfor %}
+        {% if dna.life_gift %}<div class="axis-sat axis-right"><div class="tk">Life Mission</div><div class="tv">{{ dna.life_gift }}</div></div>{% endif %}
+        {% if chart.dasha.mahadasha %}<div class="axis-sat axis-bottom"><div class="tk">Current Phase</div><div class="tv">{{ chart.dasha.mahadasha }} Mahadasha</div></div>{% endif %}
       </div>
+      {% endif %}
     </div>
   </div>
 </section>
 {% endif %}
 
-<!-- ══════════════════ HALL 2.5 — WHY THIS IS YOUR ARCHETYPE ══════════════════ -->
-{% set idn = ai.identity or {} %}
 {% if idn.evidence_weights %}
 <section id="hall-evidence" class="hall compact">
   <div class="hall-inner reveal" style="max-width:640px">
@@ -191,9 +189,11 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
         <div class="evidence-result-label">Archetype</div>
         <div class="evidence-result-name">{{ idn.archetype or dna.archetype_name }}</div>
         {% if idn.confidence %}
-        <div class="evidence-confidence conf-{{ idn.confidence }}">
-          {{ idn.confidence|capitalize }} Confidence
+        {% set steps = {"low": 1, "moderate": 2, "high": 3}.get(idn.confidence, 2) %}
+        <div class="confidence-steps conf-{{ idn.confidence }}">
+          {% for i in range(3) %}<div class="confidence-step-seg{{ ' filled' if i < steps }}"></div>{% endfor %}
         </div>
+        <div class="evidence-confidence conf-{{ idn.confidence }}">{{ idn.confidence|capitalize }} Confidence</div>
         {% endif %}
       </div>
     </div>
@@ -201,6 +201,13 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
     {% if idn.evidence %}
     <button class="adv-toggle" style="margin-top:26px" onclick="this.nextElementSibling.classList.toggle('show');this.style.display='none'">See Full Reasoning Chain</button>
     <div class="evidence-full-chain"><p>{{ idn.evidence }}</p></div>
+    {% endif %}
+
+    {% if dna.life_gift %}
+    <div class="what-this-means">
+      <div class="ds-eyebrow">What This Means</div>
+      <p>{{ dna.life_gift }}</p>
+    </div>
     {% endif %}
   </div>
 </section>
