@@ -85,33 +85,29 @@ html { scroll-behavior: smooth; }
 }
 .archetype-hook { font-family: var(--font-head); font-style: italic; font-size: 18px; color: var(--ink-dim); max-width: 500px; margin: 0 auto 34px; }
 
-/* Axis Compass — Primary Axis as centerpiece, 4 real dimensions as satellites */
-.axis-compass {
-  display: grid; grid-template-columns: 1fr 1.3fr 1fr; grid-template-rows: auto auto auto;
-  grid-template-areas: ".    top    ." "left center right" ".    bottom .";
-  gap: 12px; text-align: left; max-width: 640px; margin: 0 auto;
+/* Primary Axis — two labeled poles, no fabricated position/percentage:
+   nothing computes a real numeric point along this spectrum. */
+.primary-axis-bar { max-width: 480px; margin: 28px auto 0; }
+.axis-poles {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  font-family: var(--font-head); font-size: clamp(17px, 2.6vw, 22px); color: var(--gold-bright);
 }
-.axis-top    { grid-area: top; }
-.axis-left   { grid-area: left; }
-.axis-right  { grid-area: right; }
-.axis-bottom { grid-area: bottom; }
-.axis-sat {
-  background: rgba(255,255,255,.03); border: 1px solid rgba(217,178,91,.18); border-radius: 12px;
-  padding: 13px 15px;
+.axis-pole { flex: 0 1 auto; }
+.axis-line { color: var(--gold); opacity: .6; font-size: 20px; }
+
+/* Evidence cards — horizontal grid instead of a vertical expandable list */
+.axis-evidence-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 12px;
+  margin-top: 18px;
 }
-.axis-left { border-color: rgba(155,92,255,.3); }
-.axis-sat .tk { font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
-.axis-sat .tv { font-size: 13.5px; color: var(--ink); margin-top: 5px; }
-.axis-center {
-  grid-area: center; text-align: center; padding: 22px 16px; border-radius: 16px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(217,178,91,.14), transparent 70%);
-  border: 1px solid var(--gold-bright);
+.axis-evidence-card {
+  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 12px;
+  padding: 14px 16px; text-align: left;
 }
-.axis-center .tk { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
-.axis-center-val { font-family: var(--font-head); font-size: 19px; color: var(--gold-bright); margin-top: 6px; }
-@media (max-width: 640px) {
-  .axis-compass { grid-template-columns: 1fr; grid-template-areas: "top" "center" "left" "right" "bottom"; }
-}
+.axis-evidence-factor { font-size: 12.5px; color: var(--ink); line-height: 1.4; min-height: 34px; }
+.axis-evidence-weight { font-family: var(--font-body); font-weight: 700; font-size: 18px; color: var(--gold-bright); margin: 8px 0 6px; }
+.axis-evidence-bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,.08); overflow: hidden; }
+.axis-evidence-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--purple), var(--gold-bright)); }
 
 /* Stepped confidence bar — categorical (high/moderate/low), not a fabricated percentage */
 .confidence-steps { display: flex; gap: 4px; justify-content: center; margin: 12px 0 8px; }
@@ -413,44 +409,9 @@ html { scroll-behavior: smooth; }
 .letter-line:last-child { color: var(--ink-dim); font-style: italic; margin-bottom: 0; }
 @media (max-width: 600px) { .letter { padding: 34px 26px; } }
 
-/* ── EVIDENCE FLOWCHART (Why This Is Your Archetype) ─────────────────── */
-.evidence-flow { display: flex; flex-direction: column; align-items: stretch; }
-.evidence-arrow {
-  text-align: center; color: var(--gold); opacity: .55; font-size: 18px; margin: 4px 0;
-}
-.evidence-step {
-  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 14px;
-  padding: 16px 20px; cursor: pointer;
-}
-.evidence-step summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  list-style: none; cursor: pointer;
-}
-.evidence-step summary::-webkit-details-marker { display: none; }
-.evidence-step-factor { font-size: 14.5px; color: var(--ink); }
-.evidence-step-weight {
-  font-family: var(--font-body); font-variant-numeric: tabular-nums; font-weight: 600;
-  color: var(--gold-bright); font-size: 15px; flex-shrink: 0;
-}
-.evidence-weight-bar {
-  height: 5px; border-radius: 3px; background: rgba(255,255,255,.08); margin-top: 12px; overflow: hidden;
-}
-.evidence-weight-fill {
-  height: 100%; border-radius: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
-}
-.evidence-step-detail { font-size: 13px; color: var(--ink-dim); margin-top: 10px; margin-bottom: 0; }
-.evidence-result {
-  text-align: center; padding: 22px; border-radius: 14px; margin-top: 4px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(217,178,91,.16), transparent 70%);
-  border: 1px solid var(--glass-brd);
-}
-.evidence-result-label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim); }
-.evidence-result-name {
-  font-family: var(--font-head); font-size: clamp(24px, 4vw, 32px); margin: 6px 0 10px;
-  background: linear-gradient(120deg, #f7e6b0, var(--gold-bright) 45%, #b8860b);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+/* ── ARCHETYPE EVIDENCE (Why This Is Your Archetype) ──────────────────
+   Card grid styles live above with the primary-axis-bar block; only the
+   confidence badge and full-reasoning-chain toggle remain here. */
 .evidence-confidence {
   display: inline-block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
   padding: 5px 14px; border-radius: 999px; font-weight: 600;
@@ -512,7 +473,7 @@ html { scroll-behavior: smooth; }
 
   .archetype-card, .council-card, .quote-card, .remedy-card, .karma-card,
   .reveal-card, .summary-card, .chapter-node, .letter, .badge,
-  .evidence-step, .evidence-result, .snapshot-card {
+  .snapshot-card, .axis-evidence-card {
     background: #fbf6ea !important;
     border: 1px solid #d9b25b !important;
     box-shadow: none !important;
@@ -524,19 +485,17 @@ html { scroll-behavior: smooth; }
   .snapshot-weather-fill { background: #b8860b !important; }
   .ancestor-strength-row, .ancestor-caveat { color: #4a4030 !important; }
   .snapshot-title { color: #6b5d3f !important; }
-  .axis-sat, .axis-center, .council-character, .compass-detail {
+  .council-character, .compass-detail {
     background: #f3ead2 !important;
     border-color: #d9b25b !important;
   }
-  .axis-center-val { color: #8a6d1f !important; }
+  .axis-pole, .axis-line, .axis-evidence-factor, .axis-evidence-weight { color: #8a6d1f !important; }
+  .axis-evidence-fill { background: #b8860b !important; }
   .confidence-step-seg.filled { background: #b8860b !important; }
   .what-this-means { background: #fbf6ea !important; border: 1px solid #d9b25b !important; }
   .what-this-means p { color: #2a2416 !important; }
-  .evidence-result-name { background: none !important; -webkit-text-fill-color: #8a6d1f !important; color: #8a6d1f !important; }
-  .evidence-step-detail, .evidence-full-chain p { color: #4a4030 !important; }
   .evidence-full-chain { display: block !important; }
-  .evidence-step[open] summary, .evidence-step summary { color: #2a2416; }
-  .evidence-step:not([open]) > *:not(summary) { display: block !important; }
+  .evidence-full-chain p { color: #4a4030 !important; }
   .compass-detail { display: block !important; }
   .compass-axis-ring, .compass-axis-line { stroke: rgba(0,0,0,.12) !important; }
   .compass-polygon { fill: rgba(217,178,91,.3) !important; stroke: #8a6d1f !important; }
