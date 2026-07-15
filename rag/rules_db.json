@@ -2820,7 +2820,7 @@
       "spirituality": 0.8,
       "foreign": 0.5
     },
-    "interpretation": "Ketu in 12th is considered the best placement for Ketu \u2014 strongly favors spiritual liberation (moksha), renunciation, and meditation.",
+    "interpretation": "Ketu in 12th is considered the best placement for Ketu — strongly favors spiritual liberation (moksha), renunciation, and meditation.",
     "weight": 1.3,
     "tags": [
       "spirituality",
@@ -3354,7 +3354,7 @@
       "fortune": 0.75,
       "dharma": 0.7
     },
-    "interpretation": "9th lord in 10th: Dharmakarmadhipati combination \u2014 fortune through righteous career. The native rises professionally through ethical conduct.",
+    "interpretation": "9th lord in 10th: Dharmakarmadhipati combination — fortune through righteous career. The native rises professionally through ethical conduct.",
     "weight": 1.3,
     "tags": [
       "career",
@@ -3377,7 +3377,7 @@
       "authority": 0.75,
       "fame": 0.7
     },
-    "interpretation": "10th lord in 10th: extremely powerful career house \u2014 the native is highly successful, authoritative, and respected in their profession.",
+    "interpretation": "10th lord in 10th: extremely powerful career house — the native is highly successful, authoritative, and respected in their profession.",
     "weight": 1.3,
     "tags": [
       "career",
@@ -3422,7 +3422,7 @@
       "fortune": 0.75,
       "dharma": 0.7
     },
-    "interpretation": "10th lord in 9th: Dharmakarmadhipati \u2014 career aligned with dharma brings fortune. Success in religious, legal, or educational professions.",
+    "interpretation": "10th lord in 9th: Dharmakarmadhipati — career aligned with dharma brings fortune. Success in religious, legal, or educational professions.",
     "weight": 1.3,
     "tags": [
       "career",
@@ -3744,6 +3744,789 @@
     "tags": [
       "spirituality",
       "moksha"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_01",
+    "source": "Janma Nakshatra (Moon in Ashwini)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Ashwini"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "initiative": 0.7,
+      "healing": 0.6
+    },
+    "interpretation": "Moon in Ashwini (ruled by Ketu, deity the Ashwini Kumaras, celestial healers) gives a pioneering, quick-starting mind. You initiate before others finish deliberating, carry natural healing or rescuing instincts, and prize independence; impatience and starting more than you finish is the shadow.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_02",
+    "source": "Janma Nakshatra (Moon in Bharani)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Bharani"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.6,
+      "endurance": 0.7,
+      "creativity": 0.6
+    },
+    "interpretation": "Moon in Bharani (Venus, deity Yama, lord of restraint and transitions) gives intensity held under discipline. You endure and transform through life's death-and-rebirth passages, carry strong creative and sensual drives, and grow most through self-restraint rather than indulgence.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_03",
+    "source": "Janma Nakshatra (Moon in Krittika)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Krittika"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.6,
+      "ambition": 0.7,
+      "criticism": 0.6
+    },
+    "interpretation": "Moon in Krittika (Sun, deity Agni, fire) gives a sharp, cutting, purifying mind. You see through pretense, hold high standards, protect fiercely, and burn away what is false; the same edge can turn critical or scorching when unchecked.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_04",
+    "source": "Janma Nakshatra (Moon in Rohini)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Rohini"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "charisma": 0.7,
+      "materiality": 0.7
+    },
+    "interpretation": "Moon in Rohini (the Moon's own favourite star, deity Brahma the creator) gives magnetic charm and material creativity. You draw people and resources easily, love beauty and comfort, and manifest what you desire; possessiveness and attachment are the shadow to watch.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_05",
+    "source": "Janma Nakshatra (Moon in Mrigashira)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Mrigashira"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "curiosity": 0.7,
+      "restlessness": 0.5
+    },
+    "interpretation": "Moon in Mrigashira (Mars, deity Soma, symbol the deer's head) gives a searching, curious, gentle mind. You are a lifelong seeker of knowledge, places, and the perfect answer, restless and questioning, at your best when the search has a worthy object.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_06",
+    "source": "Janma Nakshatra (Moon in Ardra)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Ardra"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "transformation": 0.7,
+      "intensity": 0.6
+    },
+    "interpretation": "Moon in Ardra (Rahu, deity Rudra the storm, symbol the teardrop) gives a stormy, transformative, research-driven mind. You break things down to rebuild them better, feel emotion intensely, and think most sharply through crisis and upheaval.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_07",
+    "source": "Janma Nakshatra (Moon in Punarvasu)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Punarvasu"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "optimism": 0.7,
+      "resilience": 0.7
+    },
+    "interpretation": "Moon in Punarvasu (Jupiter, deity Aditi the boundless mother) gives renewal and resilience. You return from setbacks with optimism intact, hold a philosophical and generous outlook, and find your footing again wherever life scatters you; the star of the second chance.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_08",
+    "source": "Janma Nakshatra (Moon in Pushya)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Pushya"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "nourishment": 0.7,
+      "duty": 0.7
+    },
+    "interpretation": "Moon in Pushya (Saturn, deity Brihaspati, the most auspicious nakshatra for stability) gives a nourishing, dutiful, spiritually grounded mind. You care for and steady others, take responsibility naturally, and build lasting security, happiest when needed and of service.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_09",
+    "source": "Janma Nakshatra (Moon in Ashlesha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Ashlesha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "strategy": 0.7,
+      "insight": 0.6
+    },
+    "interpretation": "Moon in Ashlesha (Mercury, deity the Nagas, serpents, symbol the coiled snake) gives a penetrating, hypnotic, strategic mind. You read people deeply, hold your cards close, and wield sharp insight, which serves wisdom when honest and manipulation when not.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_10",
+    "source": "Janma Nakshatra (Moon in Magha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Magha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "leadership": 0.7,
+      "tradition": 0.6
+    },
+    "interpretation": "Moon in Magha (Ketu, deity the Pitris, ancestors, symbol the throne) gives a regal, tradition-honouring mind. You carry ancestral pride and natural authority, respect lineage and ceremony, and are drawn to lead from a seat others recognise as earned.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_11",
+    "source": "Janma Nakshatra (Moon in PurvaPhalguni)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "PurvaPhalguni"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.6,
+      "pleasure": 0.7,
+      "creativity": 0.6
+    },
+    "interpretation": "Moon in Purva Phalguni (Venus, deity Bhaga, god of enjoyment, symbol the front of a bed) gives a pleasure-loving, warm, creative mind. You value rest, romance, generosity and the arts, and do your best work when life also makes room for delight.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_12",
+    "source": "Janma Nakshatra (Moon in UttaraPhalguni)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "UttaraPhalguni"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.6,
+      "reliability": 0.7,
+      "partnership": 0.6
+    },
+    "interpretation": "Moon in Uttara Phalguni (Sun, deity Aryaman, god of contracts and friendship) gives a reliable, organised, helpful mind. You keep your word, excel in partnership and service, and are the dependable friend others build on, steady rather than showy.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_13",
+    "source": "Janma Nakshatra (Moon in Hasta)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Hasta"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "skill": 0.7,
+      "resourcefulness": 0.6
+    },
+    "interpretation": "Moon in Hasta (Moon, deity Savitar, symbol the hand) gives a skilled, clever, resourceful mind. You work magic with your hands and wit through craft, healing, and detail, and can shape almost any situation to your advantage, with cleverness tipping into craftiness as the shadow.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_14",
+    "source": "Janma Nakshatra (Moon in Chitra)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Chitra"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "artistry": 0.7,
+      "charisma": 0.6
+    },
+    "interpretation": "Moon in Chitra (Mars, deity Tvashtar or Vishwakarma the divine architect, symbol the bright jewel) gives a brilliant, design-oriented, charismatic mind. You are drawn to build beautiful, well-made things and to be seen; form and aesthetics matter to you deeply.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_15",
+    "source": "Janma Nakshatra (Moon in Swati)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Swati"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "independence": 0.7,
+      "diplomacy": 0.6
+    },
+    "interpretation": "Moon in Swati (Rahu, deity Vayu the wind, symbol the young shoot bending in wind) gives an independent, flexible, self-directed mind. You need freedom and room to move, adapt diplomatically to any climate, and dislike being tied down or controlled.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_16",
+    "source": "Janma Nakshatra (Moon in Vishakha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Vishakha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "ambition": 0.7,
+      "determination": 0.7
+    },
+    "interpretation": "Moon in Vishakha (Jupiter, deities Indra and Agni, symbol the triumphal arch) gives a goal-driven, determined mind. You fix on an aim and pursue it with patient intensity until you arrive, dual-natured, willing to wait and sacrifice for the triumph you can see coming.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_17",
+    "source": "Janma Nakshatra (Moon in Anuradha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Anuradha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "friendship": 0.7,
+      "cooperation": 0.6
+    },
+    "interpretation": "Moon in Anuradha (Saturn, deity Mitra, god of friendship, symbol the lotus) gives a devoted, cooperative mind. You achieve through loyalty and relationship rather than force, honour your friendships, and can thrive far from home by building family wherever you land.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_18",
+    "source": "Janma Nakshatra (Moon in Jyeshtha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Jyeshtha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "responsibility": 0.7,
+      "protection": 0.6
+    },
+    "interpretation": "Moon in Jyeshtha (Mercury, deity Indra the chief, symbol the umbrella) gives a senior, protective, responsible mind. You carry the elder's burden, capable, powerful, and shielding those under you, with a tendency toward control and a hidden depth of occult insight.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_19",
+    "source": "Janma Nakshatra (Moon in Mula)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Mula"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "investigation": 0.7,
+      "philosophy": 0.6
+    },
+    "interpretation": "Moon in Mula (Ketu, deity Nirriti, symbol tied roots) gives a root-seeking, investigative mind. You are compelled to get to the very bottom of things, uproot what is false to rebuild on truth, and turn naturally toward philosophy and the deeper why.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_20",
+    "source": "Janma Nakshatra (Moon in PurvaAshadha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "PurvaAshadha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "optimism": 0.7,
+      "persuasion": 0.6
+    },
+    "interpretation": "Moon in Purva Ashadha (Venus, deity Apas the waters, symbol the winnowing fan) gives invincible optimism and persuasive force. You are hard to defeat and hard to discourage, move others by conviction, and carry deep, sea-like emotions beneath a confident surface.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_21",
+    "source": "Janma Nakshatra (Moon in UttaraAshadha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "UttaraAshadha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "endurance": 0.7,
+      "leadership": 0.6
+    },
+    "interpretation": "Moon in Uttara Ashadha (Sun, deities the Vishvedevas, symbol the elephant tusk) gives enduring, principled leadership. Your victories are the lasting kind, won through patience and integrity rather than speed, and you often come fully into your power later, not early.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_22",
+    "source": "Janma Nakshatra (Moon in Shravana)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Shravana"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "learning": 0.7,
+      "communication": 0.6
+    },
+    "interpretation": "Moon in Shravana (Moon, deity Vishnu, symbol the ear) gives a listening, learning, connecting mind. You gather knowledge and link people and ideas, teach and transmit what you hear, and can earn recognition through communication and the careful art of listening.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_23",
+    "source": "Janma Nakshatra (Moon in Dhanishtha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Dhanishtha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "wealth": 0.6,
+      "rhythm": 0.6
+    },
+    "interpretation": "Moon in Dhanishtha (Mars, deities the Vasus, symbol the drum) gives a rhythmic, ambitious, group-oriented mind. You have a natural sense of timing and music, are drawn toward wealth and status, and thrive in teams and communities that move to a shared beat.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_24",
+    "source": "Janma Nakshatra (Moon in Shatabhisha)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Shatabhisha"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "healing": 0.6,
+      "independence": 0.6
+    },
+    "interpretation": "Moon in Shatabhisha (Rahu, deity Varuna, symbol the empty circle of a hundred healers) gives a healing, secretive, independent mind. You are drawn to research, medicine, mysticism and technology, work best alone or unconventionally, and guard a private inner world.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_25",
+    "source": "Janma Nakshatra (Moon in PurvaBhadrapada)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "PurvaBhadrapada"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "idealism": 0.6,
+      "intensity": 0.6
+    },
+    "interpretation": "Moon in Purva Bhadrapada (Jupiter, deity Aja Ekapada, the two-faced star) gives an idealistic, intense, transformative mind. You burn with conviction, see past the ordinary, and hold a dual nature, worldly and otherworldly at once, that fuels passionate, spiritually charged work.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_26",
+    "source": "Janma Nakshatra (Moon in UttaraBhadrapada)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "UttaraBhadrapada"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "wisdom": 0.7,
+      "stability": 0.6
+    },
+    "interpretation": "Moon in Uttara Bhadrapada (Saturn, deity Ahir Budhnya the serpent of the deep) gives deep, calm, patient wisdom. You stay stable under pressure, hold controlled emotional depth, and carry a mystical steadiness, the quiet strength others lean on in a storm.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
+    ]
+  },
+  {
+    "rule_id": "NAK_MOON_27",
+    "source": "Janma Nakshatra (Moon in Revati)",
+    "required": [
+      {
+        "type": "nakshatra",
+        "planet": "Moon",
+        "nakshatra": "Revati"
+      }
+    ],
+    "optional": [
+      {
+        "type": "dasha_active",
+        "planet": "Moon"
+      }
+    ],
+    "effects": {
+      "mind": 0.7,
+      "compassion": 0.7,
+      "completion": 0.6
+    },
+    "interpretation": "Moon in Revati (Mercury, deity Pushan, protector of travellers, symbol the fish) gives a nourishing, gentle, completion-oriented mind. You care for those in transit, bring journeys and cycles to a graceful close, and carry deep compassion and a quietly spiritual nature.",
+    "weight": 1.35,
+    "tags": [
+      "personality",
+      "mind",
+      "nakshatra"
     ]
   }
 ]

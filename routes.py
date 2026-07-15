@@ -771,8 +771,11 @@ def api_preview():
     try:
         chart = build_chart(year, month, day, hour, minute, lat, lon,
                             timezone_offset=tz, name=str(data.get("name", ""))[:100])
-        # RAG: retrieve matching classical rules (BPHS, Phaladeepika, 300 Combinations)
-        chart["classical_rules"] = query_rules(chart, top_k=12)
+        # RAG: retrieve matching classical rules (BPHS, Phaladeepika, 300
+        # Combinations, Janma Nakshatra). Raised from 12 to 18 so the new
+        # high-weight nakshatra layer adds specificity without crowding out
+        # the house/yoga rules.
+        chart["classical_rules"] = query_rules(chart, top_k=18)
     except Exception as e:                       # noqa: BLE001
         log.exception("chart build failed")
         return jsonify(error=f"Chart calculation failed: {e}"), 500

@@ -29,6 +29,19 @@ def _eval_condition(cond: dict, chart: dict) -> bool:
     yogas = {y["name"] for y in chart.get("yogas", [])}
     dasha = chart.get("dasha", {})
 
+    if t == "nakshatra":
+        # A planet occupies a specific nakshatra. The Moon's nakshatra (Janma
+        # Nakshatra / birth star) is the most personalising layer — matched via
+        # planet="Moon". Works for any planet that carries a "nakshatra" field.
+        # The top-level chart["moon"]["nakshatra"] is preferred for the Moon
+        # since it's the canonical birth-star field.
+        planet = cond["planet"]
+        if planet == "Moon" and chart.get("moon", {}).get("nakshatra"):
+            actual = chart["moon"]["nakshatra"]
+        else:
+            actual = (planets.get(planet) or {}).get("nakshatra")
+        return actual is not None and actual == cond["nakshatra"]
+
     if t == "planet_in_house":
         p = planets.get(cond["planet"])
         return p is not None and p["house"] == cond["house"]
