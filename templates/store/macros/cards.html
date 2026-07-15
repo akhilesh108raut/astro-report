@@ -1,0 +1,49 @@
+{# ═══════════════════════════════════════════════════════════════════════
+   REPORT DESIGN SYSTEM — Phase 1 macros.
+   Styled by static/css/tokens.css + static/css/cards.css.
+   Import with: {% from "store/macros/cards.html" import section_header, base_card, insight_card, stat_chip, divider %}
+   ═══════════════════════════════════════════════════════════════════════ #}
+
+{% macro section_header(eyebrow, title, subtitle=None) %}
+<div class="ds-section-header">
+  <div class="ds-eyebrow">{{ eyebrow }}</div>
+  <div class="ds-heading">{{ title }}</div>
+  {% if subtitle %}<p class="ds-subtitle">{{ subtitle }}</p>{% endif %}
+</div>
+{% endmacro %}
+
+{# Generic wrapping card — pass arbitrary content via {% call base_card(...) %}...{% endcall %} #}
+{% macro base_card(icon=None, category=None, extra_class='') %}
+<div class="ds-card {{ extra_class }}">
+  {% if icon or category %}
+  <div class="ds-card-eyebrow">{% if icon %}<span>{{ icon }}</span>{% endif %}{% if category %}<span>{{ category }}</span>{% endif %}</div>
+  {% endif %}
+  {{ caller() }}
+</div>
+{% endmacro %}
+
+{# Self-contained insight card: icon/category header, a quote, an optional
+   expandable "why this appears" reasoning, and an optional meter bar. This
+   is the "why this appears" pattern used everywhere — one definition. #}
+{% macro insight_card(icon=None, category=None, quote='', why=None, meter_pct=None, meter_tone='gold', chips=None, extra_class='') %}
+<details class="ds-card {{ extra_class }}">
+  <summary>
+    {% if icon or category %}
+    <div class="ds-card-eyebrow">{% if icon %}<span>{{ icon }}</span>{% endif %}{% if category %}<span>{{ category }}</span>{% endif %}</div>
+    {% endif %}
+    {% if chips %}
+    <div class="ds-chips-row">{% for c in chips %}{{ stat_chip(c) }}{% endfor %}</div>
+    {% endif %}
+    <p class="ds-quote">“{{ quote }}”</p>
+    {% if meter_pct is not none %}
+    <div class="ds-meter"><div class="ds-meter-fill tone-{{ meter_tone }}" style="width:{{ meter_pct }}%"></div></div>
+    {% endif %}
+    {% if why %}<div class="ds-why-hint">Why this appears ↓</div>{% endif %}
+  </summary>
+  {% if why %}<p class="ds-why-text">{{ why }}</p>{% endif %}
+</details>
+{% endmacro %}
+
+{% macro stat_chip(text) %}<span class="ds-chip">{{ text }}</span>{% endmacro %}
+
+{% macro divider(mark='✦') %}<div class="ds-divider"><span>{{ mark }}</span></div>{% endmacro %}

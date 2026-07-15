@@ -265,7 +265,9 @@ html { scroll-behavior: smooth; }
 }
 .planet-card.expanded .pdetail { display: block; }
 
-/* ── HALL 8 — YOGA GALLERY (collectible cards) ────────────────────── */
+/* ── HALL 8 — YOGA GALLERY ──────────────────────────────────────────
+   Cards now come from the design system (cards.css .ds-card /
+   macros/cards.html insight_card) — only the discovery strip remains here. */
 .yoga-discovery {
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
   gap: 10px; margin-bottom: 28px; font-size: 12.5px; color: var(--ink-dim);
@@ -274,69 +276,11 @@ html { scroll-behavior: smooth; }
 .yoga-discovery-step.gold b { color: var(--gold-bright); }
 .yoga-discovery-arrow { color: var(--gold); opacity: .5; font-size: 13px; }
 
-.yoga-card {
-  border-radius: 18px; padding: 24px; margin-bottom: 14px;
-  border: 1px solid rgba(217,178,91,.25); position: relative; overflow: hidden;
-  transition: transform .25s, box-shadow .25s, border-color .25s;
-}
-.yoga-card:nth-child(3n+1) { background: linear-gradient(135deg, rgba(217,178,91,.08), rgba(20,16,42,.5)); }
-.yoga-card:nth-child(3n+2) { background: linear-gradient(135deg, rgba(155,92,255,.08), rgba(20,16,42,.5)); }
-.yoga-card:nth-child(3n+3) { background: linear-gradient(135deg, rgba(74,222,128,.06), rgba(20,16,42,.5)); }
-.yoga-card:hover, .yoga-card[open] {
-  transform: translateY(-7px);
-  box-shadow: 0 18px 40px rgba(0,0,0,.4);
-  border-color: var(--gold-bright);
-}
-.yoga-card summary { cursor: pointer; list-style: none; }
-.yoga-card summary::-webkit-details-marker { display: none; }
-.yoga-title { font-family: var(--font-head); font-size: 22px; color: var(--gold-bright); }
-.yoga-rarity { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--purple); margin: 4px 0 10px; }
-.yoga-stars {
-  color: var(--gold); letter-spacing: 2px; font-size: 13px; margin-bottom: 8px;
-  transition: text-shadow .3s;
-}
-.yoga-card:hover .yoga-stars { text-shadow: 0 0 12px rgba(217,178,91,.8); }
-.yoga-effect { font-size: 14px; color: var(--ink); }
-.yoga-chips { margin: 10px 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.yoga-chips .chip { transition: transform .3s; }
-.yoga-card:hover .yoga-chips .chip { transform: translateY(-2px); }
-.yoga-expand-hint {
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim);
-  margin-top: 12px;
-}
-.yoga-rarity-meter {
-  height: 6px; border-radius: 3px; background: rgba(255,255,255,.08);
-  margin: 16px 0 14px; overflow: hidden;
-}
-.yoga-rarity-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--purple), var(--gold-bright)); }
-.yoga-detail-label {
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
-  margin: 14px 0 4px;
-}
-.yoga-detail-text { font-size: 13.5px; color: var(--ink-dim); line-height: 1.7; margin: 0; }
-
-/* ── HALL 8.7 — ECHOES FROM YOUR ANCESTORS ────────────────────────── */
-.ancestor-disclaimer { font-size: 12px; color: var(--ink-dim); text-align: center; font-style: italic; margin: -8px 0 26px; }
-.ancestor-card {
-  border-radius: 16px; padding: 22px 24px; margin-bottom: 14px;
-  background: linear-gradient(135deg, rgba(217,178,91,.06), rgba(20,16,42,.5));
-  border: 1px solid var(--glass-brd); transition: transform .25s, border-color .25s;
-}
-.ancestor-card:hover, .ancestor-card[open] { transform: translateY(-4px); border-color: var(--gold-bright); }
-.ancestor-card summary { cursor: pointer; list-style: none; }
-.ancestor-card summary::-webkit-details-marker { display: none; }
-.ancestor-line { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-.ancestor-quote { font-family: var(--font-head); font-style: italic; font-size: 16.5px; color: var(--ink); line-height: 1.6; margin: 0; }
-.ancestor-connection {
-  font-size: 13.5px; color: var(--ink-dim); line-height: 1.7; margin-top: 14px; padding-top: 14px;
-  border-top: 1px solid var(--glass-brd);
-}
-.ancestor-panel {
-  background: var(--glass); border: 1px solid var(--glass-brd); border-radius: 14px;
-  padding: 20px 22px; margin-bottom: 14px;
-}
-.ancestor-strength-row { font-size: 13.5px; color: var(--ink); margin-bottom: 8px; }
-.ancestor-caveat { font-size: 11.5px; color: var(--ink-dim); font-style: italic; margin: 12px 0 0; }
+/* ── HALL 8.7 — ECHOES FROM YOUR ANCESTORS ────────────────────────────
+   Card chrome now comes from the design system (cards.css .ds-card /
+   macros/cards.html) — only the content-specific rows remain here. */
+.ancestor-strength-row { font-size: var(--fs-caption); color: var(--text-primary); margin-bottom: var(--space-2); }
+.ancestor-caveat { font-size: var(--fs-footnote); color: var(--text-secondary); font-style: italic; margin: var(--space-3) 0 0; }
 
 /* ── HALL 9 — SCRIPTURE QUOTES ─────────────────────────────────────── */
 .quote-card {
@@ -534,8 +478,8 @@ html { scroll-behavior: smooth; }
   .arrival-hook, .archetype-hook, .hall-eyebrow, .eyebrow { color: #6b5d3f; }
 
   .archetype-card, .council-card, .quote-card, .remedy-card, .karma-card,
-  .reveal-card, .summary-card, .yoga-card, .chapter-node, .letter, .badge,
-  .evidence-step, .evidence-result, .snapshot-card, .ancestor-card, .ancestor-panel {
+  .reveal-card, .summary-card, .chapter-node, .letter, .badge,
+  .evidence-step, .evidence-result, .snapshot-card {
     background: #fbf6ea !important;
     border: 1px solid #d9b25b !important;
     box-shadow: none !important;
@@ -545,10 +489,7 @@ html { scroll-behavior: smooth; }
   .snapshot-stat-val, .snapshot-card-headline { color: #2a2416 !important; }
   .snapshot-card-detail, .snapshot-why-text, .snapshot-weather-label { color: #4a4030 !important; }
   .snapshot-weather-fill { background: #b8860b !important; }
-  .ancestor-card:not([open]) > *:not(summary) { display: block !important; }
-  .ancestor-quote { color: #2a2416 !important; }
-  .ancestor-connection, .ancestor-strength-row, .ancestor-caveat, .ancestor-disclaimer { color: #4a4030 !important; }
-  .ancestor-line { color: #8a6d1f !important; }
+  .ancestor-strength-row, .ancestor-caveat { color: #4a4030 !important; }
   .snapshot-title { color: #6b5d3f !important; }
   .archetype-tile, .council-character, .compass-detail {
     background: #f3ead2 !important;
@@ -565,11 +506,5 @@ html { scroll-behavior: smooth; }
   .compass-center-score, .compass-node-score, .compass-meaning { color: #2a2416 !important; }
   .compass-center-label, .compass-center-theme, .compass-node-name { color: #6b5d3f !important; }
 
-  .yoga-card { transform: none !important; box-shadow: none !important; }
-  .yoga-card:not([open]) > *:not(summary) { display: block !important; }
-  .yoga-title { -webkit-text-fill-color: #8a6d1f !important; color: #8a6d1f !important; }
-  .yoga-effect, .yoga-detail-text { color: #3a3225 !important; }
-  .yoga-detail-label, .yoga-expand-hint { color: #6b5d3f !important; }
-  .yoga-rarity-fill { background: #b8860b !important; }
   .yoga-discovery-step b { color: #2a2416 !important; }
 }

@@ -1,0 +1,50 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — Phase 1 of the report design system.
+   Aliases the existing store.css palette to canonical token names and adds
+   the spacing/typography/radius scales that didn't exist yet. Nothing here
+   redefines colors from scratch — store.css's :root remains the source of
+   truth for the actual hex/rgba values, so existing components keep working
+   unchanged while new components (macros/cards.html) build on these tokens.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Colors — canonical names over the existing palette ── */
+  --bg-primary: var(--bg);
+  --bg-secondary: var(--bg-2);
+  --card: var(--glass);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-dim);
+  --text-muted: rgba(255, 255, 255, .45);
+  --border-subtle: var(--glass-brd);
+  --border-highlight: var(--gold-bright);
+  --accent-gold: var(--gold-bright);
+  --accent-emerald: var(--green);
+  --accent-amber: #f0a94e;
+  --accent-red: var(--red);
+  --accent-purple: var(--purple);
+
+  /* ── Spacing scale — never hardcode a spacing value outside this list ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ── Radius scale ── */
+  --radius-sm: 10px;
+  --radius-md: var(--radius);
+  --radius-lg: 28px;
+
+  /* ── Typography scale ── */
+  --fs-display: clamp(56px, 9vw, 96px);
+  --fs-heading: clamp(24px, 4vw, 36px);
+  --fs-section: 18px;
+  --fs-card-label: 13px;
+  --fs-body: 15px;
+  --fs-caption: 14px;
+  --fs-footnote: 13px;
+}

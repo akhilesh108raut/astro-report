@@ -1,0 +1,78 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   CARD COMPONENT SYSTEM — Phase 1 of the report design system.
+   Styles for templates/store/macros/cards.html. One card definition
+   (.ds-card) with variants, instead of one-off markup per section.
+   Requires tokens.css to be loaded first.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.ds-section-header { text-align: center; margin-bottom: var(--space-6); }
+.ds-eyebrow {
+  font-size: var(--fs-footnote); letter-spacing: .18em; text-transform: uppercase;
+  color: var(--accent-gold); margin-bottom: var(--space-2);
+}
+.ds-heading { font-family: var(--font-head); font-size: var(--fs-heading); color: var(--text-primary); }
+.ds-subtitle { font-size: var(--fs-caption); color: var(--text-secondary); font-style: italic; margin-top: var(--space-2); }
+
+.ds-card {
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-3);
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+.ds-card:hover, .ds-card[open] {
+  transform: translateY(-4px);
+  border-color: var(--border-highlight);
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+}
+details.ds-card summary { cursor: pointer; list-style: none; }
+details.ds-card summary::-webkit-details-marker { display: none; }
+
+.ds-card-eyebrow {
+  font-size: var(--fs-footnote); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent-gold); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);
+}
+.ds-quote {
+  font-family: var(--font-head); font-style: italic; font-size: var(--fs-section);
+  color: var(--text-primary); line-height: 1.6; margin: 0;
+}
+.ds-why-hint {
+  font-size: var(--fs-footnote); color: var(--text-secondary);
+  margin-top: var(--space-3); letter-spacing: .06em;
+}
+.ds-why-text {
+  font-size: var(--fs-caption); color: var(--text-secondary); line-height: 1.7;
+  margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-subtle);
+}
+
+/* Metric bar — used by insight_card(meter_pct=...) and metric_card() */
+.ds-meter { height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); overflow: hidden; margin: var(--space-4) 0 var(--space-3); }
+.ds-meter-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold)); }
+.ds-meter-fill.tone-emerald { background: var(--accent-emerald); }
+.ds-meter-fill.tone-gold    { background: linear-gradient(90deg, var(--gold), var(--accent-gold)); }
+.ds-meter-fill.tone-amber   { background: var(--accent-amber); }
+.ds-meter-fill.tone-red     { background: var(--accent-red); }
+
+.ds-metric-row { display: flex; align-items: baseline; justify-content: space-between; font-size: var(--fs-body); color: var(--text-primary); }
+.ds-metric-val { font-weight: 700; color: var(--accent-gold); }
+.ds-metric-caption { font-size: var(--fs-footnote); color: var(--text-secondary); margin: 0; }
+
+.ds-chip {
+  display: inline-block; font-size: var(--fs-footnote); color: var(--text-secondary);
+  background: rgba(255,255,255,.04); border: 1px solid var(--border-subtle);
+  border-radius: 999px; padding: 4px var(--space-3); margin: 0 var(--space-2) var(--space-2) 0;
+}
+.ds-chips-row { margin-bottom: var(--space-3); }
+
+.ds-divider { text-align: center; color: var(--accent-gold); opacity: .5; font-size: 18px; margin: var(--space-7) 0; }
+
+@media print {
+  .ds-card { background: #fbf6ea !important; border: 1px solid #d9b25b !important; box-shadow: none !important; color: #2a2416 !important; }
+  .ds-card:not([open]) > *:not(summary) { display: block !important; }
+  .ds-quote { color: #2a2416 !important; }
+  .ds-card-eyebrow { color: #8a6d1f !important; }
+  .ds-why-text, .ds-metric-caption { color: #4a4030 !important; }
+  .ds-heading { color: #8a6d1f !important; }
+  .ds-subtitle, .ds-eyebrow { color: #6b5d3f !important; }
+}
