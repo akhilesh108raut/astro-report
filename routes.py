@@ -342,6 +342,59 @@ _ANCESTOR_LESSON = {
     "Rahu":    "Staying present instead of always reaching for what's next",
     "Ketu":    "Staying instead of withdrawing when things get close",
 }
+# Per-planet ancestral "lines" — each with an icon, a line name, and 2-3
+# quote variants. Which lines appear is chosen by THIS chart's strongest
+# planets, and the quote variant is picked by the planet's house, so two
+# different charts get different lines AND different quotes (not the old
+# fixed 3 quotes everyone shared).
+_ANCESTOR_LINES = {
+    "Sun": ("👑", "the Line of Sovereigns", [
+        "A crown is not worn on the head. It is carried in the spine.",
+        "Do not wait to be chosen. The ones who came before you were never given their place — they grew into it.",
+        "Light does not apologize for being seen. Neither should you.",
+    ]),
+    "Moon": ("🌙", "the Line of Caretakers", [
+        "Protect your peace before your reputation. A restless home makes a restless mind.",
+        "The one who tends the fire is never truly cold. Tend yours before you warm the world.",
+        "Feeling deeply is not weakness. It is the inheritance that let us survive.",
+    ]),
+    "Mars": ("⚔️", "Those Who Endured Hardship", [
+        "Your greatest victories arrive after the battles others believed had already defeated you.",
+        "We did not survive by avoiding the fight. We survived by choosing which ones were ours.",
+        "Courage is not the absence of fear. It is fear that has finally been given a direction.",
+    ]),
+    "Mercury": ("📜", "Scholars and Storytellers", [
+        "Knowledge kept only for yourself becomes a burden. Knowledge shared becomes your legacy.",
+        "The clever tongue opens doors. The wise one knows which to leave shut.",
+        "We passed down no gold. We passed down the questions worth asking.",
+    ]),
+    "Jupiter": ("🕉️", "Sages and Teachers", [
+        "Do not confuse silence with weakness. The strongest tree grows quietly before it gives shade.",
+        "Faith is not certainty. It is walking on before the path has shown itself.",
+        "The teacher who fears being surpassed has not understood the lesson.",
+    ]),
+    "Venus": ("🌸", "Artisans and Lovers", [
+        "Beauty is not vanity. It is the proof that we did more than merely survive.",
+        "Love what is imperfect fully, or you will love nothing at all.",
+        "Make something with your hands. It is how we spoke when words ran out.",
+    ]),
+    "Saturn": ("🏛️", "the Line of Builders", [
+        "What is built slowly is built to outlast the builder. Do not rush your foundations.",
+        "We did not ask whether the work was fair. We asked whether it would still stand.",
+        "Discipline is a gift the young rarely recognize until they need it most.",
+    ]),
+    "Rahu": ("🧭", "Seekers Who Crossed Boundaries", [
+        "The ones who left home are the reason you have a wider one.",
+        "Hunger built us. But learn where it ends, or it will eat the very thing it won.",
+        "Every frontier looks like exile until you arrive.",
+    ]),
+    "Ketu": ("🔥", "Mystics and Renunciates", [
+        "You already carry what you are searching for. The search is how you remember it.",
+        "Let go early, and grief becomes gratitude. Hold too long, and even gifts become chains.",
+        "Some of us renounced the world to see it clearly. Some of you will do the same.",
+    ]),
+}
+
 # Archetype name (substring match) → a symbolic ancestral "voice" framing.
 _ANCESTOR_VOICE = [
     ("Sovereign", ("👑", "the Line of Builders")), ("Hermit", ("🏺", "Sages and Teachers")),
@@ -523,34 +576,47 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
     # ── Echoes From Your Ancestors — symbolic reflection, always hedged ──
     strong = [p for p, d in planets_raw.items() if d.get("dignity") in ("exalted", "own")]
     weak = [p for p, d in planets_raw.items() if d.get("dignity") == "debilitated"]
-    saturn = planets_raw.get("Saturn", {})
-    moon = planets_raw.get("Moon", {})
-    mercury = planets_raw.get("Mercury", {})
-    jupiter = planets_raw.get("Jupiter", {})
     mahadasha = (chart.get("dasha") or {}).get("mahadasha", "")
 
-    ancestor_cards = [{
-        "icon": "👤", "line": "From the Line of Builders",
-        "quote": "Do not confuse silence with weakness. The strongest tree grows quietly before it gives shade.",
-        "connection": f"Your chart suggests Saturn ({saturn.get('sign', '?')}, house {saturn.get('house', '?')}) "
-                      f"carries real weight — discipline often appears as an inherited lesson rather than a personal choice.",
-    }, {
-        "icon": "🌙", "line": "From the Line of Caretakers",
-        "quote": "Protect your peace before protecting your reputation. A restless home creates a restless mind.",
-        "connection": f"This theme often points toward your Moon ({moon.get('sign', '?')}, house {moon.get('house', '?')})"
-                      + (f" combined with your current {mahadasha} Mahadasha." if mahadasha else "."),
-    }, {
-        "icon": "📜", "line": "Wisdom Passed Through Generations",
-        "quote": "Knowledge kept only for yourself becomes a burden. Knowledge shared becomes your legacy.",
-        "connection": f"A recurring theme may trace to Mercury (house {mercury.get('house', '?')}) "
-                      f"and Jupiter (house {jupiter.get('house', '?')}) both shaping how you learn and teach.",
-    }]
-    if has_viparita or has_raja:
-        ancestor_cards.insert(1, {
-            "icon": "⚔️", "line": "From Those Who Endured Hardship",
-            "quote": "Your greatest victories will arrive after the battles others believed had already defeated you.",
-            "connection": ("Viparita Raja Yoga" if has_viparita else "Raja Yoga")
-                          + f" combined with Saturn's influence suggests resilience built through, not despite, difficulty.",
+    # Score each planet's prominence in THIS chart, so the ancestral lines
+    # that appear are the person's own dominant planets — not a fixed set.
+    _KENDRA, _TRIKONA = {1, 4, 7, 10}, {5, 9}
+
+    def _prominence(pname):
+        d = planets_raw.get(pname, {})
+        if not d:
+            return -99
+        s = 0
+        dig = d.get("dignity")
+        s += {"exalted": 4, "own": 3, "debilitated": -3}.get(dig, 0)
+        h = d.get("house")
+        if h in _KENDRA:
+            s += 2
+        elif h in _TRIKONA:
+            s += 2
+        if pname == mahadasha:
+            s += 2                       # the currently-active planet speaks loudest
+        return s
+
+    ranked = sorted(_ANCESTOR_LINES, key=_prominence, reverse=True)
+    # Top 3 most-prominent planets become the ancestral lines shown.
+    ancestor_cards = []
+    for pname in ranked[:3]:
+        icon, line, quotes = _ANCESTOR_LINES[pname]
+        d = planets_raw.get(pname, {})
+        house = d.get("house")
+        # Quote variant chosen by the planet's house → varies by placement,
+        # so two people who share a strong planet still get different quotes.
+        qi = (int(house) if isinstance(house, int) else sum(ord(c) for c in pname)) % len(quotes)
+        dig = d.get("dignity")
+        dig_note = (f", especially strong here ({dig})" if dig in ("exalted", "own")
+                    else f", a tender inherited theme ({dig})" if dig == "debilitated" else "")
+        active = " — and active in your life right now through its Mahadasha" if pname == mahadasha else ""
+        ancestor_cards.append({
+            "icon": icon, "line": line, "quote": quotes[qi],
+            "connection": f"This voice rises from your {pname} ({d.get('sign', '?')}, house "
+                          f"{house}{dig_note}){active}. Your chart weights it heavily, which is "
+                          f"why this particular ancestral theme speaks louder for you than for most.",
         })
 
     ancestor_strengths = [
