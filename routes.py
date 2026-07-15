@@ -582,6 +582,14 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
     # that appear are the person's own dominant planets — not a fixed set.
     _KENDRA, _TRIKONA = {1, 4, 7, 10}, {5, 9}
 
+    # Astrological significators of lineage: Sun = paternal line, Moon =
+    # maternal line, Ketu = ancestral/past-life karma (pitru), and the 9th
+    # house = father/ancestors/dharma. These get a boost so the ancestral
+    # section actually centres on the chart's lineage karakas, not just any
+    # strong planet.
+    _ninth_lord = ((chart.get("house_lords") or {}).get("house_9_lord", {}) or {}).get("planet")
+    _ninth_occupants = {p for p, d in planets_raw.items() if d.get("house") == 9}
+
     def _prominence(pname):
         d = planets_raw.get(pname, {})
         if not d:
@@ -590,34 +598,53 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
         dig = d.get("dignity")
         s += {"exalted": 4, "own": 3, "debilitated": -3}.get(dig, 0)
         h = d.get("house")
-        if h in _KENDRA:
-            s += 2
-        elif h in _TRIKONA:
+        if h in _KENDRA or h in _TRIKONA:
             s += 2
         if pname == mahadasha:
             s += 2                       # the currently-active planet speaks loudest
+        if pname in ("Sun", "Moon", "Ketu"):
+            s += 3                       # primary lineage karakas
+        if pname == _ninth_lord or pname in _ninth_occupants:
+            s += 2                       # tied to the house of father/ancestors
         return s
 
+    # Index the RAG-retrieved classical rules by the planet each references,
+    # so each ancestral card can be grounded in an ACTUAL matched rule (real
+    # BPHS / nakshatra / dignity interpretation) rather than a generic line.
+    rules_by_planet = {}
+    for r in rules:
+        for cond in r.get("required", []):
+            p = cond.get("planet")
+            if p:
+                rules_by_planet.setdefault(p, []).append(r)
+
     ranked = sorted(_ANCESTOR_LINES, key=_prominence, reverse=True)
-    # Top 3 most-prominent planets become the ancestral lines shown.
     ancestor_cards = []
     for pname in ranked[:3]:
         icon, line, quotes = _ANCESTOR_LINES[pname]
         d = planets_raw.get(pname, {})
         house = d.get("house")
-        # Quote variant chosen by the planet's house → varies by placement,
-        # so two people who share a strong planet still get different quotes.
         qi = (int(house) if isinstance(house, int) else sum(ord(c) for c in pname)) % len(quotes)
         dig = d.get("dignity")
-        dig_note = (f", especially strong here ({dig})" if dig in ("exalted", "own")
-                    else f", a tender inherited theme ({dig})" if dig == "debilitated" else "")
-        active = " — and active in your life right now through its Mahadasha" if pname == mahadasha else ""
-        ancestor_cards.append({
-            "icon": icon, "line": line, "quote": quotes[qi],
-            "connection": f"This voice rises from your {pname} ({d.get('sign', '?')}, house "
-                          f"{house}{dig_note}){active}. Your chart weights it heavily, which is "
-                          f"why this particular ancestral theme speaks louder for you than for most.",
-        })
+
+        # Ground the "why this appears" in the strongest RAG rule for this
+        # planet — quote its real classical interpretation and cite the source.
+        matched = sorted(rules_by_planet.get(pname, []),
+                         key=lambda r: r.get("weight", 1.0), reverse=True)
+        if matched:
+            top = matched[0]
+            connection = (f"Classical texts ({top.get('source', 'BPHS')}) describe your "
+                          f"{pname} here: “{top.get('interpretation', '')}” "
+                          f"In your lineage this reads as an inherited theme rather than a "
+                          f"personal accident — your chart weights it heavily.")
+        else:
+            dig_note = (f", especially strong here ({dig})" if dig in ("exalted", "own")
+                        else f", a tender inherited theme ({dig})" if dig == "debilitated" else "")
+            connection = (f"This voice rises from your {pname} ({d.get('sign', '?')}, "
+                          f"house {house}{dig_note}). Your chart weights it heavily, which is "
+                          f"why this ancestral theme speaks louder for you than for most.")
+        ancestor_cards.append({"icon": icon, "line": line, "quote": quotes[qi],
+                               "connection": connection})
 
     ancestor_strengths = [
         {"label": _ANCESTOR_STRENGTH[p][0], "why": f"Because {_ANCESTOR_STRENGTH[p][1]}."}
