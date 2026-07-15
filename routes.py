@@ -60,6 +60,20 @@ def _grant_ownership(report_uuid: str):
     session["store_owned"] = owned
 
 
+def _can_view_report(report_uuid: str, purchase) -> bool:
+    """A PAID report is accessible by its (unguessable, 32-hex) UUID — the
+    link IS the capability, same as the emailed/shared report link. This is
+    what keeps the report reachable after a refresh, on a new device, or in
+    incognito, where the session cookie (Lax SameSite, lost on the cross-site
+    Razorpay redirect) can't be relied on. Unpaid purchases stay locked."""
+    if purchase.status != "paid":
+        return False
+    # Re-populate the session so any session-based flows stay consistent, but
+    # access no longer DEPENDS on the session being present.
+    _grant_ownership(report_uuid)
+    return True
+
+
 # ── Chart helpers ────────────────────────────────────────────────────────────
 
 def _overall_score(chart: dict) -> int:
@@ -215,15 +229,11 @@ def view_report(report_uuid):
     report = Report.query.filter_by(uuid=report_uuid).first_or_404()
     purchase = report.purchase
 
-    owns = (report_uuid in _owned_uuids()) or (
-        purchase.user_id and session.get("user_id") == purchase.user_id
-    ) or _dev_mode()  # local dev only: no Razorpay keys + debug on
-    if purchase.status != "paid" or not owns:
+    if not (_can_view_report(report_uuid, purchase) or _dev_mode()):
         return render_template("store/cancel.html",
                                title="Report locked",
-                               message="This report belongs to another purchase. "
-                                       "Open it from the device you paid on, or sign in "
-                                       "with the account used at checkout."), 403
+                               message="This report isn't unlocked yet — complete "
+                                       "your payment to view the full reading."), 403
 
     chart = report.chart()
     ai = _ensure_ai(report)
@@ -668,15 +678,11 @@ def view_report_v2(report_uuid):
     report = Report.query.filter_by(uuid=report_uuid).first_or_404()
     purchase = report.purchase
 
-    owns = (report_uuid in _owned_uuids()) or (
-        purchase.user_id and session.get("user_id") == purchase.user_id
-    ) or _dev_mode()  # local dev only: no Razorpay keys + debug on
-    if purchase.status != "paid" or not owns:
+    if not (_can_view_report(report_uuid, purchase) or _dev_mode()):
         return render_template("store/cancel.html",
                                title="Report locked",
-                               message="This report belongs to another purchase. "
-                                       "Open it from the device you paid on, or sign in "
-                                       "with the account used at checkout."), 403
+                               message="This report isn't unlocked yet — complete "
+                                       "your payment to view the full reading."), 403
 
     chart = report.chart()
     ai = _ensure_ai(report)
