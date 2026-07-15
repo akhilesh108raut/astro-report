@@ -707,28 +707,31 @@ def _v2_derived(chart: dict, ai: dict, name: str = "") -> dict:
     # ── Achievement badges (only from real, verifiable placements) ───
     badges, _seen_labels = [], set()
 
-    def _add_badge(icon, label):
+    def _add_badge(icon, label, desc):
         if label not in _seen_labels:
             _seen_labels.add(label)
-            badges.append({"icon": icon, "label": label})
+            badges.append({"icon": icon, "label": label, "desc": desc})
 
     for y in raw_yogas:
-        if isinstance(y, dict) and "Raja" in y.get("name", ""):
-            _add_badge("⚔", y["name"])
+        yname = y.get("name", "") if isinstance(y, dict) else ""
+        if "Viparita" in yname:
+            _add_badge("⚔", yname, "A rare reversal yoga — real setbacks turn into unexpected gains once you stop resisting them.")
+        elif "Raja" in yname:
+            _add_badge("⚔", yname, "A royal-status combination — placements aligned to bring authority, recognition, and rising position.")
     for pname, pdata in planets_raw.items():
         if pdata.get("dignity") == "exalted":
-            _add_badge("🌟", f"{pname} Exalted")
+            _add_badge("🌟", f"{pname} Exalted", f"Your {pname} sits at its point of maximum classical strength, its natural gifts come through at full power.")
     lagna_lord_house = (chart.get("house_lords") or {}).get("house_1_lord", {}).get("placed_in_house")
     if lagna_lord_house in (9, 10):
-        _add_badge("🏆", "Born Leader")
+        _add_badge("🏆", "Born Leader", "The lord of your own personality sits in your house of career or fortune — your identity and your public path are directly linked.")
     if planets_raw.get("Moon", {}).get("dignity") == "exalted":
-        _add_badge("🌙", "Emotional Intelligence")
+        _add_badge("🌙", "Emotional Intelligence", "An exalted Moon gives unusually stable, self-aware emotions — a real asset in reading and steadying others.")
     jup_house = planets_raw.get("Jupiter", {}).get("house")
     if jup_house in (1, 5, 9):
-        _add_badge("♃", "Teacher's Blessing")
+        _add_badge("♃", "Teacher's Blessing", "Jupiter, the planet of wisdom, sits in a house of self, learning, or fortune — a natural pull toward teaching, mentoring, or guiding others.")
     rahu_house = planets_raw.get("Rahu", {}).get("house")
     if rahu_house in (3, 6, 10, 11):
-        _add_badge("🌍", "Ambition Amplifier")
+        _add_badge("🌍", "Ambition Amplifier", "Rahu sits in a house of effort and gain, amplifying drive and hunger for achievement well beyond the ordinary.")
     badges = badges[:6]
 
     # ── "If I only read one page" summary — human copy, not raw fields ──

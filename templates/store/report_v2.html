@@ -483,10 +483,14 @@ href="{{ url_for('report_store.static', filename='css/report_v2.css') }}">
 <section id="hall-badges" class="hall compact">
   <div class="hall-inner reveal" style="max-width:700px">
     <div class="hall-eyebrow">Your Chart's Signature</div>
-    <div class="hall-title">Achievements</div>
+    <div class="hall-title">Rare Placements in Your Chart</div>
+    <p style="text-align:center;opacity:.7;font-size:14px;margin-top:-8px;margin-bottom:24px">Not everyone's chart has these — tap one to see why it matters.</p>
     <div class="badge-grid">
       {% for b in badges %}
-      <div class="badge"><span class="bicon">{{ b.icon }}</span>{{ b.label }}</div>
+      <div class="badge" onclick="this.classList.toggle('expanded')">
+        <span class="bicon">{{ b.icon }}</span>{{ b.label }}
+        <div class="badge-desc">{{ b.desc }}</div>
+      </div>
       {% endfor %}
     </div>
   </div>
